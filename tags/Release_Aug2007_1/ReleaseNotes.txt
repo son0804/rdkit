@@ -1,0 +1,134 @@
+******  Release_July2007_1 *******
+(Changes relative to Release_April2007_1)
+
+Bug Fixes
+ - operators and SparseIntVects. (issue 1716736)
+ - the Mol file parser now calculates cis/trans labels for double
+   bonds where the two ends had the same substituents. (issue 1718794)
+ - iterator interface to DiscreteValueVects and UniformGrid3D. (issue
+   1719831)
+ - improper removal of stereochemistry from ring atoms (issue
+   1719053)
+ - stereochemistry specifications and ring bonds.  (issue 1725068)
+ - handling of aromatic bonds in template molecules for chemical
+   reactions. (issue 1748846)
+ - handling of unrecognized atom types in the descriptor calculation
+   code. (issue 1749494)
+ - ChemicalReactionException now exposed to Python. (issue 1749513)
+ - some small problems in topological torsions and atom pairs
+
+New Features
+ - The Atom Pairs and Topological Torsions code can now provide
+   "explanations" of the codes. See $RDBASE/Python/Chem/AtomPairs for
+   details.
+ - The PointND class has been exposed to Python
+ - The "Butina" clustering algorithm [JCICS 39:747-50 (1999)] is now
+   available in $RDBase/Python/Ml/Cluster/Butina.py 
+ - A preliminary implementation of the subshape alignment algorithm is
+   available. 
+ - The free version of MS Visual C++ is now supported.   
+ - There is better support for queries in MDL mol files. (issue 1756962)
+   Specifically: ring and chain bond queries; the not modifier for
+   atom lists; R group labels. 
+ - An EditableMol class is now exposed to Python to allow molecules to
+   be easily edited. (issue 1764162)
+ - The RingInfo class is now exposed to Python.
+ - The replaceSidechains and and replaceCore functions have been added
+   in the ChemTransforms library and are exposed to Python as
+   Chem.ReplaceSidechains and Chem.ReplaceCore.
+ - pickle support added to classes: PointND
+ - atoms and bonds now support the HasQuery() and GetSmarts() methods
+   from Python.   
+   
+Other
+ - Similarity scores can now be calculated from Python in bulk
+   (i.e. calculating the similarity between one vector and a list of
+   others). This can be substantially faster than calling the
+   individual routines multiple times. The relevant functions are
+   BulkTanimotoSimilarity, BulkDiceSimilarity, etc.
+ - The calculation of AtomPairs and TopologicalTorsions fingerprints
+   is now a lot more efficient.
+ - Optimization of the Dice metric implementation for SparseIntVects
+ - The Visual Studio build files have been moved to the directories
+   $RDBASE/Code/Build.VC71 and $RDBASE/Code/Build.VC80. This allows
+   simultaneous support of both versions of the system and cleans up
+   the source trees a bit.
+ - Boost version 1.34 is now supported (testing has been done on 1.34 and 1.34.1).
+ - Updates to the "Getting Started" documentation.
+ 
+******  Release_April2007_1 *******
+(Changes relative to Release_Jan2007_1)
+
+Bug Fixes
+ - handing of isotope information in SMILES has been fixed
+ - "implicit" hydrogens are now added to charged atoms explicitly when
+   writing SMILES. (issue 1670149)
+ - the 2D->3D code no longer generates non-planar conjugated 4-rings
+   (e.g. C1=CC=C1). (issue 1653802) 
+ - removing explicit hydrogens no longer produces incorrect smiles 
+   (issue 1694023)
+ - bit indices and signature lengths in the AtomPairs code no longer
+   being calculated incorrectly. *NOTE* this changes the bits that are
+   set, so if you have existing signatures, they will need to be
+   regenerated.
+ - Fixed a bug causing MolSuppliers to generate incorrect length
+   information when a combination of random access and iterator
+   interfaces are used. (issue 1702647)
+ - Fixed a bug leading to incorrect line numbers in error messages
+   from the SDMolSuppler. (issue 1695221)
+
+New Features
+ - chemical reactions are now supported
+ - there is a new entry point into the 2D depictor code,
+   compute2DCoordsMimicDistMat(), that attempts to generate 2D
+   depictions that are similar to the structure described by the
+   distance matrix. There's also a shorthand approach for calling this
+   to mimic a 3D structure available as:
+   AllChem.GenerateDepictionMatching3DStructure()
+ - DiscreteValueVect and UniformGrid3D now support the binary 
+   operators |, &, +, and -.
+ - a reader/writer for TPL files has been added.
+ - support has been added for MolCatalogs: hierarchical catalogs that
+   can store complete molecules.
+ - the protrude distance metric for shapes has been added
+ - pickle support added to classes: UniformGrid, DiscreteValueVect,
+   Point 
+ - added the class DataStructs/SparseIntVect to improve performance
+   and clarity of the AtomPairs code
+
+Other
+ - the non-GUI code now supports python2.5; the GUI code may work with
+   python2.5, but that has not been tested
+ - the Mol and SD file parsers have been sped up quite a bit.
+ - the "Crippen" descriptors are now calculated somewhat faster.
+ - in-code documentation updates
+ - new documentation for beginners in $RDBASE/Docs/Book
+
+******  Release_Jan2007_1 *******
+(Changes relative to Release_Oct2006_1)
+
+Bug Fixes
+  - zero-atom molecules now trigger an exception
+  - dummy atoms are no longer labelled 'Xe'
+  - core leak in the mol file writer fixed
+  - mol files with multiple charge lines are now correctly parsed
+  - a workaround was installed to prevent crashes in the regression
+    tests on Windows when using the newest VC++ v7 series compiler.
+    (http://sourceforge.net/tracker/index.php?func=detail&aid=1607290&group_id=160139&atid=814650)
+  - chirality perception (which requires partial sanitization) is no
+    longer done by the MolFileParser when sanitization is switched
+    off.
+  - Two potential memory corruption problems were fixed (rev's 150 and
+    151).
+
+New Features
+  - optional use of chirality in substructure searches
+  - MolWriters can now all take a stream as an argument
+  - Chiral terms can now be included in the DistanceGeometry
+    embedding.
+
+Other
+  - $RDBASE/Code/Demos/RDKit/BinaryIO is a demonstration of using
+    boost IOStreams and the ROMol pickling mechanism to generate
+    highly compressed, random-access files of molecules.
+  - the Point code has been refactored
