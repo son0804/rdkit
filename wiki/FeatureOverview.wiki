@@ -6,7 +6,7 @@
    * Substructure searching with SMARTS
    * Canonical SMILES
    * Chirality support
-   * Easy serialization (molecule < - > text)
+   * Easy serialization (molecule < - > text for efficient storage on disk or in databases)
  * 2D depiction (including constrained depiction and 2D depiction of 3D structures)
  * 2D -> 3D conversion via distance geometry
  * UFF implementation for cleaning up geometries
