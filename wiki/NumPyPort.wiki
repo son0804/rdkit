@@ -1,0 +1,35 @@
+#summary Notes from attempting (again) to do the port to numpy
+#labels Development,Notes
+
+following some notes from here: http://www.scipy.org/Porting_to_NumPy
+on branch:
+http://rdkit.svn.sourceforge.net/svnroot/rdkit/branches/NumPyPort_27June2008
+
+in case it matters, this is using numpy v1.0.4
+
+Process:
+  # run `python -c "numpy.oldnumeric.alter_code1 as noa; noa.converttree('.')"` in $RDBASE
+  # replace all instances of `Numeric/arrayobject.h` with `numpy/oldnumeric.h`:
+{{{
+for foo in Numerics/Alignment/Wrap/rdAlignment.cpp \
+SimDivPickers/Wrap/HierarchicalClusterPicker.cpp \
+SimDivPickers/Wrap/MaxMinPicker.cpp SimDivPickers/Wrap/rdSimDivPickers.cpp \
+Demos/boost/numpy/linalg.cpp ML/Cluster/Murtagh/Clustering.cpp \
+ML/InfoTheory/cEntropy.cpp ML/InfoTheory/Wrap/BitCorrMatGenerator.cpp \
+ML/InfoTheory/Wrap/rdInfoTheory.cpp ML/InfoTheory/Wrap/InfoBitRanker.cpp \
+ML/Data/cQuantize.cpp GraphMol/Depictor/Wrap/rdDepictor.cpp \
+GraphMol/ShapeHelpers/Wrap/rdShapeHelpers.cpp GraphMol/Wrap/rdchem.cpp \
+GraphMol/Wrap/rdmolops.cpp GraphMol/Wrap/MolOps.cpp \
+GraphMol/MolAlign/Wrap/rdMolAlign.cpp GraphMol/MolTransforms/Wrap/rdMolTransforms.cpp \
+DistGeom/Wrap/DistGeom.cpp RDBoost/Wrap/RDBase.cpp \
+DataManip/MetricMatrixCalc/Wrap/rdMetricMatrixCalc.cpp; \
+do cp $foo $foo.sav; sed 's|Numeric/arrayobject.h|numpy/oldnumeric.h|' $foo.sav > $foo; done
+}}}
+  # Make sure the the numpy includes are in the python include directory
+  # Find and fix the occurrences of `from Numeric import *` in $RDBASE/Code
+  # Convert wrappers in $RDBASE/Code that use python::numeric::array argument types to use python::objects and supplemental type checking.
+  # Find and fix the occurrences of `from Numeric import *` in $RDBASE/Python (there were a ton of them)
+  # replace the uses of RandomArray
+  # Regenerate some of the pickled reference data for the unit tests due to the changed datastructs and RNG.
+
+This was all merged back onto the trunk with [http://rdkit.svn.sourceforge.net/viewvc/rdkit?view=rev&revision=742 rev742].

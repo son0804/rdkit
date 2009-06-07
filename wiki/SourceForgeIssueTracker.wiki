@@ -1,0 +1,3 @@
+#summary We're still using sourceforge for bug tracking
+
+Unfortunately we're still doing [http://sourceforge.net/tracker/?atid=814650&group_id=160139 bug tracking] and [http://sourceforge.net/tracker/?group_id=160139&atid=814653 feature request tracking] at sourceforge.

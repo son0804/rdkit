@@ -1,0 +1,55 @@
+#summary Overview of the descriptors available in the RDKit
+
+Here's a summary table of the available descriptors. Fingerprints are covered [FingerprintsInTheRDKit on another page]
+
+If the descriptor is written in C++ it is normally also accessible from Python. There's a sample code snippet at the bottom of the page showing how to use the descriptors
+
+|| *Descriptor/Descriptor Family* || *Language* || *Notes* ||
+|| Gasteiger/Marsili Partial Charges || C++ (`$RDBASE/Code/GraphMol/PartialCharges/GasteigerCharges.h:computeGasteigerCharges()`) || _Tetrahedron_ *36*:3219-28 (1980) || 
+|| BalabanJ || Python ||  _Chem. Phys. Lett._ *89*:399-404 (1982)||
+|| BertzCT || Python || _J. Am. Chem. Soc._ *103*:3599-601 (1981) ||
+|| Ipc || Python || _J. Chem. Phys._ *67*:4517-33 (1977) ||
+|| HallKierAlpha || Python || _Rev. Comput. Chem._ *2*:367-422 (1991) ||
+|| Kappa1 - Kappa3 || Python || _Rev. Comput. Chem._ *2*:367-422 (1991) ||
+|| Chi0, Chi1 || Python || _Rev. Comput. Chem._ *2*:367-422 (1991) ||
+|| Chi0n - Chi4n || Python || _Rev. Comput. Chem._ *2*:367-422 (1991) ||
+|| Chi0v - Chi4v || Python || _Rev. Comput. Chem._ *2*:367-422 (1991) ||
+|| MolLogP || C++ (`$RDBASE/Code/GraphMol/Descriptors/Crippen.h:CalcCrippenDescriptors()`) || Wildman and Crippen _JCICS_ *39*:868-73 (1999) ||
+|| MolMR || C++ (`$RDBASE/Code/GraphMol/Descriptors/Crippen.h:CalcCrippenDescriptors()`) || Wildman and Crippen _JCICS_ *39*:868-73 (1999) ||
+|| MolWt || C++ (`$RDBASE/Code/GraphMol/Descriptors/MolDescriptors.h:CalcAMW()`) || ||
+|| HeavyAtomCount || Python || ||
+|| HeavyAtomMolWt || Python || ||
+|| NHOHCount || Python || ||
+|| NOCount || Python || ||
+|| NumHAcceptors || Python || ||
+|| NumHDonors || Python || ||
+|| NumHeteroatoms || Python || ||
+|| NumRotatableBonds || Python || ||
+|| NumValenceElectrons || Python || ||
+|| RingCount || Python || ||
+|| TPSA || Python || _J. Med. Chem._ *43*:3714-7, (2000) ||
+|| LabuteASA || C++ (`$RDBASE/Code/GraphMol/Descriptors/MolSurf.h:calcLabuteASA()`) || _J. Mol. Graph. Mod._  *18*:464-77 (2000) ||
+|| PEOE_VSA1 - PEOE_VSA14 || Python || MOE-type descriptors using partial charges and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ||
+|| SMR_VSA1 - SMR_VSA10  || Python || MOE-type descriptors using MR contributions and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ||
+|| SlogP_VSA1 - SlogP_VSA12 || Python || MOE-type descriptors using LogP contributions and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ||
+|| EState_VSA1 - EState_VSA11 || Python || MOE-type descriptors using EState indices and surface area contributions (developed at RD, not described in the CCG paper) ||
+|| VSA_EState1 - VSA_EState10 || Python || MOE-type descriptors using EState indices and surface area contributions (developed at RD, not described in the CCG paper) ||
+|| Topliss fragments || Python || implemented using a set of SMARTS definitions in `$(RDBASE)/Data/FragmentDescriptors.csv` ||
+
+Most of the descriptors are straightforward to use from Python via the centralized `AvailDescriptors` module :
+{{{
+from rdkit.Chem import AvailDescriptors
+from rdkit import Chem
+m = Chem.MolFromSmiles('c1ccccc1C(=O)O')
+AvailDescriptors.descDict['TPSA'](m)  # returns 37.30
+AvailDescriptors.descDict['MolLogP'](m) # returns 1.3848
+}}}
+
+Partial charges are handled a bit differently:
+{{{
+from rdkit import Chem
+from rdkit.Chem import AllChem
+m = Chem.MolFromSmiles('c1ccccc1C(=O)O')
+AllChem.ComputeGasteigerCharges(m)
+float(m.GetAtomWithIdx(0).GetProp('_GasteigerCharge')) # returns -0.04769
+}}}

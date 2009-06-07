@@ -1,0 +1,96 @@
+#summary Making substructure searching faster
+#labels Notes
+
+= Testbed =
+From a mailing list post:
+Andrew's question about fingerprints hit me at the right time: I had
+just finished doing some optimization work on the RDKit substructure
+search machinery (removing the vflib dependency). The details are
+here:
+http://code.google.com/p/rdkit/wiki/SubgraphIsomorphismOptimization
+
+It would be quite interesting to use the new Ullmann code as a
+framework and do an implementation of the VF or VF2 algorithms used in
+vflib.
+
+Of course there's no better way to optimize subgraph isomorphism than
+to avoid it all together, which is where the fingerprints mentioned
+come in. I'm spending a couple of days home from work (with a cold),
+so I have some room to explore here a little bit.
+
+I put together a sandbox using my 1000 pubchem molecules (they're from
+the HTS set, so they are all either drug-like or lead-like, whatever
+that means). To get a set of "molecule-like" queries, I fragmented
+those 1000 molecules using RECAP and kept the 823 unique fragments I
+got.
+
+I've been using those 823 molecules to query the full set of 1000
+molecules and looking at how many calls to the isomorphism code I can
+avoid using either the RDKit (daylight-like) fingerprints or the
+layered fingerprints (out to layer 0x4, beyond that these aren't
+suitable for SSS).
+
+= Experiments done =
+
+The results look pretty encouraging: I can easily filter out more than
+90% of the comparisons via fingerprints without losing anything. There
+are 823000 (823x1000) possible comparisons with my dataset; using the
+RDKit fingerprints as a screen I filter out 765534 of them (93%) using
+the layered fingerprints I filter out 765224 (also 93%). The screening
+[not even remotely optimized, I'm calculating (A&B)==A instead of
+doing it on the fly and short circuiting when something mismatches]
+takes about 10 seconds in each case.
+
+== Fingerprint Size ==
+By default each fingerprint uses 2048 bits. I can shrink this by
+folding the fingerprints (or generating them shorter in the first
+place... the end result is the same). That potentially gains speed and
+certainly saves storage space, but there may be a cost at how
+discriminating the fingerprints are.
+
+Experiment 1: reduce fps to 1024 bits
+RDK fingerprints: filter out 717356 (87%)
+Layered: filter out 752948 (91%)
+No obvious speed improvement
+
+Experiment 2: reduce fps to 512 bits
+RDK fingerprints: filter out 441529 (54%)
+Layered: filter out 710647 (86%)
+10-15% faster
+
+The layered fps are clearly more robust w.r.t. fingerprint size (which
+makes sense: I only set one bit per path there as opposed to 4 per
+path for the RDKit fp; a good experiment would be to try the RDKit fps
+with one bit per path). They're also faster to generate (they no
+longer require a PRNG).
+
+== Set overlap ==
+
+  On Tue, Feb 10, 2009 at 4:02 PM,  <nikolaus.stiefl@novartis.com> wrote: 
+  
+  > is one a subset of the other? If not - would it make sense to test on both?
+
+It's an interesting question
+
+the screened-out compounds are 99% similar: of the 765534 screened out
+by the RDK fingerprints, all but 7907 of them are also screened by the
+layered fps. Turned around: of the 765224 screened out by the layered
+fps, all but 7597 of them are also removed by the RDK fingerprints.
+
+So in this dataset, doing a second pass using the RDK fingerprints of
+the compounds screened out by the layered fps would reduce the number
+of subgraph isomorphism calls from 57466 to 49869 (13%). That savings
+will be accompanied by some additional complication and more required
+storage (an extra FP that needs to be stored).
+
+Not sure if it's worth it in the end or not... certainly it's worth
+thinking about if larger datasets show similar patterns.
+
+
+= Experiments still to do =
+
+Suggestions so far, along with their suggester
+ * look at screen-out rate of MACCS keys (A Dalke)
+ * look at bit correlations (N Stiefl, A Dalke)
+ * look at false positive rate of the bit screens, i.e. how many pairs pass the fingerprint tests but still fail subgraph isomorphism. (G Landrum)
+

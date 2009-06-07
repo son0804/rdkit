@@ -1,0 +1,15 @@
+#summary Pointers to information on getting started with the RDKit
+
+= Getting started as a user =
+ # [http://rdkit.svn.sourceforge.net/viewvc/*checkout*/rdkit/trunk/Docs/Book/GettingStartedInPython.pdf Getting Started in Python PDF]
+ # [HowDoI How do I?] : a collection of simple tasks
+
+= Installing binary versions =
+ # [http://rdkit.svn.sourceforge.net/viewvc/*checkout*/rdkit/trunk/Docs/SoftwareRequirements.txt Additional Software Requirements]
+ # InstallingOnWindows
+
+= Building the software =
+ # [BuildingOnLinux On linux]
+ # [BuildingOnWindows On windows, using visual studio]
+ # [BuildingWithMinGW On windows, using MinGW]
+ # [BuildingOnMacOs On MacOS/X]

@@ -1,0 +1,72 @@
+#summary How we got rid of the Lapack++ dependency
+#labels Development,Notes
+
+= boost bindings and uBLAS = 
+Source: [http://mathema.tician.de/software/boost-bindings http://mathema.tician.de/software/boost-bindings]
+
+Built on top of boost uBLAS : [http://www.boost.org/libs/numeric/ublas/doc/ http://www.boost.org/libs/numeric/ublas/doc/]
+
+There's a mailing list for uBLAS that seems to be active: [http://lists.boost.org/mailman/listinfo.cgi/ublas http://lists.boost.org/mailman/listinfo.cgi/ublas]
+
+== basic use of boost bindings and uBLAS ==
+
+This builds and produces correct results using the June 10, 2008 version of the boost bindings from here: [http://mathema.tician.de/dl/software/boost-bindings http://mathema.tician.de/dl/software/boost-bindings]
+{{{
+#include <iostream>
+#include <boost/numeric/bindings/traits/ublas_matrix.hpp> 
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/bindings/lapack/syev.hpp>
+#include <boost/numeric/ublas/io.hpp> 
+
+namespace ublas = boost::numeric::ublas;
+namespace lapack = boost::numeric::bindings::lapack;
+
+/* 
+[12]>>> linalg.eig(v)
+Out[12] 
+(array([ 0.78855903,  2.13305014,  4.07839083]),
+ array([[-0.92694274,  0.3596972 ,  0.10674778],
+       [ 0.37334588,  0.91250859,  0.16715542],
+       [ 0.03728293, -0.19479734,  0.98013467]]))
+*/
+
+int main() {
+  ublas::matrix<double> A(3,3);
+  ublas::vector<double> B(3);
+  A(0,0)=1;
+  A(1,1)=2;
+  A(2,2)=4;
+  A(0,1)=.5;
+  A(0,2)=.25;
+  A(1,2)=.3;
+  
+  lapack::syev('V','L',A,B);
+  return 0;
+}
+
+}}}
+
+== changes to the RDKit ==
+This is pretty simple, there are changes in `$RDBASE/Code/GraphMol/MolDiscriminators.cpp` and `$RDBASE/Code/Numerics/Eigensolvers/testEigensolvers.cpp`
+
+Changes checked in on revs [http://rdkit.svn.sourceforge.net/viewvc/rdkit?view=rev&revision=754 754], [http://rdkit.svn.sourceforge.net/viewvc/rdkit?view=rev&revision=755 755], and [http://rdkit.svn.sourceforge.net/viewvc/rdkit?view=rev&revision=756 756].
+
+At the moment the old behavior (using Lapack++) can be accessed by editing the Jamfiles. This can stay in for a release or so before being completely removed.
+
+Trying to build this on Windows led to error messages like this:
+{{{
+testEigenSolvers.obj : error LNK2019: unresolved external symbol _dsyev referenced in function "void __cdecl boost::numeric::bindings::lapack::detail::syev(char,char,int,double *,int,double *,double *,int,int &)" (?syev@detail@lapack@bindings@numeric@boost@@YAXDDHPANH00HAAH@Z)
+bin\msvc-8.0express\release\threading-multi\main.exe : fatal error LNK1120: 1 unresolved externals
+}}}
+The solution is to add `BOOST_NUMERIC_BINDINGS_USE_CLAPACK` to the compile flags on windows; which translates into: `<toolset>msvc:<define>BOOST_NUMERIC_BINDINGS_USE_CLAPACK` in the Jamfile.
+
+
+= Alternatives considered: =
+== MTL ==
+Source : [http://www.osl.iu.edu/research/mtl/ http://www.osl.iu.edu/research/mtl/]
+
+Mailing list archive here : [http://www.nabble.com/MTL-Dev-f14239.html http://www.nabble.com/MTL-Dev-f14239.html], it's protected on the official page. Not much activity on the list.
+
+MTL2 seems pretty out of date, MTL4 is still alpha.
+
+

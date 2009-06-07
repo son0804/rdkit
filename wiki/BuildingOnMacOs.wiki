@@ -1,0 +1,94 @@
+#summary Building the RDKit under MacOS/X (Darwin)
+#labels Development,Notes
+
+The instructions below are for source distributions from Q1 2009 on. They have been tested under MacOS/X v10.5.
+
+== Software to Install ==
+  * numpy : the [http://sourceforge.net/project/showfiles.php?group_id=1369&package_id=175103 current version of numpy] should be installed. It's fine to use the binary installer. 
+  * boost : download a copy of the current versions of the [http://www.boost.org/users/download/ boost source distribution and boost-Jam]. Both are available from the same link.  Extract the source distribution (to, for example, ~/boost_1_37_0). 
+  * boost numeric bindings : download the most recent version from from [http://mathema.tician.de/dl/software/boost-bindings http://mathema.tician.de/dl/software/boost-bindings].
+    ** extract the tar ball to some temporary location.
+    ** copy the directory `boost-numeric-bindings/boost/numeric/bindings` to `~/boost_1_37_0/boost/numeric`
+    ** copy the directory `boost-numeric-bindings/libs/numeric/bindings` to `~/boost_1_37_0/libs/numeric`
+  * a subversion client : _This is only necessary if you are planning on building development versions of the RDKit_.
+
+== Setup and Preparation ==
+This section assumes that you are using the system python, that the boost libraries have been extracted to ~/boost_1_37_0, and that you will build the RDKit from a directory named ~/RDKit. If any of these conditions is not true, just change the corresponding paths. 
+  * Make sure that boost builds properly by going to directory ~/boost_1_37_0 and executing the command: `./configure --with-libraries=python,thread`. Then run `make install`. This may take a bit, but it should finish without errors. Further instructions on building boost from source can be found [http://www.boost.org/doc/libs/1_37_0/more/getting_started/unix-variants.html here].
+  * If you are planning on using a development version of the RDKit: get a copy of the current RDKit source using subversion. If you're using the command-line client the command is: `svn co http://rdkit.svn.sourceforge.net/svnroot/rdkit/trunk ~/RDKit` 
+  * If you are planning on using a released version of the RDKit : get a copy of the most recent release and extract it into the directory ~/RDKit 
+  * Set the required environment variables in your .bashrc:
+  ** RDBASE = ~/RDKit
+  ** BOOSTHOME = ~\boost_1_37_0
+  ** BOOST_BUILD_PATH = $BOOSTHOME
+  ** If Python is not installed in the standard location, the PYTHONHOME environment variable should point to the root of your Python installation.
+  * Make sure that the directory $RDBASE/bin is in your PATH
+  * Make sure that bjam is in your PATH and that its shared libraries are in your DYLD_LIBRARY_PATH (by default both of these should be true).
+  * Make sure that $RDBASE/bin is in your DYLD_LIBRARY_PATH
+  * Make sure that the directory $RDBASE is in your PYTHONPATH
+
+== Building the RDKit ==
+  * cd to your $RDBASE/Code directory
+  * do `python CompleteJamroot.py`
+  * run : `bjam`. This will take a while and will generate a lot of text (including many warnings), but it should finish without errors. 
+
+If the last step above completed without errors, you have succeeded in building the RDKit C++ libraries and Python wrappers. Congratulations!
+
+== Testing ==
+It's a good idea to test your build to make sure everything is ok. Here's how to do so.
+  * cd to your $RDBASE/Code directory
+  * run `python $RDBASE/rdkit/TestRunner.py test_list.py`. After this completes (less than a minute or so), you should see a message like this:
+{{{
+-----------------
+        Script: test_list.py.  Passed 15 tests in 49.63 seconds
+}}}
+  Note that the number of tests passed and time required to run will change as the code itself changes.  The important thing is that no failures are reported.
+  * cd to your $RDBASE/rdkit/Chem directory
+  * run `python $RDBASE/rdkit/TestRunner.py test_list.py`. After this completes (less than 60 seconds), you should see a message like the one above.
+
+If these three test suites pass without failures, your RDKit installation is in good shape and you are ready to go.
+
+== Troubleshooting ==
+
+=== Problems under MacOS/X v10.4 ===
+Instructions courtesy of Andrew Dalke.
+Note that the build under this older version of OS/X requires more recent changes to the code, so you'll need either  subversion pull or a source release more recent than Q32008.
+
+{{{
+2) 10.4 uses an old version of yacc (v1.28 from 1999!), which for
+some reason Boost doesn't know how to handle. Greg's looking in to
+how to fix this automatically, but another solution might be to
+assume that the number of people compiling with 10.4 is dwindling and
+not worth worrying about.
+
+The problem occurs when converting the yacc grammars for SMILES and
+SMARTS. Here's a diagnostic error message:
+
+GraphMol/SmilesParse/smiles.ll:30:26: error: smiles.tab.hpp: No such
+file or directory
+GraphMol/SmilesParse/smiles.ll: In function 'int yysmiles_lex()':
+GraphMol/SmilesParse/smiles.ll:44: error: 'CHI_CLASS_TOKEN' was not
+declared in this scope
+GraphMol/SmilesParse/smiles.ll:46: error: 'AT_TOKEN' was not declared
+in this scope
+
+The problem is the created output file is "smiles.tab.cpp.h" instead
+of "smiles.tab.hpp"
+
+> [josiah:~/ftps/RDKit_Q32008_1/Code] dalke% find . -name 'smiles.tab*'
+> ./GraphMol/SmilesParse/bin/darwin/release/macosx-version-10.4/
+> threading-multi/smiles.tab.cpp
+> ./GraphMol/SmilesParse/bin/darwin/release/macosx-version-10.4/
+> threading-multi/smiles.tab.cpp.h
+> ./GraphMol/SmilesParse/bin/darwin/release/macosx-version-10.4/
+> threading-multi/smiles.tab.o
+>
+> so it looks like the output was ".cpp.h" instead of ".hpp". I
+> manually copied it to the ".hpp" form and it seems to have worked -
+> I ended up with problems with smarts.tab.hpp instead:
+
+
+That is, I renamed the file, recompiled, and ended up with similar
+problems with the SMARTS grammar. I then renamed "smarts.tab.cpp.h"
+to "smarts.tab.hpp" and recompiled. That gets me to completion.
+}}}

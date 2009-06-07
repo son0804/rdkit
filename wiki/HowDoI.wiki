@@ -1,0 +1,13 @@
+#summary A collection of short blurbs on how to do various useful things with the RDKit.
+#labels Tutorial
+
+=Working with molecules=
+
+==Working with individual molecules==
+
+  * [Creating2DPictures Creating 2D Pictures] of molecules
+  * [Generating3DCoordinates Generating 3D Coordinates] of molecules
+
+==Working with groups of molecules==
+
+  * [UsingTheDbCLI Using The Db CLI] to quickly create and search molecular databases.

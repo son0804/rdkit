@@ -1,0 +1,51 @@
+#summary Building the RDKit code with MinGW.
+#labels Development,notes
+
+= Downloads =
+  * msys
+  * mingw
+  * bison: http://gnuwin32.sourceforge.net/packages/bison.htm
+  * flex: http://gnuwin32.sourceforge.net/packages/flex.htm
+
+= Environment Variables =
+  * PATH : must include $RDBASE\bin
+  * BISON_SIMPLE : $BISON\share\bison\bison.simple
+  * BOOSTHOME, BOOST_BUILD_PATH : pointing to where the boost sources are installed
+
+= Example Environment =
+Here's a sample set of environment variables that I have tested. 
+
+=== Code installation details ===
+  * Python install : `n:\Python2.5`
+  * boost install : `n:\boost_1_37_0`
+  * RDKit location : `n:\RDKit_mingw`
+  * mingw location : `n:\mingw`
+  * msys location : `n:\msys`
+  * bison location : `n:\Program Files\GnuWin32`
+  * flex location : `n:\Program Files\GnuWin32`
+
+=== Environment variables ===
+{{{
+export BISON_SIMPLE="n:\\Progra~1\\GnuWin32\\share\\bison\\bison.simple"
+export BOOSTHOME="n:\\boost_1_37_0"
+export BOOST_BUILD_PATH="n:\\boost_1_37_0"
+export RDBASE="n:\\RDKit_mingw"
+export PYTHONHOME="n:/Python25"
+export PATH=".:/usr/local/bin:/mingw/bin:/bin:/n/Progra~1/GnuWin32/bin:/n/python25:/n/RDKit_mingw/bin"
+}}}
+(Note, that's only part of my PATH, but it's the relevant bit.)
+
+=== Process ===
+
+This may not be optimal, but it works.
+
+From inside the msys shell:
+  # `cd $BOOSTHOME/tools/jam/src`
+  # `./build.sh`
+  # `cp bin.ntx86/bjam.exe /usr/local/bin`
+  # `cp bin.ntx86/bjam.exe $BOOSTHOME`
+  # `cd $BOOSTHOME`
+  # `./configure --with-bjam=./bjam.exe --with-libraries=python,thread --prefix=n:/boost'
+  # `bjam --toolset=gcc --with-python --with-thread`
+  # `cd $RDBASE/Code`
+  # `bjam --toolset=gcc`

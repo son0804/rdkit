@@ -1,0 +1,11 @@
+#summary Building and running java code for those of us who know nothing about java.
+
+Using the SWIG example:
+{{{
+swig -java example.i
+gcc -c example_wrap.c -I/usr/include/java -I/usr/include/java/linux
+gcc -c example.c
+ld -G example_wrap.o example.o -o libexample.so
+/usr/lib/jvm/java-6-sun-1.6.0.03/bin/javac *.java
+/usr/lib/jvm/java-6-sun-1.6.0.03/bin/java main
+}}}

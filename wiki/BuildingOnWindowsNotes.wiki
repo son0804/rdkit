@@ -1,0 +1,28 @@
+#summary Notes from the process of getting the windows build working.
+
+= Process =
+== Environment Variables ==
+ * BOOSTHOME (careful with case here)
+ * BOOST_BUILD_PATH (careful with case here)
+ * RDBASE
+ * PYTHON_ROOT: wherever python is installed (e.g. /usr)
+ * PYTHON_VERSION: the first two digits of the python version (e.g. 2.5, not 2.5.1) 
+
+*NOTE:* PATH needs to include $RDKIT/bin. If you're using cygwin, be sure to use the /c form of the path (not c:/).
+
+
+= Problems =
+
+== Building libraries ==
+Default was originally to build dynamic libraries. Under windows this doesn't work because DLLs must have explicit exports (declspec crud) in the code. 
+
+    _Solution:_ Switch as much as possible to static linking. This doesn't work for RDBoost (see below).
+
+== Building python extensions ==
+ * The RDBoost project contains stuff that needs to be accessed from all RDKit Python modules. It links against boost.python in order to provide exception handling. If RDBoost is statically linked it causes problems with other modules because it gets a static copy of the boost.python stuff, which then conflicts with the dynamic copy the other modules get. At least I think that's what's going on.
+ * need to be very careful about static vs dynamic and the python libraries on windows. Having the <requirement> for the BPL in a Jamfile where a static library is built ends up screwing stuff up down the road.
+ * most of this static building needs to be limited to windows: on linux it just leads to problems with the Dict stuff (because of problems with to_any/from_any working across library boundaries).
+
+
+= Resources =
+ * [http://www.boost.org/libs/python/doc/building.html Boost.Python build instructions]

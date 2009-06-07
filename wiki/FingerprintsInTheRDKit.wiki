@@ -1,0 +1,23 @@
+#summary Overview of the fingerprints available in the RDKit
+
+Here's a summary table of the available Fingerprints. Descriptors are covered on  [DescriptorsInTheRDKit another page].
+
+If the fingerprint is written in C++ it is normally also accessible from Python. There's a sample code snippet at the bottom of the page showing how to generate fingerprints
+
+|| *Fingerprint type* || *Language* || *Notes* || *Python Function* || *C++ Header* ||
+|| Topological || C++ || a Daylight-like fingerprint based on hashing molecular subgraphs || `Chem.RDKitFingerprint` || `.../GraphMol/Fingerprints/Fingerprints.h` ||
+|| Atom pairs || C++ || _JCICS_ *25*:64-73 (1985) || `Chem.AtomPairs.Pairs.GetAtomPairFingerprint` || `.../GraphMol/Descriptors/AtomPairs.h` ||
+|| Topological Torsions || C++ || _JCICS_ *27*:82-5 (1987) || `Chem.AtomPairs.Pairs.GetTopologicalTorsionFingerprint` || `.../GraphMol/Descriptors/AtomPairs.h` ||
+|| MACCS Keys || Python || Using the 166 public keys implemented as SMARTS || `Chem.MACCSKeys.GenMACCSKeys` || N/A ||
+
+{{{
+from rdkit import Chem
+m = Chem.MolFromSmiles('c1ccccc1C(=O)O')
+
+rdkfp = Chem.RDKFingerprint(m)
+
+from rdkit.Chem.AtomPairs import Pairs,Torsions
+apfp = Pairs.GetAtomPairFingerprint(m)
+ttfp = Torsions.GetTopologicalTorsionFingerprint(m)
+
+}}}
