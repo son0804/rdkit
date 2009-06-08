@@ -1,0 +1,13 @@
+#summary Building with support for compressed MolSuppliers on windows
+#labels Notes,Development
+
+In order to use the new compressed MolSupplier classes on windows, you need to install zlib and libbz2:
+
+= Getting zlib and bzlib2 =
+Download the source distributions of zlib and bzip2:
+  * zlib: http://www.zlib.net/
+  * libbz2: http://www.bzip.org/
+Extract the files somewhere sensible; I put them in c:/boost
+
+= Building the boost libs =
+`/c/boost/boost_1_38_0 >bjam --with-iostreams --with-thread --with-python -sZLIB_SOURCE=c:/boost/zlib-1.2.3 -sBZIP2_SOURCE=c:/boost/bzip2-1.0.5 install`
