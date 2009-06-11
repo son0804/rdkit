@@ -1,0 +1,32 @@
+#summary Some benchmarking results
+#labels Notes,Development
+
+= Introduction =
+
+The goal here is to track the evolution of the performance of the RDKit over time.
+
+The test data and scripts will be in svn.
+
+= Details =
+
+  # Results1: construct 1000 molecules from smiles
+  # Results2: construct 1000 molecules from sdf
+  # Results3: construct 1823 fragment molecules from SMARTS (smiles really)
+  # Results4: 1000 x 100 HasSubstructMatch (100 from Results3)
+  # Results5: 1000 x 100 GetSubstructMatches (100 from Results3)
+  # Results6: construct 428 queries from RLewis_smarts.txt
+  # Results7: 1000 x 428 HasSubstructMatch
+  # Results8: 1000 x 428 GetSubstructMatches
+
+
+
+= Results =
+
+
+|| Date || Machine || Code Version || t1 || t2 || t3 || t4 || t5 || t6 || t7 || t8 ||
+|| 11-06-2009|| marten || Q12009_2 ||  3.2 || 4.0 || 0.2 || 13.2 || 13.6 || 0.0 || 40.8 || 41.2 ||
+|| 11-06-2009 || marten || svn ||  3.2 || 3.0 || 0.3 || 5.6 || 5.7 || 0.0 || 17.2 || 17.0 ||
+|| ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||
+
+== Machines ==
+ * marten: Dell Dimension 9100, Ubuntu 8.10
