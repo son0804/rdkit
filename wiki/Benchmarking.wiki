@@ -5,7 +5,7 @@
 
 The goal here is to track the evolution of the performance of the RDKit over time.
 
-The test data and scripts will be in svn.
+The test data and scripts are in $RDBASE/Regress.
 
 = Details =
 
