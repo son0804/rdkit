@@ -32,4 +32,4 @@ The test data and scripts will be in svn.
 || ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||
 
 == Machines ==
- * marten: Dell Dimension 9100, Ubuntu 8.10
+ * marten: Dell Dimension 9100 (2.8GHz Pentium D), Ubuntu 8.10
