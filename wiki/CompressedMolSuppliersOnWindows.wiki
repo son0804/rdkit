@@ -10,4 +10,16 @@ Download the source distributions of zlib and bzip2:
 Extract the files somewhere sensible; I put them in c:/boost
 
 = Building the boost libs =
-`/c/boost/boost_1_38_0 >bjam --with-iostreams --with-thread --with-python -sZLIB_SOURCE=c:/boost/zlib-1.2.3 -sBZIP2_SOURCE=c:/boost/bzip2-1.0.5 install`
+`/c/boost/boost_1_39_0 >bjam --with-iostreams --with-thread --with-python -sZLIB_SOURCE=c:/boost/zlib-1.2.3 -sBZIP2_SOURCE=c:/boost/bzip2-1.0.5 install`
+
+= Getting the regressions in FileParsers working =
+{{{
+~/RDKit_trunk/Code/GraphMol/FileParsers >bjam -sZLIB_SOURCE=c:/boost/zlib-1.2.3 -sBZIP2_SOURCE=c:/boost/bzip2-1.0.5
+LINK : fatal error LNK1104: cannot open file 'boost_zlib-vc80-mt-1_39.lib'
+...failed msvc.link bin\msvc-8.0express\release\threading-multi\testMolSupplier.exe...
+...skipped <ptestExecs>testMolSupplier.exe for lack of <pbin\msvc-8.0express\release\threading-multi>testMolSupplier.exe...
+...failed updating 1 target...
+...skipped 1 target...
+}}}
+
+adding `/boost/iostreams//boost_zlib` to the Jamfile clears this up, but the resulting executable doesn't work (runs without generating errors, but doesn't show any of the expected output).
