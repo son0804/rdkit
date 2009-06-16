@@ -23,3 +23,5 @@ LINK : fatal error LNK1104: cannot open file 'boost_zlib-vc80-mt-1_39.lib'
 }}}
 
 adding `/boost/iostreams//boost_zlib` to the Jamfile clears this up, but the resulting executable doesn't work (runs without generating errors, but doesn't show any of the expected output).
+
+One problem is DLLs that aren't being found. The iostreams setup doesn't copy its DLLs into the /c/boost/lib directory when the install target is built. Copying by hand gets to the point that only libbz2.dll isn't found. May be some helpful info here: http://lists.boost.org/Archives/boost/2007/03/118374.php
