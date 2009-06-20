@@ -1,6 +1,8 @@
 #summary Building with support for compressed MolSuppliers on windows
 #labels Notes,Development
 
+*Note* to this point the procedure below has not produced anything useable. The compressed SDMolSuppliers are not currently functional under windows.
+
 In order to use the new compressed MolSupplier classes on windows, you need to install zlib and libbz2:
 
 = Getting zlib and bzlib2 =
