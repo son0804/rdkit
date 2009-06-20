@@ -13,6 +13,8 @@ Extract the files somewhere sensible; I put them in c:/boost
 `/c/boost/boost_1_39_0 >bjam --with-iostreams --with-thread --with-python -sZLIB_SOURCE=c:/boost/zlib-1.2.3 -sBZIP2_SOURCE=c:/boost/bzip2-1.0.5 install`
 
 = Getting the regressions in FileParsers working =
+Add `<define>BOOST_ALL_DYN_LINK` to the testMolSupplier build options
+
 {{{
 ~/RDKit_trunk/Code/GraphMol/FileParsers >bjam -sZLIB_SOURCE=c:/boost/zlib-1.2.3 -sBZIP2_SOURCE=c:/boost/bzip2-1.0.5
 LINK : fatal error LNK1104: cannot open file 'boost_zlib-vc80-mt-1_39.lib'
