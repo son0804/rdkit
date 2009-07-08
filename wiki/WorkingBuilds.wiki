@@ -8,6 +8,9 @@ _To come_
 = Successful Build and Test =
 
 || *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
+|| 8/07/2009 || Q2_2009_1 || Ubuntu(9.04) || g++-4.3.3 || 1.39.0 || 2.6.2 || Greg Landrum || ||
+|| 27/06/2009 || Q2_2009_1 || Ubuntu(8.10) || g++-4.3.2 || 1.39.0 || 2.5 || Greg Landrum || ||
+|| 27/06/2009 || Q2_2009_1 || WinXP || VS8-express || 1.39.0 || 2.5 || Greg Landrum || ||
 || 27/04/2009 || svn || Ubuntu(8.10) || g++-4.3.2 || 1.38.0 || 2.6.2 || Greg Landrum || ||
 || 18/03/2009 || svn || WinXP || VC++7.1 || 1.38.0 || 2.5 || Greg Landrum || ||
 || 11/03/2009 || svn || WinXP || VS8-express || 1.38.0 || 2.5 || Greg Landrum || ||
