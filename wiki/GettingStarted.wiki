@@ -9,6 +9,8 @@
  # InstallingOnWindows
 
 = Building the software =
+You might want to first check the list of [WorkingBuilds working builds] first.
+
  # [BuildingOnLinux On linux]
  # [BuildingOnWindows On windows, using visual studio]
  # [BuildingWithMinGW On windows, using MinGW]
