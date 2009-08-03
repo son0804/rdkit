@@ -1,0 +1,16 @@
+#summary Getting a binary installation working on windows
+#labels Tutorial
+
+= Pre-requisites =
+
+= Extract archive =
+
+Put it somewhere without a space in the name, i.e. `c:/`
+
+The rest of this will assume that the installation is in `c:/RDKit_Q22009_1`
+
+
+= Environment variables =
+ * `RDBASE`: `c:/RDKit_Q22009_1`
+ * `PYTHONPATH`: `%RDBASE%` if there is already a PYTHONPATH, put `;%RDBASE` at the end.
+ * `PATH`: put `;%RDBASE%/bin`
