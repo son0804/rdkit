@@ -8,6 +8,7 @@ _To come_
 = Successful Build and Test =
 
 || *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
+|| 15/10/2009 || svn || CentOS 5.3 x64 || g++-4.1.2-44 || 1.40.0 || 2.5 || Adrian Schreyer || ||
 || 9/07/2009 || svn || RHEL(64bit)|| g++-3.4.6 || 1.39.0 || 2.5 || Greg Landrum || ||
 || 8/07/2009 || Q1_2009_2 || Ubuntu(9.04) 64bit|| g++-4.4 || 1.39.0 || 2.6.2 || Abhinav Chawade || ||
 || 8/07/2009 || Q2_2009_1 || Ubuntu(9.04) || g++-4.3.3 || 1.39.0 || 2.6.2 || Greg Landrum || ||
