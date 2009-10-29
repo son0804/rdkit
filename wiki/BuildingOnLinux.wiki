@@ -1,4 +1,4 @@
-#summary New Linux build instructions
+#summary Linux build instructions
 
 The instructions below are for source distributions from Q1 2009 on. 
 = Building on Linux =
