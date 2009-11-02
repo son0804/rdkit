@@ -7,7 +7,6 @@ The instructions below are for the svn version of the code starting Nov. 2009.
 
 == Getting Ready ==
  * Required packages:
-   * Blas and lapack. This is also probably just a matter of finding the appropriate package for your linux.
    * flex and bison. These are frequently already installed if you have the various pieces of the development environment installed
    * The following are required if you are planning on using the Python wrappers:
       * The python headers. This probably means that you need to install the python-dev package (or whatever it's called) for your linux distribution.
@@ -31,8 +30,6 @@ The instructions below are for the svn version of the code starting Nov. 2009.
     * RDBASE: the root directory of the RDKit distribution (e.g. ~/RDKit)
     * LD_LIBRARY_PATH: make sure it includes $RDBASE/bin and wherever the boost shared libraries were installed
     * The following are required if you are planning on using the Python wrappers:
-      * PYTHON_ROOT: wherever python is installed (e.g. /usr)
-      * PYTHON_VERSION: the first two digits of the python version (e.g. 2.5, *not* 2.5.1)
       * PYTHONPATH: make sure it includes $RDBASE
   * Building: 
     * cd to $RDBASE
