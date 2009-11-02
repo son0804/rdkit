@@ -36,8 +36,7 @@ The instructions below are for the svn version of the code starting Nov. 2009.
     * `mkdir build`
     * `cd build`
     * `cmake ..`
-    * `make`
-  this builds all libraries, regression tests, and wrappers (by default). This command will generate a lot of text (mostly compiler warnings), but it should not generate any errors. At the end you should *not* see any messages about failed or skipped targets. 
+    * `make` : this builds all libraries, regression tests, and wrappers (by default). This command will generate a lot of text (mostly compiler warnings), but it should not generate any errors. At the end you should *not* see any messages about failed or skipped targets. 
     * `make install`
 
 == Testing the Build (optional, but recommended) ==
