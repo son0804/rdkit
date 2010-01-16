@@ -7,6 +7,7 @@ The instructions below are for the svn version of the code starting Nov. 2009.
 
 == Getting Ready ==
  * Required packages:
+   * cmake. You need version 2.6 (or more recent). http://www.cmake.org if you need to build it.
    * flex and bison. These are frequently already installed if you have the various pieces of the development environment installed
    * The following are required if you are planning on using the Python wrappers:
       * The python headers. This probably means that you need to install the python-dev package (or whatever it's called) for your linux distribution.
@@ -14,6 +15,7 @@ The instructions below are for the svn version of the code starting Nov. 2009.
       * You need to have numpy (http://www.scipy.org/NumPy) installed.
 
 == Installing Boost ==
+  * *NOTE*: if your linux distribution has a boost-devel package including the python and threading libraries, you may be able to use that and save yourself the steps below. I haven't tested this.
   * download the boost source distribution from [http://www.boost.org the boost web site]
   * extract the source to a _non-temporary_ location on your machine, you're going to need it to build the RDKit as well as boost. (e.g. `/usr/local/src/boost_1_40_0`)
   * The following are required if you are planning on using the Python wrappers:
