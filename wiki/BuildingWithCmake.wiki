@@ -7,7 +7,7 @@ The instructions below are for the svn version of the code starting Nov. 2009.
 
 == Getting Ready ==
  * Required packages:
-   * cmake. You need version 2.6 (or more recent). http://www.cmake.org if you need to build it.
+   * cmake. You need version 2.6 (or more recent). http://www.cmake.org if your linux distribution doesn't have an appropriate package.
    * flex and bison. These are frequently already installed if you have the various pieces of the development environment installed
    * The following are required if you are planning on using the Python wrappers:
       * The python headers. This probably means that you need to install the python-dev package (or whatever it's called) for your linux distribution.
