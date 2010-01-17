@@ -7,7 +7,7 @@ The instructions below are for the svn version of the code starting Nov. 2009.
 
 == Getting Ready ==
  * Required packages:
-   * cmake. You need version 2.6 (or more recent). http://www.cmake.org if your linux distribution doesn't have an appropriate package.
+   * cmake. You need version 2.6 (or more recent). http://www.cmake.org if your linux distribution doesn't have an appropriate package. _Update: It seems that v2.8 is a better bet than v2.6. It might be worth compiling your own copy of v2.8 even if v2.6 is already installed._
    * flex and bison. These are frequently already installed if you have the various pieces of the development environment installed
    * The following are required if you are planning on using the Python wrappers:
       * The python headers. This probably means that you need to install the python-dev package (or whatever it's called) for your linux distribution.
@@ -15,7 +15,7 @@ The instructions below are for the svn version of the code starting Nov. 2009.
       * You need to have numpy (http://www.scipy.org/NumPy) installed.
 
 == Installing Boost ==
-  * *NOTE*: if your linux distribution has a boost-devel package including the python and threading libraries, you may be able to use that and save yourself the steps below. I haven't tested this.
+  * *NOTE*: if your linux distribution has a boost-devel package including the python and threading libraries, you may be able to use that and save yourself the steps below. I haven't tested this. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults._
   * download the boost source distribution from [http://www.boost.org the boost web site]
   * extract the source to a _non-temporary_ location on your machine, you're going to need it to build the RDKit as well as boost. (e.g. `/usr/local/src/boost_1_40_0`)
   * The following are required if you are planning on using the Python wrappers:
@@ -33,6 +33,7 @@ The instructions below are for the svn version of the code starting Nov. 2009.
     * LD_LIBRARY_PATH: make sure it includes $RDBASE/bin and wherever the boost shared libraries were installed
     * The following are required if you are planning on using the Python wrappers:
       * PYTHONPATH: make sure it includes $RDBASE
+    * if you built your own version of boost and cmake complains about not being able to find it, define the environment variable BOOST_ROOT to point to the directory containing the boost source.
   * Building: 
     * cd to $RDBASE
     * `mkdir build`
