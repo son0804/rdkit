@@ -1,9 +1,9 @@
-#summary New Linux build instructions
+#summary New Linux (and Mac) build instructions
 #labels Tutorial
 
 The instructions below are for the svn version of the code starting Nov. 2009.
 
-= Building on Linux =
+= Building on Linux or the Mac =
 
 == Getting Ready ==
  * Required packages:
@@ -13,6 +13,8 @@ The instructions below are for the svn version of the code starting Nov. 2009.
       * The python headers. This probably means that you need to install the python-dev package (or whatever it's called) for your linux distribution.
       * sqlite3. You also need the shared libraries. This may require that you install a sqlite3-dev package.
       * You need to have numpy (http://www.scipy.org/NumPy) installed.
+
+*Mac Note* : I have tested this under Leopard using the standard MacOS development tools and python 2.5 distribution.
 
 == Installing Boost ==
   * *NOTE*: if your linux distribution has a boost-devel package including the python and threading libraries, you may be able to use that and save yourself the steps below. I haven't tested this. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults._
@@ -38,7 +40,7 @@ The instructions below are for the svn version of the code starting Nov. 2009.
     * cd to $RDBASE
     * `mkdir build`
     * `cd build`
-    * `cmake ..`
+    * `cmake ..` : See the section below on configuring the build if you need to specify a non-default version of python
     * `make` : this builds all libraries, regression tests, and wrappers (by default).
     * `make install`
 
@@ -47,3 +49,16 @@ The instructions below are for the svn version of the code starting Nov. 2009.
     * `sqlite3 $RDBASE/Data/RDTests.sqlt < $RDBASE/rdkit/Dbase/test_data/RDTests.sqlite`
     * `sqlite3 $RDBASE/Data/RDData.sqlt < $RDBASE/rdkit/Dbase/test_data/RDData.sqlite`
   * cd to $RDBASE/build and do `ctest`
+  * you're done!
+
+== Advanced : Configuring the Build ==
+
+=== Specifying an alternate Python installation ===
+
+You need to tell cmake where to find the python library it should link against and the python header files.
+
+Here's a sample command line:
+
+{{{cmake -D PYTHON_LIBRARIES=/usr/lib/python2.5/config/libpython2.5.a -D PYTHON_INCLUDE_DIRS=/usr/include/python2.5/ -D PYTHON_EXECUTABLE=/usr/bin/python ..}}}
+
+The `PYTHON_EXECUTABLE` part is optional if the correct python is the first version in your PATH.
