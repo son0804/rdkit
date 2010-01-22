@@ -59,6 +59,6 @@ You need to tell cmake where to find the python library it should link against a
 
 Here's a sample command line:
 
-{{{cmake -D PYTHON_LIBRARIES=/usr/lib/python2.5/config/libpython2.5.a -D PYTHON_INCLUDE_DIR=/usr/include/python2.5/ -D PYTHON_EXECUTABLE=/usr/bin/python ..}}}
+{{{cmake -D PYTHON_LIBRARY=/usr/lib/python2.5/config/libpython2.5.a -D PYTHON_INCLUDE_DIR=/usr/include/python2.5/ -D PYTHON_EXECUTABLE=/usr/bin/python ..}}}
 
 The `PYTHON_EXECUTABLE` part is optional if the correct python is the first version in your PATH.
