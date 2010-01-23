@@ -17,14 +17,14 @@ The instructions below are for the svn version of the code starting Nov. 2009.
 *Mac Note* : I have tested this under Leopard using the standard MacOS development tools and python 2.5 distribution.
 
 == Installing Boost ==
-  * *NOTE*: if your linux distribution has a boost-devel package including the python and threading libraries, you may be able to use that and save yourself the steps below. I haven't tested this. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults._
+  * *NOTE*: if your linux distribution has a boost-devel package including the python libraries, you may be able to use that and save yourself the steps below. I haven't tested this. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults._
   * download the boost source distribution from [http://www.boost.org the boost web site]
-  * extract the source to a _non-temporary_ location on your machine, you're going to need it to build the RDKit as well as boost. (e.g. `/usr/local/src/boost_1_40_0`)
+  * extract the source somewhere on your machine, you're going to need it to build the RDKit as well as boost. (e.g. `/usr/local/src/boost_1_40_0`)
   * The following are required if you are planning on using the Python wrappers:
     * build and install the required boost shared libraries: 
      * `cd $BOOST`
-     * Building on 32 bit systems: `bjam  --with-thread --with-python release install`
-     * Building on 64 bit systems: `bjam  --with-thread --with-python address-model=64 release install`
+     * Building on 32 bit systems: `bjam --with-python release install`
+     * Building on 64 bit systems: `bjam --with-python address-model=64 release install`
 
     If you have any problems with this step, check the boost [http://www.boost.org/more/getting_started/unix-variants.html installation instructions].
 
@@ -62,3 +62,9 @@ Here's a sample command line:
 {{{cmake -D PYTHON_LIBRARY=/usr/lib/python2.5/config/libpython2.5.a -D PYTHON_INCLUDE_DIR=/usr/include/python2.5/ -D PYTHON_EXECUTABLE=/usr/bin/python ..}}}
 
 The `PYTHON_EXECUTABLE` part is optional if the correct python is the first version in your PATH.
+
+=== Disabling the Python wrappers ==
+
+You can completely disable building of the python wrappers by setting the configuration variable RDK_BUILD_PYTHON_WRAPPERS to nil:
+
+{{{cmake -D RDK_BUILD_PYTHON_WRAPPERS= ..}}
