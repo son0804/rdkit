@@ -67,4 +67,4 @@ The `PYTHON_EXECUTABLE` part is optional if the correct python is the first vers
 
 You can completely disable building of the python wrappers by setting the configuration variable RDK_BUILD_PYTHON_WRAPPERS to nil:
 
-{{{cmake -D RDK_BUILD_PYTHON_WRAPPERS= ..}}
+{{{cmake -D RDK_BUILD_PYTHON_WRAPPERS= ..}}}
