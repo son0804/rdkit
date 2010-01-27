@@ -1,0 +1,6 @@
+#summary Obsolete
+#labels Deprecated
+
+For source releases prior to Q4 2009, look at BuildingOnLinux_Old
+
+For newer source releases look at BuildingWithCmake
