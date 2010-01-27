@@ -1,4 +1,5 @@
 #summary Linux build instructions
+#labels Development,Notes
 
 The instructions below are for source distributions from Q1 2009 on. 
 = Building on Linux =
