@@ -1,5 +1,5 @@
 #summary New windows build instructions
-#labels Tutorial
+#labels Development,Notes
 
 The instructions below are for versions of the code starting Q4 2009.
 
