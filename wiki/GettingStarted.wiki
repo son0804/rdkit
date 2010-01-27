@@ -11,7 +11,7 @@
 = Building the software =
 You might want to first check the list of [WorkingBuilds working builds] first.
 
- # [BuildingOnLinux On linux]
+ # [BuildingWithCmake On linux or MacOS/X]
  # [BuildingOnWindows On windows, using visual studio]
  # [BuildingWithMinGW On windows, using MinGW]
- # [BuildingOnMacOs On MacOS/X]
+ 
