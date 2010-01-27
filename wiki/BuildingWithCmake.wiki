@@ -1,7 +1,7 @@
 #summary New Linux (and Mac) build instructions
-#labels Tutorial
+#labels Development,Notes
 
-The instructions below are for the svn version of the code starting Nov. 2009.
+The instructions below are for the Q42009 release and subsequent releases.
 
 = Building on Linux or the Mac =
 
