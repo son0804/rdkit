@@ -14,35 +14,29 @@ For source releases prior to Q4 2009, look at BuildingOnWindows_Old
     * extract the tar ball to some temporary location.
   * a subversion client : _This is only necessary if you are planning on building development versions of the RDKit_. A command line client for subversion can be installed as part of the cygwin installation, or a very nice graphical client that integrates well with windows explorer can be downloaded from the [http://tortoisesvn.tigris.org/ Tortoise SVN home page].
 
+== Installing Boost ==
+
+
 == Setup and Preparation ==
 This section assumes that python is installed in c:\Python25, that the boost libraries have been extracted to c:\boost\boost_1_37_0, and that you will build the RDKit from a directory named c:\RDKit. If any of these conditions is not true, just change the corresponding paths. 
 
  Notes : 
     # If you install things in paths that have spaces in their names, be sure to use quotes properly in your environment variable definitions.
 
-  * Make sure that boost builds properly by going to directory c:\boost\boost_1_37_0 and executing the command: `.\bjam.exe --toolset=msvc --with-thread --with-python release install`. This may take a bit, but it should finish without errors. This provides a good test that at least the compiler and bjam are installed properly.
   * If you are planning on using a development version of the RDKit: get a copy of the current RDKit source using subversion. If you're using the command-line client the command is: `svn co http://rdkit.svn.sourceforge.net/svnroot/rdkit/trunk c:\RDKit` 
   * If you are planning on using a released version of the RDKit : get a copy of the most recent release and extract it into the directory c:\RDKit 
   * Set the required environment variables (you can set this in cygwin or in windows. If you set them in windows, be sure to restart your cygwin window):
     * RDBASE = c:\RDKit
-    * BOOSTHOME = c:\boost\boost_1_37_0
-    * BOOST_BUILD_PATH = c:\boost\boost_1_37_0
-    * If Python is not installed in the standard location, the PYTHONHOME environment variable should point to the root of your Python installation.
+    * BOOST_ROOT = c:\boost\boost_1_37_0
   * Make sure that the directory c:\Python25 is in your PATH
   * Make sure that the directory c:\RDKit\bin is in your PATH
   * Make sure that the directory c:\boost\lib is in your PATH
   * Make sure that the directory c:\RDKit is in your PYTHONPATH
 
-== Installing Boost ==
-
-
 == Building the Code ==
   * follow the Installing Boost instructions above.
   * environment variables:
     * RDBASE: the root directory of the RDKit distribution (e.g. ~/RDKit)
-    * PATH: make sure it includes $RDBASE/bin and wherever the boost shared libraries were installed
-    * The following are required if you are planning on using the Python wrappers:
-      * PYTHONPATH: make sure it includes $RDBASE
     * if you built your own version of boost and cmake complains about not being able to find it, define the environment variable BOOST_ROOT to point to the directory containing the boost source.
   * Building: 
 
