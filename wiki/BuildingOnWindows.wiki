@@ -11,7 +11,6 @@ For source releases prior to Q4 2009, look at BuildingOnWindows_Old
   * python : [http://www.python.org/download python] should be installed
   * numpy : the [http://sourceforge.net/project/showfiles.php?group_id=1369&package_id=175103 current version of numpy] should be installed. It's fine to use the binary installer. 
   * boost : download a copy of the current versions of the [http://www.boost.org/users/download/ boost source distribution and boost-Jam]. Both are available from the same link, be sure to get the `.ntx86.zip` file for boost-Jam.  Extract the source distribution (to, for example, c:\boost\boost_1_37_0) and copy the bjam.exe executable from the boost jam zip file to the  same directory.
-    * extract the tar ball to some temporary location.
   * a subversion client : _This is only necessary if you are planning on building development versions of the RDKit_. A command line client for subversion can be installed as part of the cygwin installation, or a very nice graphical client that integrates well with windows explorer can be downloaded from the [http://tortoisesvn.tigris.org/ Tortoise SVN home page].
 
 == Setup and Preparation ==
