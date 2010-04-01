@@ -60,7 +60,7 @@ You need to tell cmake where to find the boost libraries and header files:
 
 If you have put boost in /opt/local, the cmake invocation would look like:
 
-{{{cmake -DBOOST_ROOT=/opt/local}}}
+{{{cmake -DBOOST_ROOT=/opt/local ..}}}
 
 === Specifying an alternate Python installation ===
 
