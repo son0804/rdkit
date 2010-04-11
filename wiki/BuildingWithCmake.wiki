@@ -17,15 +17,15 @@ The instructions below are for the Q42009 release and subsequent releases.
 *Mac Note* : I have tested this under Leopard using the standard MacOS development tools and python 2.5 distribution.
 
 == Installing Boost ==
-  * *NOTE*: if your linux distribution has a boost-devel package including the python libraries, you may be able to use that and save yourself the steps below. I haven't tested this. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults._
+  * *NOTE*: if your linux distribution has a boost-devel package including the python and regex libraries, you may be able to use that and save yourself the steps below. I haven't tested this. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults._
   * download the boost source distribution from [http://www.boost.org the boost web site]
   * extract the source somewhere on your machine, you're going to need it to build the RDKit as well as boost. (e.g. `/usr/local/src/boost_1_40_0`)
   * The following are required if you are planning on using the Python wrappers:
     * build and install the required boost shared libraries: 
      * `cd $BOOST`
-     * `./bootstrap.sh --with-libraries=python`
-     * Building on 32 bit systems: `./bjam --with-python release install`
-     * Building on 64 bit systems: `./bjam --with-python address-model=64 release install`
+     * `./bootstrap.sh --with-libraries=python,regex`
+     * Building on 32 bit systems: `./bjam install`
+     * Building on 64 bit systems: `./bjam address-model=64 install`
 
     If you have any problems with this step, check the boost [http://www.boost.org/more/getting_started/unix-variants.html installation instructions].
 
