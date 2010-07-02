@@ -7,6 +7,6 @@ info coming soon
 = Details =
 
   * BuildingTheCartridge
-  * CreatingADatabase
+  * DatabaseCreation
   * ExampleSimilarityQueries
   * ExampleSubstructureQueries
