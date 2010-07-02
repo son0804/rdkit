@@ -86,8 +86,11 @@ chembl=# create index molidx on mols using gist(m);
 
 This last step can take a while is only required if you plan to do substructure searches.
 
-= Creating some fingerprints =
+= Creating some fingerprints and the fingerprint indices =
 
 {{{
 chembl=# select regno,atompairbv_fp(m) as pairbv,torsionbv_fp(m) as torsionbv,morganbv_fp(m,2) as morganbv into fps from mols;
+chembl=# create index apbvidx on fps using gist(pairbv);
+chembl=# create index torsbvidx on fps using gist(torsionbv);
+chembl=# create index morganbvidx on fps using gist(morganbv);
 }}}
