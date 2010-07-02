@@ -33,10 +33,32 @@ for i,l in enumerate(inf.readlines()):
         fail.flush()
 }}}
 
+Get the set of unique molecules and the data table:
+{{{
+inf = file('chembl.proc.txt','r')
+outf = file('chembl.reg.txt','w+')
+dataf = file('chembl.data.txt','w+')
+
+seen=set()
+
+for i,l in enumerate(inf.readlines()):
+     if i==0:
+         continue
+     else:
+         l = l.split('\t')
+         smi,regno = l[:2]
+         if regno not in seen:
+             smi = smi.replace('=N#N','=[N+]=[N-]').replace('N#N=','[N-]=[N+]=')
+             outf.write('%s\t%s\n'%(regno,smi))
+             seen.add(regno)
+         dataf.write('\t'.join(l[1:]))
+}}}
+
 Then, from the shell, make sure backslashes are quoted:
 
 {{{
-~/RDKit/Data/Chembl > sed 's|\\|\\\\|g' chembl.proc.txt > chembl.quoted.txt
+~/RDKit/Data/Chembl > sed 's|\\|\\\\|g' chembl.reg.txt > chembl.reg.q.txt
+~/RDKit/Data/Chembl > sed 's|\\|\\\\|g' chembl.data.txt > chembl.data.q.txt
 }}}
 
 = Creating the database =
@@ -47,3 +69,14 @@ Then, from the shell, make sure backslashes are quoted:
 }}}
 
 = Loading the molecules =
+
+{{{
+~/RDKit/Data/Chembl > psql chembl
+psql (8.4.1)
+Type "help" for help.
+
+chembl=# create table mols (regno integer primary key,m mol);
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "mols_pkey" for table "mols"
+CREATE TABLE
+chembl=# \timing
+Timing is on.
