@@ -1,5 +1,7 @@
 #summary How to build the PostgreSQL cartridge
 
+_More information coming soon, here's info from the README_
+
 Compatibility: PostgreSQL 8.4+
 
 Installation:
