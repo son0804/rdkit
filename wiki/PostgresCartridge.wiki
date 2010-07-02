@@ -6,7 +6,7 @@ info coming soon
 
 = Details =
 
-* BuildingTheCartridge
-* CreatingADatabase
-* ExampleSimilarityQueries
-* ExampleSubstructureQueries
+  * BuildingTheCartridge
+  * CreatingADatabase
+  * ExampleSimilarityQueries
+  * ExampleSubstructureQueries
