@@ -1,5 +1,7 @@
 #summary Creating a chemical database
 
+*_work in progress_*
+
 = Introduction =
 
 In this example I show how to load a database from a pre-processed block of compounds from ChemBL.
