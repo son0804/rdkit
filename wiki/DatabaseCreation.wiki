@@ -84,4 +84,10 @@ chembl=# copy mols from '/home/glandrum/RDKit/Data/Chembl/chembl.reg.q.txt' deli
 chembl=# create index molidx on mols using gist(m);
 }}}
 
-This last step can be quite slow.
+This last step can take a while is only required if you plan to do substructure searches.
+
+= Creating some fingerprints =
+
+{{{
+chembl=# select regno,atompairbv_fp(m) as pairbv,torsionbv_fp(m) as torsionbv,morganbv_fp(m,2) as morganbv into fps from mols;
+}}}
