@@ -1,0 +1,49 @@
+#summary Creating a chemical database
+
+= Introduction =
+
+In this example I show how to load a database from a pre-processed block of compounds from ChemBL.
+
+
+= Preprocessing the input =
+
+It's important to make sure all the molecules can be processed by the RDKit:
+{{{
+from rdkit import Chem
+
+inf = file('chembl.extract.txt','r')
+ok = file('chembl.proc.txt','w+')
+fail = file('chembl.fail.txt','w+')
+
+for i,l in enumerate(inf.readlines()):
+     if i==0:
+          ok.write(l)
+          fail.write(l)
+     else:
+          smi = l.split('\t')[0].replace('=N#N','=[N+]=[N-]').replace('N#N=','[N-]=[N+]=')
+          if len(smi)>300: continue    # <- this test makes sure we don't load anything huge.
+          m = Chem.MolFromSmiles(smi)
+          if not m:
+               fail.write(l)
+          else:
+               ok.write(l)
+     if not i%1000: 
+        print "done: %d"%i
+        ok.flush()
+        fail.flush()
+}}}
+
+Then, from the shell, make sure backslashes are quoted:
+
+{{{
+~/RDKit/Data/Chembl > sed 's|\\|\\\\|g' chembl.proc.txt > chembl.quoted.txt
+}}}
+
+= Creating the database =
+
+{{{
+~/RDKit/Data/Chembl > createdb chembl
+~/RDKit/Data/Chembl > psql chembl < /usr/local/pgsql/share/contrib/rdkit.sql
+}}}
+
+= Loading the molecules =
