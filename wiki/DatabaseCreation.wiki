@@ -81,3 +81,5 @@ CREATE TABLE
 chembl=# copy mols from '/home/glandrum/RDKit/Data/Chembl/chembl.reg.q.txt' delimiter E'\t';
 chembl=# create index molidx on mols using gist(m);
 }}}
+
+This last step can be quite slow.
