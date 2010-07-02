@@ -84,7 +84,7 @@ chembl=# copy mols from '/home/glandrum/RDKit/Data/Chembl/chembl.reg.q.txt' deli
 chembl=# create index molidx on mols using gist(m);
 }}}
 
-This last step can take a while is only required if you plan to do substructure searches.
+This last step can take a long time and is only required if you plan to do substructure searches.
 
 = Creating some fingerprints and the fingerprint indices =
 
