@@ -1,22 +1,31 @@
 #summary How to build the PostgreSQL cartridge
 
-_More information coming soon, here's info from the README_
+_The contents of this page are preliminary. If you have questions or suggestions, please leave a comment or send something to the mailing list._
+
+= Requirements =
 
 Compatibility: PostgreSQL 8.4+
 
-Installation:
+You need a source distribution of PostgreSQL to be able to build the cartridge.
 
- Module assumes that the RDKit is installed in $RDBASE
- (check Makefile).
+= Compilation and Testing = 
 
- untar archive in postgresql contrib directory
+The Makefile assumes that the RDKit is installed in $RDBASE. You will need $RDBASE/bin in your $LD_LIBRARY_PATH
+
+Copy the cartridge directory ($RDBASE/Code/PgSQL/rdkit) to the postgresql contrib directory
  
+{{{
  cd rdkit
- 
  make && make install && make installcheck 
+}}}
 
- Install rdkit into database DB: 
-   psql DB < rdkit.sql
+The last step will take a few minutes.
 
- Uninstall rdkit from database DB:
-   psql DB < uninstall_rdkit.sql
+
+= Adding the cartridge to a database =
+
+Install rdkit cartridge into the database DB: 
+   `psql DB < rdkit.sql`
+
+Uninstall rdkit from database DB:
+   `psql DB < uninstall_rdkit.sql`
