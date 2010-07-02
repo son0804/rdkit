@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary How to build the PostgreSQL cartridge
 
 Compatibility: PostgreSQL 8.4+
 
