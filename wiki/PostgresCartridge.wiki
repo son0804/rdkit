@@ -1,0 +1,11 @@
+#summary A database cartridge for similarity searching.
+
+= Introduction =
+
+info coming soon
+
+= Details =
+
+  * BuildingTheCartridge
+  * ExampleSimilarityQueries
+  * ExampleSubstructureQueries
