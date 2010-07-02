@@ -78,5 +78,6 @@ Type "help" for help.
 chembl=# create table mols (regno integer primary key,m mol);
 NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "mols_pkey" for table "mols"
 CREATE TABLE
-chembl=# \timing
-Timing is on.
+chembl=# copy mols from '/home/glandrum/RDKit/Data/Chembl/chembl.reg.q.txt' delimiter E'\t';
+chembl=# create index molidx on mols using gist(m);
+}}}
