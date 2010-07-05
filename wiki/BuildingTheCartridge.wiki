@@ -8,6 +8,9 @@ Compatibility: PostgreSQL 8.4+
 
 You need a source distribution of PostgreSQL to be able to build the cartridge.
 
+Until the cartridge code is included in an RDKit release (Q3 2010), you also need to build the RDKit from subversion; earlier releases will not work.
+
+
 = Compilation and Testing = 
 
 The Makefile assumes that the RDKit is installed in $RDBASE. You will need $RDBASE/bin in your $LD_LIBRARY_PATH
