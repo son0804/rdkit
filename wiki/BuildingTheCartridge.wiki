@@ -6,10 +6,9 @@ _The contents of this page are preliminary. If you have questions or suggestions
 
 Compatibility: PostgreSQL 8.4+
 
-You need a source distribution of PostgreSQL to be able to build the cartridge.
+At the moment the cartridge Makefiles need to be located in the PostgreSQL source tree, so uou need a source distribution of PostgreSQL to be able to build the cartridge. This means that using your linux distributions package manager to install PostgreSQL probably will not work. 
 
 Until the cartridge code is included in an RDKit release (Q3 2010), you also need to build the RDKit from subversion; earlier releases will not work.
-
 
 = Compilation and Testing = 
 
