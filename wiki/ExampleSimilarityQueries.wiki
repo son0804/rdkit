@@ -1,0 +1,72 @@
+#summary Some example queries for doing similarity searching.
+
+= Introduction =
+
+These queries are using the database created following the instructions on the DatabaseCreation page.
+
+
+= Similarity search using Morgan fingerprints =
+
+Tanimoto similarity using the current similarity cutoff:
+{{{
+chembl=# select count(*) from fps where morganbv_fp('N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1',2) % morganbv;
+ count 
+-------
+     6
+(1 row)
+}}}
+The `%` operator calculates the Tanimoto similarity between two fingerprints. You can calculate the Dice similarity using the `#` operator:
+{{{
+chembl=# select count(*) from fps where morganbv_fp('N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1',2) # morganbv;
+ count 
+-------
+    65
+(1 row)
+}}}
+
+Including the similarity values as well:
+{{{
+chembl=# select regno,tanimoto_sml(morganbv_fp('N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1',2), morganbv) sml from fps
+chembl-# where morganbv_fp('N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1',2) % morganbv order by sml desc;
+ regno  |        sml        
+--------+-------------------
+ 359520 |                 1
+ 359882 | 0.902777777777778
+ 358683 | 0.597560975609756
+ 358280 | 0.511363636363636
+ 358281 |               0.5
+ 358763 |               0.5
+(6 rows)
+}}}
+Including SMILES:
+{{{
+chembl=# select regno,tanimoto_sml(morganbv_fp('N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1',2), morganbv) sml,m from fps
+chembl-# join mols using (regno) where 
+chembl-# morganbv_fp('N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1',2) % morganbv order by sml desc;
+ regno  |        sml        |                                     m                                      
+--------+-------------------+----------------------------------------------------------------------------
+ 359520 |                 1 | N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1
+ 359882 | 0.902777777777778 | N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(F)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1
+ 358683 | 0.597560975609756 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C3C2CCN(CC3CC3)CC2)c1
+ 358280 | 0.511363636363636 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C3C2CCN(Cc3ccccc3)CC2)c1
+ 358281 |               0.5 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C3C2CCN(CCCCCO)CC2)c1
+ 358763 |               0.5 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C3C2CCNCC2)c1
+(6 rows)
+}}}
+
+To retrieve more values change the similarity threshold:
+{{{
+chembl=# show rdkit.tanimoto_threshold;
+ rdkit.tanimoto_threshold 
+--------------------------
+ 0.5
+(1 row)
+
+chembl=# set rdkit.tanimoto_threshold=0.4;
+SET
+chembl=# select count(*) from fps where morganbv_fp('N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1',2) % morganbv;
+ count 
+-------
+    28
+(1 row)
+}}}
