@@ -6,7 +6,7 @@ _The contents of this page are preliminary. If you have questions or suggestions
 
 Compatibility: PostgreSQL 8.4+
 
-At the moment the cartridge Makefiles need to be located in the PostgreSQL source tree, so uou need a source distribution of PostgreSQL to be able to build the cartridge. This means that using your linux distributions package manager to install PostgreSQL probably will not work. 
+It should be possible to build the cartridge using either a version of PostgreSQL built from source or a package from your linux distribution (be sure to include the -devel package).
 
 Until the cartridge code is included in an RDKit release (Q3 2010), you also need to build the RDKit from subversion; earlier releases will not work.
 
@@ -14,20 +14,25 @@ Until the cartridge code is included in an RDKit release (Q3 2010), you also nee
 
 The Makefile assumes that the RDKit is installed in $RDBASE. You will need $RDBASE/bin in your $LD_LIBRARY_PATH
 
-Copy the cartridge directory ($RDBASE/Code/PgSQL/rdkit) to the postgresql contrib directory
+Go to the cartridge directory: 
  
 {{{
- cd rdkit
+ cd $RDBASE/Code/PgSQL/rdkit
  make && make install && make installcheck 
 }}}
 
-The last step will take a few minutes.
+The last step will take a few minutes. The last step will probably fail on debian-based linux distributions such as Ubuntu because of a [http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=554166 bug in their postgresql packages].
 
 
 = Adding the cartridge to a database =
 
 Install rdkit cartridge into the database DB: 
-   `psql DB < rdkit.sql`
+   `psql DB < $RDBASE/Code/PgSQL/rdkit.sql`
+or:
+   `psql DB < /usr/share/postgresql/8.4/contrib/rdkit.sql`
+the actual path in the second form depends on where postgresql is installed.
 
-Uninstall rdkit from database DB:
-   `psql DB < uninstall_rdkit.sql`
+Uninstall rdkit cartridge from database DB:
+   `psql DB < $RDBASE/Code/PgSQL/uninstall_rdkit.sql`
+or:
+   `psql DB < /usr/share/postgresql/8.4/contrib/uninstall_rdkit.sql`
