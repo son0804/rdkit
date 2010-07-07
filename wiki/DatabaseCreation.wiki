@@ -88,6 +88,25 @@ chembl=# create index molidx on mols using gist(m);
 
 This last step can take a long time and is only required if you plan to do substructure searches.
 
+Once the molecules are loaded you can take a look at them:
+
+{{{
+chembl=# select regno,m from mols limit 10;
+ regno  |                                      m                                      
+--------+-----------------------------------------------------------------------------
+ 358139 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C32CCN(CC3CC3)CC2)c1
+ 358280 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C3C2CCN(Cc3ccccc3)CC2)c1
+ 358600 | N#Cc1ccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C3C2CCN(C3CCCC3)CC2)cc1
+ 358268 | O=Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C3C2CCN(C3CCCC3)CC2)c1
+ 358597 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2ccc(F)c(C(F)(F)F)c2)C32CCN(CC3CC3)CC2)c1
+ 358396 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C32CCN(C3CCSC3)CC2)c1
+ 359520 | N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2CCN(CC3CC3)CC2)c1
+ 358757 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2ccc(Cl)c(Cl)c2)C32CCN(CC3CC3)CC2)c1
+ 358281 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cc(Cl)cc(Cl)c2)C3C2CCN(CCCCCO)CC2)c1
+ 374616 | CCCCNC(C1N(C(C(N)C(C)C)=O)CCC1)=O
+(10 rows)
+}}}
+
 = Creating some fingerprints and the fingerprint indices =
 
 {{{
