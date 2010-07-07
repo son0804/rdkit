@@ -67,8 +67,9 @@ Then, from the shell, make sure backslashes are quoted:
 
 {{{
 ~/RDKit/Data/Chembl > createdb chembl
-~/RDKit/Data/Chembl > psql chembl < /usr/local/pgsql/share/contrib/rdkit.sql
+~/RDKit/Data/Chembl > psql chembl < /usr/share/postgresql/8.4/contrib/rdkit.sql
 }}}
+Note that the path in the second command will depend on where postgresql is installed.
 
 = Loading the molecules =
 
@@ -93,4 +94,10 @@ chembl=# select regno,atompairbv_fp(m) as pairbv,torsionbv_fp(m) as torsionbv,mo
 chembl=# create index apbvidx on fps using gist(pairbv);
 chembl=# create index torsbvidx on fps using gist(torsionbv);
 chembl=# create index morganbvidx on fps using gist(morganbv);
+}}}
+
+
+= Adding properties to the database =
+{{{
+chembl=# select regno,mol_amw(m) as amw,mol_logp(m) as logp,mol_hba(m) as hba,mol_hbd(m) as hbd,mol_numheavyatoms(m) as nhvy into props from mols;
 }}}
