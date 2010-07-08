@@ -9,4 +9,4 @@ info coming soon
   * BuildingTheCartridge
   * DatabaseCreation
   * ExampleSimilarityQueries
-  * ExampleSubstructureQueries
+  * ExampleStructureQueries
