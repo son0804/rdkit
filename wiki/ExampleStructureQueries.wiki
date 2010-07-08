@@ -1,0 +1,86 @@
+#summary Some example queries for doing structure searching.
+
+= Introduction =
+
+These queries are using the database created following the instructions on the DatabaseCreation page.
+
+*Note* as of the initial release, substructure searches can only be done using SMILES; SMARTS is not yet supported.
+
+= Substructure Queries =
+
+Retrieve the number of molecules containing a triazine:
+{{{
+chembl=# select count(*) from mols where m @> 'c1ncncn1';
+ count 
+-------
+   752
+(1 row)
+}}}
+
+Retrieve the number of molecules containing a coumarin:
+{{{
+chembl=# select count(*) from mols where m @> 'O=C1OC2=CC=CC=C2C=C1';
+ count 
+-------
+   655
+(1 row)
+}}}
+
+Get the first 10 of those:
+{{{
+chembl=# select regno,m from mols where m @> 'O=C1OC2=CC=CC=C2C=C1' limit 10;
+ regno  |                       m                       
+--------+-----------------------------------------------
+ 522772 | O=c1oc2cc3occc3c(OCCCCOc3ccccc3)c2cc1
+ 561313 | COc1c2ccoc2c(OC)c2oc(=O)cc(OCCCCOc3ccccc3)c21
+ 559488 | O=c1oc2ccccc2c(OCCCCOc2ccccc2)c1
+ 561321 | O=c1oc2c(cc3ccoc3c2OCCCCOc2ccccc2)cc1
+ 557739 | O=c1oc2c(c(OCCCCOc3ccccc3)ccc2)cc1
+ 563073 | COc1c2ccoc2c(OCCCCOc2ccccc2)c2oc(=O)cc(C)c21
+ 555459 | O=c1oc2cc(OCc3ccc(F)cc3)ccc2c(-c2ccccc2)c1
+ 567837 | CCCCCCc1c(OC)cc2oc(=O)c3c(c2c1)CCC3
+ 494234 | c1ccc(C(COC(c2c(=O)oc3c(ccc(O)c3)c2)=O)=O)cc1
+ 422130 | COc1ccc2oc(=O)c(CCC(=O)NO)cc2c1
+(10 rows)
+}}}
+
+= Including property filters =
+
+Add property filters to a substructure query:
+{{{
+chembl=# select regno,m,amw,logp from mols join props using(regno) where m @> 'O=C1OC2=CC=CC=C2C=C1' and amw<300 and logp<3.0 order by amw ;
+ regno  |                      m                      |   amw   |  logp   
+--------+---------------------------------------------+---------+---------
+   1256 | O=c1oc2c(cccc2)cc1                          | 146.145 |   1.793
+ 401542 | Nc1cc(=O)oc2ccccc12                         |  161.16 |  1.3752
+ 390097 | O=c1oc2c(cc1)ccc(O)c2O                      | 178.143 |  1.2042
+ 390095 | O=c1ccc2cc(O)c(O)cc2o1                      | 178.143 |  1.2042
+ 252271 | N#Cc1c(=O)oc2c(ccc(O)c2)c1                  | 187.154 | 1.37028
+ 521443 | COc1c2oc(=O)c(C)cc2ccc1                     | 190.198 | 2.11002
+  21796 | Cc1c2ccc(O)cc2oc(=O)c1C                     | 190.198 | 2.11544
+ 521441 | COc1ccc2c(oc(=O)c(C)c2)c1                   | 190.198 | 2.11002
+ 521368 | COc1ccc2oc(=O)c(C)cc2c1                     | 190.198 | 2.11002
+   ...
+ 202780 | O=c1oc2cc(CNCCNc3ccccc3)ccc2cc1             | 294.354 |  2.8428
+ 426190 | Cc1cc(=O)[nH]c2ccc3c4c(oc(=O)c3c12)ccc(F)c4 | 295.269 | 2.75332
+ 202815 | O=c1oc2cc(CNCCOc3ccccc3)ccc2cc1             | 295.338 |  2.8097
+ 453048 | COc1c(OCC(C)=O)ccc2c1oc(=O)c1c2cccc1        | 298.294 |  2.9226
+(112 rows)
+}}}
+
+= Other kinds of structural searches =
+
+Look for molecules in the database that are substructures of a query (i.e. where the query is a superstructure of the database molecule):
+{{{
+chembl=# select regno,m from mols where m <@ 'c1ccc(C(COC(c2c(=O)oc3c(ccc(O)c3)c2)=O)=O)cc1' limit 10;
+ regno  |                       m                       
+--------+-----------------------------------------------
+ 494234 | c1ccc(C(COC(c2c(=O)oc3c(ccc(O)c3)c2)=O)=O)cc1
+  13342 | CC(=O)O
+  13456 | Oc1ccccc1
+ 252310 | c1ccc(C(COC(c2cc3c(oc2=O)cccc3)=O)=O)cc1
+ 252208 | CCOC(=O)c1c(=O)oc2c(ccc(O)c2)c1
+   1256 | O=c1oc2c(cccc2)cc1
+  16791 | Cc1ccccc1
+(7 rows)
+}}}
