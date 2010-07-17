@@ -1,4 +1,5 @@
 #summary Some example queries for doing structure searching.
+#labels cartridge,Tutorial
 
 = Introduction =
 
@@ -84,3 +85,6 @@ chembl=# select regno,m from mols where m <@ 'c1ccc(C(COC(c2c(=O)oc3c(ccc(O)c3)c
   16791 | Cc1ccccc1
 (7 rows)
 }}}
+
+----
+[http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
