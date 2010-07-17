@@ -1,4 +1,5 @@
 #summary A database cartridge for similarity searching.
+#labels cartridge
 
 = Introduction =
 
@@ -10,3 +11,5 @@ info coming soon
   * DatabaseCreation
   * ExampleSimilarityQueries
   * ExampleStructureQueries
+
+[http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
