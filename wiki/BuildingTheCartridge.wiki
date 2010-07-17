@@ -1,4 +1,5 @@
 #summary How to build the PostgreSQL cartridge
+#labels cartridge
 
 _The contents of this page are preliminary. If you have questions or suggestions, please leave a comment or send something to the mailing list._
 
