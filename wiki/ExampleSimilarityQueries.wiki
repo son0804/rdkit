@@ -1,4 +1,5 @@
 #summary Some example queries for doing similarity searching.
+#labels cartridge,Tutorial
 
 = Introduction =
 
@@ -140,3 +141,6 @@ chembl-# atompairbv_fp('N#Cc1cccc(-c2ccc3c(c2)CCN(Cc2nc4cc(Cl)c(Cl)cc4[nH]2)C3C2
  358532 | 0.507418397626113 | N#Cc1cccc(-c2ccc3c(c2)CCN(CC(=O)Nc2cccc(Cl)c2)C32CCN(CC3CC3)CC2)c1
 (34 rows)
 }}}
+
+----
+[http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
