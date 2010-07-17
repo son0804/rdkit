@@ -1,4 +1,5 @@
 #summary Creating a chemical database
+#labels cartridge,tutorial
 
 *_work in progress_*
 
@@ -121,3 +122,6 @@ chembl=# create index morganbvidx on fps using gist(morganbv);
 {{{
 chembl=# select regno,mol_amw(m) as amw,mol_logp(m) as logp,mol_hba(m) as hba,mol_hbd(m) as hbd,mol_numheavyatoms(m) as nhvy into props from mols;
 }}}
+
+----
+[http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
