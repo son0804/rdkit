@@ -36,3 +36,6 @@ Uninstall rdkit cartridge from database DB:
    `psql DB < $RDBASE/Code/PgSQL/uninstall_rdkit.sql`
 or:
    `psql DB < /usr/share/postgresql/8.4/contrib/uninstall_rdkit.sql`
+
+----
+[http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
