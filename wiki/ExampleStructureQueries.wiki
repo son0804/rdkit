@@ -14,7 +14,7 @@ Retrieve the number of molecules containing a triazine:
 chembl=# select count(*) from mols where m @> 'c1ncncn1';
  count 
 -------
-   752
+   765
 (1 row)
 }}}
 
@@ -77,13 +77,12 @@ chembl=# select regno,m from mols where m <@ 'c1ccc(C(COC(c2c(=O)oc3c(ccc(O)c3)c
  regno  |                       m                       
 --------+-----------------------------------------------
  494234 | c1ccc(C(COC(c2c(=O)oc3c(ccc(O)c3)c2)=O)=O)cc1
-  13342 | CC(=O)O
-  13456 | Oc1ccccc1
- 252310 | c1ccc(C(COC(c2cc3c(oc2=O)cccc3)=O)=O)cc1
- 252208 | CCOC(=O)c1c(=O)oc2c(ccc(O)c2)c1
    1256 | O=c1oc2c(cccc2)cc1
   16791 | Cc1ccccc1
-(7 rows)
+ 252208 | CCOC(=O)c1c(=O)oc2c(ccc(O)c2)c1
+ 252310 | c1ccc(C(COC(c2cc3c(oc2=O)cccc3)=O)=O)cc1
+  13342 | CC(=O)O
+  13456 | Oc1ccccc1
 }}}
 
 ----
