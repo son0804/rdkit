@@ -12,4 +12,5 @@ info coming soon
   * ExampleSimilarityQueries
   * ExampleStructureQueries
 
+----
 [http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
