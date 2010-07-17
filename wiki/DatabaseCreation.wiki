@@ -1,5 +1,5 @@
 #summary Creating a chemical database
-#labels cartridge,tutorial
+#labels cartridge,Tutorial
 
 *_work in progress_*
 
