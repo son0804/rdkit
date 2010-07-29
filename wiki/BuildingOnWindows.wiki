@@ -39,7 +39,7 @@ This section assumes that python is installed in c:\Python25, that the boost lib
     * Start the cmake gui
     * tell it where the source code is (e.g. c:/RDKit) and where to build the binaries (recommended: c:/RDKit/build)
     * click "Configure", select your compiler, and wait until the basic configuration is complete, you'll see a bunch of red lines entries in the main windows.
-       * look in the output frame to be sure the correct version of boost, python, bison, and flex have been found. If an older boost version is displayed than what you have, you can try fixing this by editing the file `$RDBASE/CMakeLists.txt` and adding your version to the line that looks like this: `SET(Boost_ADDITIONAL_VERSIONS "1.42" "1.42.0" "1.41" "1.41.0" "1.40" "1.40.0")`. For example, to allow boost 1.43 to be used, you would have the line: `SET(Boost_ADDITIONAL_VERSIONS "1.43" "1.43.0" "1.42" "1.42.0" "1.41" "1.41.0" "1.40" "1.40.0")`. After editing the file, go to "File->Delete Cache" in the cmake GUI and then click "Configure" again.
+       * look in the output frame to be sure the correct version of boost, python, bison, and flex have been found. If an older boost version is displayed, you can try fixing this by editing the file `$RDBASE/CMakeLists.txt` and adding your version to the line that looks like this: `SET(Boost_ADDITIONAL_VERSIONS "1.42" "1.42.0" "1.41" "1.41.0" "1.40" "1.40.0")`. For example, to allow boost 1.43 to be used, you would have the line: `SET(Boost_ADDITIONAL_VERSIONS "1.43" "1.43.0" "1.42" "1.42.0" "1.41" "1.41.0" "1.40" "1.40.0")`. After editing the file, go to "File->Delete Cache" in the cmake GUI and then click "Configure" again.
     * click "Configure" again
     * click "Generate"
   * Build:
