@@ -10,22 +10,21 @@ For source releases prior to Q4 2009, look at BuildingOnWindows_Old
   * flex and bison : these are easily installed as part of a [http://www.cygwin.com cygwin] installation, but one can also find flex and bison binaries for windows elsewhere. Cygwin is not required to build the RDKit, but it's very useful to have (a minimal cygwin installation is fine). *Note* if you install flex and bison without cygwin, be sure to read [http://eli.thegreenplace.net/2007/07/27/bison-looking-for-bisonsimple-on-windows/ this web page] about environment variables and set the BISON_SIMPLE environment variable to the appropriate value.
   * python : [http://www.python.org/download python] should be installed
   * numpy : the [http://sourceforge.net/project/showfiles.php?group_id=1369&package_id=175103 current version of numpy] should be installed. It's fine to use the binary installer. 
-  * boost : download a copy of the current versions of the [http://www.boost.org/users/download/ boost source distribution and boost-Jam]. Both are available from the same link, be sure to get the `.ntx86.zip` file for boost-Jam.  Extract the source distribution (to, for example, c:\boost\boost_1_37_0) and copy the bjam.exe executable from the boost jam zip file to the  same directory.
+  * boost : download a copy of the current versions of the [http://www.boost.org/users/download/ boost source distribution and boost-Jam]. Both are available from the same link, be sure to get the `.ntx86.zip` file for boost-Jam.  Extract the source distribution (to, for example, c:\boost\boost_1_43_0) and copy the bjam.exe executable from the boost jam zip file to the  same directory.
   * a subversion client : _This is only necessary if you are planning on building development versions of the RDKit_. A command line client for subversion can be installed as part of the cygwin installation, or a very nice graphical client that integrates well with windows explorer can be downloaded from the [http://tortoisesvn.tigris.org/ Tortoise SVN home page].
 
 == Setup and Preparation ==
-This section assumes that python is installed in c:\Python25, that the boost libraries have been extracted to c:\boost\boost_1_37_0, and that you will build the RDKit from a directory named c:\RDKit. If any of these conditions is not true, just change the corresponding paths. 
+This section assumes that python is installed in c:\Python25, that the boost libraries have been extracted to c:\boost\boost_1_43_0, and that you will build the RDKit from a directory named c:\RDKit. If any of these conditions is not true, just change the corresponding paths. 
 
  Notes : 
     # If you install things in paths that have spaces in their names, be sure to use quotes properly in your environment variable definitions.
-    # If you have more than one version of visual studio installed, the instructions below may not use the correct compiler. In this case you need to use a different `--toolset` argument to specify the version of the compiler used in all commands. Information for this situation is covered in [http://www.boost.org/doc/libs/1_37_0/more/getting_started/windows.html the boost.build documentation].
+    # If you have more than one version of visual studio installed, the instructions below may not use the correct compiler. In this case you need to use a different `--toolset` argument to specify the version of the compiler used in all commands. Information for this situation is covered in [http://www.boost.org/doc/libs/1_43_0/more/getting_started/windows.html the boost.build documentation].
 
-  * Make sure that boost builds properly by going to the directory c:\boost\boost_1_37_0 and executing the command: `.\bjam.exe --toolset=msvc --with-python release install`. This may take a while, but it should finish without errors. 
+  * Make sure that boost builds properly by going to the directory c:\boost\boost_1_43_0 and executing the command: `.\bjam.exe toolset=msvc link=shared --with-python --with-regex --with-thread release install`. This may take a while, but it should finish without errors. 
   * If you are planning on using a development version of the RDKit: get a copy of the current RDKit source using subversion. If you're using the command-line client the command is: `svn co http://rdkit.svn.sourceforge.net/svnroot/rdkit/trunk c:\RDKit` 
   * If you are planning on using a released version of the RDKit : get a copy of the most recent release and extract it into the directory c:\RDKit 
   * Set the required environment variables (you can set this in cygwin or in windows. If you set them in windows, be sure to restart your cygwin window):
     * RDBASE = c:\RDKit
-    * BOOST_ROOT = c:\boost\boost_1_37_0
   * Make sure that the directory c:\Python25 is in your PATH
   * Make sure that the directory c:\RDKit\bin is in your PATH
   * Make sure that the directory c:\boost\lib is in your PATH
@@ -40,11 +39,12 @@ This section assumes that python is installed in c:\Python25, that the boost lib
     * Start the cmake gui
     * tell it where the source code is (e.g. c:/RDKit) and where to build the binaries (recommended: c:/RDKit/build)
     * click "Configure", select your compiler, and wait until the basic configuration is complete, you'll see a bunch of red lines entries in the main windows.
+       * look in the output frame to be sure the correct version of boost, python, bison, and flex have been found. If an older boost version is displayed than what you have, you can try fixing this by editing the file `$RDBASE/CMakeLists.txt` and adding your version to the line that looks like this: `SET(Boost_ADDITIONAL_VERSIONS "1.42" "1.42.0" "1.41" "1.41.0" "1.40" "1.40.0")`. For example, to allow boost 1.43 to be used, you would have the line: `SET(Boost_ADDITIONAL_VERSIONS "1.43" "1.43.0" "1.42" "1.42.0" "1.41" "1.41.0" "1.40" "1.40.0")`. After editing the file, go to "File->Delete Cache" in the cmake GUI and then click "Configure" again.
     * click "Configure" again
     * click "Generate"
   * Build:
     * open the solution file that cmake created (c:/RDKit/build/RDKit.sln) with Visual Studio.
-    * build the "ALL_BUILD" target; this will take a while and generate warnings, but there should be no errors.
+    * build the "ALL_BUILD" target; this will take a while and generate warnings, but there should be no errors. Make sure you are building a "Release" configuration.
     * build the "INSTALL" target
 
 == Testing the Build (optional, but recommended) ==
