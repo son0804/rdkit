@@ -18,7 +18,7 @@ This section assumes that python is installed in c:\Python25, that the boost lib
 
  Notes : 
     # If you install things in paths that have spaces in their names, be sure to use quotes properly in your environment variable definitions.
-    # If you have more than one version of visual studio installed, the instructions below may not use the correct compiler. In this case you need to use a different `--toolset` argument to specify the version of the compiler used in all commands. Information for this situation is covered in [http://www.boost.org/doc/libs/1_43_0/more/getting_started/windows.html the boost.build documentation].
+    # If you have more than one version of visual studio installed, the instructions below may not use the correct compiler. In this case you need to use a different `toolset` argument to specify the version of the compiler used in all commands. Information for this situation is covered in [http://www.boost.org/doc/libs/1_43_0/more/getting_started/windows.html the boost.build documentation].
 
   * Make sure that boost builds properly by going to the directory c:\boost\boost_1_43_0 and executing the command: `.\bjam.exe toolset=msvc --with-python --with-regex --with-thread release install`. This may take a while, but it should finish without errors. 
   * If you are planning on using a development version of the RDKit: get a copy of the current RDKit source using subversion. If you're using the command-line client the command is: `svn co http://rdkit.svn.sourceforge.net/svnroot/rdkit/trunk c:\RDKit` 
@@ -40,6 +40,7 @@ This section assumes that python is installed in c:\Python25, that the boost lib
     * tell it where the source code is (e.g. c:/RDKit) and where to build the binaries (recommended: c:/RDKit/build)
     * click "Configure", select your compiler, and wait until the basic configuration is complete, you'll see a bunch of red lines entries in the main windows.
        * look in the output frame to be sure the correct version of boost, python, bison, and flex have been found. If an older boost version is displayed, you can try fixing this by editing the file `$RDBASE/CMakeLists.txt` and adding your version to the line that looks like this: `SET(Boost_ADDITIONAL_VERSIONS "1.42" "1.42.0" "1.41" "1.41.0" "1.40" "1.40.0")`. For example, to allow boost 1.43 to be used, you would have the line: `SET(Boost_ADDITIONAL_VERSIONS "1.43" "1.43.0" "1.42" "1.42.0" "1.41" "1.41.0" "1.40" "1.40.0")`. After editing the file, go to "File->Delete Cache" in the cmake GUI and then click "Configure" again.
+       * If you do not wish to build the RDKit python wrappers, deselect `RDK_BUILD_PYTHON_WRAPPERS` in the window with options.
     * click "Configure" again
     * click "Generate"
   * Build:
