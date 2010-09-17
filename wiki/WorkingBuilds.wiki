@@ -10,7 +10,6 @@ _To come_
 || *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
 || 17/09/2010 || svn || Ubuntu(10.04) || g++-4.4.3 || 1.44.0 || 2.6.5 || Greg Landrum || ||
 || 17/09/2010 || svn || MacOSX (Snow Leopard) || g++-4.2.1 || 1.43.0 || 2.6.1 || Greg Landrum || ||
-
 || 05/06/2010 || svn || Ubuntu(10.04) || g++-4.4.3 || 1.43.0 || 2.6.5 || Greg Landrum || ||
 || 11/04/2010 || svn || Ubuntu(9.10) || g++-4.4.1 || 1.42.0 || 2.6.4 || Greg Landrum || ||
 || 22/11/2009 || svn || MacOSX (Leopard) || g++-4.0.1 || 1.41.0 || 2.5 || Greg Landrum || ||
