@@ -5,7 +5,7 @@ _The contents of this page are preliminary. If you have questions or suggestions
 
 = Requirements =
 
-Compatibility: PostgreSQL 8.4+
+Compatibility: PostgreSQL 8.4+ (PostgreSQL 9.0 is supported)
 
 It should be possible to build the cartridge using either a version of PostgreSQL built from source or a package from your linux distribution (be sure to include the -devel package).
 
@@ -23,6 +23,8 @@ Go to the cartridge directory:
 }}}
 
 The last step will take a few minutes. The last step will probably fail on debian-based linux distributions such as Ubuntu because of a [http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=554166 bug in their postgresql packages]. To run the tests there you will need to install postgresql from source.
+
+*Note:* With PostgreSQL v9.0 the `props` test may fail. This is only due to a difference in output formatting and is not an indication of a real problem.
 
 = Adding the cartridge to a database =
 
