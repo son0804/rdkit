@@ -5,7 +5,7 @@
 
 == Required ==
  * The windows binary build from http://rdkit.googlecode.com/files/RDKit_Q22009_1.win32.tgz
- * Python 2.5 (from http://www.python.org/)
+ * Python 2.5 or 2.6 (from http://www.python.org/)
  * numpy (from http://numpy.scipy.org/)
  * PIL: (from http://www.pythonware.com/products/pil/index.htm)
 
