@@ -22,6 +22,7 @@ Put it somewhere without a space in the name, i.e. `c:/`
 The rest of this will assume that the installation is in `c:/RDKit_Q22009_1`
 
 = Environment variables =
- * `RDBASE`: `c:/RDKit_Q22009_1`
+ * `RDBASE`: `c:/RDKit_Q22009_1`  *Note* this is optional for the Q3 2010 and later releases.
  * `PYTHONPATH`: `%RDBASE%` if there is already a PYTHONPATH, put `;%RDBASE` at the end.
- * `PATH`: add `;%RDBASE%/bin` to the end
+ * *Releases prior to Q3 2010*: `PATH`: add `;%RDBASE%/bin` to the end
+ * *Q3 2010 and more recent releases*: `PATH`: add `;%RDBASE%/lib` to the end
