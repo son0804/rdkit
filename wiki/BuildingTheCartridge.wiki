@@ -1,8 +1,6 @@
 #summary How to build the PostgreSQL cartridge
 #labels cartridge
 
-_The contents of this page are preliminary. If you have questions or suggestions, please leave a comment or send something to the mailing list._
-
 = Requirements =
 
 Compatibility: PostgreSQL 8.4+ (PostgreSQL 9.0 is supported)
@@ -13,7 +11,8 @@ Until the cartridge code is included in an RDKit release (Q3 2010), you also nee
 
 = Compilation and Testing = 
 
-The Makefile assumes that the RDKit is installed in $RDBASE. You will need $RDBASE/bin in your $LD_LIBRARY_PATH
+The Makefile assumes that the RDKit is installed in $RDBASE and that $BOOSTHOME points to where boost is installed.
+You will need $RDBASE/lib in your $LD_LIBRARY_PATH
 
 Go to the cartridge directory: 
  
