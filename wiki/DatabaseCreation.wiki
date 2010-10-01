@@ -7,7 +7,7 @@
 
 In this example I show how to load a database from a pre-processed block of compounds from ChemBL.
 
-Once you've built the database, samples of how to query it can be found on the ExampleSimilarityQueries and ExampleSubstructureQueries pages.
+Once you've built the database, samples of how to query it can be found on the ExampleSimilarityQueries and ExampleStructureQueries pages.
 
 = Preprocessing the input =
 
