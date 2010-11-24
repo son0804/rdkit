@@ -4,6 +4,7 @@
 = Successful Build and Test =
 
 || *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
+|| 24/11/2010 || svn || Ubuntu(10.10) || g++-4.4.4 || 1.42.0 || 2.6.6 || Greg Landrum || ||
 || 18/11/2010 || svn || Fedora14 || g++-4.5.1 || 1.44.0 || 2.7 || Kirk DeLisle || [http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01385.html description] ||
 || 05/10/2010 || svn || Ubuntu(10.04) || g++-4.4.3 || 1.44.0 || 2.7 || Greg Landrum || ||
 || 17/09/2010 || svn || Ubuntu(10.04) || g++-4.4.3 || 1.44.0 || 2.6.5 || Greg Landrum || ||
