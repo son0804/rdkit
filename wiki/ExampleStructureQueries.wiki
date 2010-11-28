@@ -71,6 +71,7 @@ chembl=# select regno,m,amw,logp from mols join props using(regno) where m @> 'O
 
 = Other kinds of structural searches =
 
+== Superstructure queries ==
 Look for molecules in the database that are substructures of a query (i.e. where the query is a superstructure of the database molecule):
 {{{
 chembl=# select regno,m from mols where m <@ 'c1ccc(C(COC(c2c(=O)oc3c(ccc(O)c3)c2)=O)=O)cc1' limit 10;
@@ -84,6 +85,31 @@ chembl=# select regno,m from mols where m <@ 'c1ccc(C(COC(c2c(=O)oc3c(ccc(O)c3)c
   13342 | CC(=O)O
   13456 | Oc1ccccc1
 }}}
+
+== SMARTS-based Queries ==
+
+_Available in version 2010_Q4 and later_
+
+For efficiency reasons, substructure queries are by default executed using SMILES semantics. In order to do SMARTS-based queries, the query string needs to be explicitly cast to a qmol, as this example shows: 
+{{{
+chembl=# select * from mols where m@> 'cc(c)NC(=O)N'::qmol limit 10;
+ regno  |                            m                             
+--------+----------------------------------------------------------
+ 212349 | NC(=O)c1ccc(NC(N2CCC3N(OS(O)(=O)=O)C(=O)C23)=O)cc1
+ 212247 | NC(=O)c1ccc(NC(N2CCC3N(S(O)(=O)=O)C(=O)C23)=O)cc1
+ 107726 | c1ccc(N2CC(=O)N(S(c3cc(C)c(C)cc3)(=O)=O)C2=O)cc1
+ 108232 | N#Cc1ccc(S(N2C(=O)CN(c3ccccc3)C2=O)(=O)=O)cc1
+ 107509 | Cc1ccc(S(N2C(=O)CN(c3ccccc3)C2=O)(=O)=O)cc1
+ 108171 | c1ccc(N2CC(=O)N(S(c3ccc([N+]([O-])=O)cc3)(=O)=O)C2=O)cc1
+ 108343 | COC(Cc1cc(S(N2C(=O)CN(c3ccccc3)C2=O)(=O)=O)ccc1)=O
+ 274614 | CCCn1cc2c(nc(NC(=O)Nc3ccc(C)cc3)n3c2nc(-c2ccco2)n3)n1
+ 108945 | c1ccc(N2CC(=O)N(C(=O)c3ccc(Cl)cc3)C2=O)cc1
+ 108718 | N#Cc1cccc(S(N2C(=O)CN(c3ccccc3)C2=O)(=O)=O)c1
+(10 rows)
+}}}
+
+Note that SMARTS-based queries are typically substantially slower than the equivalent SMILES-based queries.
+
 
 ----
 [http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
