@@ -119,7 +119,7 @@ Currently, the cartridge does not support matching full structures; a feature re
 In the meanwhile, it is possible to use a query like:
 {{{
 select * from mols where m<@'CC(=O)c1ccc2c(c1)C(=O)C(=O)N2C'
-and m@>'CC(=O)c1ccc2c(c1)C(=O)C(=O)N2' 
+and m@>'CC(=O)c1ccc2c(c1)C(=O)C(=O)N2C' 
 and m::text='CC(=O)c1ccc2c(c1)C(=O)C(=O)N2C'::mol::text;
 }}}
 to achieve the same result
