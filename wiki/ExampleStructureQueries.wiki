@@ -111,5 +111,18 @@ chembl=# select * from mols where m@> 'cc(c)NC(=O)N'::qmol limit 10;
 Note that SMARTS-based queries are typically substantially slower than the equivalent SMILES-based queries.
 
 
+== Exact match queries ==
+
+Currently, the cartridge does not support matching full structures; a feature request was 
+[https://sourceforge.net/tracker/?func=detail&aid=3120707&group_id=160139&atid=814653 opened here].
+
+In the meanwhile, it is possible to use a query like:
+{{{
+select * from mols where m<@'CC(=O)c1ccc2c(c1)C(=O)C(=O)N2C'
+and m@>'CC(=O)c1ccc2c(c1)C(=O)C(=O)N2' 
+and m::text='CC(=O)c1ccc2c(c1)C(=O)C(=O)N2C'::mol::text;
+}}}
+to achieve the same result
+
 ----
 [http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
