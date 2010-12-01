@@ -46,3 +46,6 @@ _Notes_ :
 == Testing the Build (optional, but recommended) ==
   * cd to $RDBASE/build and run `ctest`
   * you're done!
+
+== Additional notes ==
+  * There is a bug in boost v1.44 that causes link errors related to boost-serialization on windows. To fix this you need to edit one of the boost header files. [https://groups.google.com/group/boost-list/msg/066897d43d9ca27a?hl=en This post] contains instructions on what needs to be done.
