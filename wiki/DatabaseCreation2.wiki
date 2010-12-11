@@ -1,15 +1,13 @@
-#summary Creating a chemical database, example 2
+#summary Creating and using a chemical database 2: Working with the eMolecules catalog.
 #labels cartridge,Tutorial
 
-*_work in progress_*
+*Note* This example relies on cartridge functionality that was added for the Q4 2010 release. It will not work with the Q3 2010 release.
 
 = Introduction =
-
-This example relies on cartridge functionality that was added for the Q4 2010 release. It will not work with the Q3 2010 release.
  
 In this example I show how to load a database from the SMILES file of commercially available compounds that is downloadable from emolecules.com at URL http://www.emolecules.com/doc/plus/download-database.php
 
-If you choose to repeat this exact example yourself, please note that it takes a couple of hours to load the 5 million row database and generate all fingerprints. The timing information below was collected on a standard PC (Dell Studio XPS with a 2.9GHz i7 CPU and 8GB of RAM) running Ubuntu 10.10 and using postgreSQL v9.0.1.
+If you choose to repeat this exact example yourself, please note that it takes several hours to load the 5 million row database and generate all fingerprints. The timing information below was collected on a commodity desktop PC (Dell Studio XPS with a 2.9GHz i7 CPU and 8GB of RAM) running Ubuntu 10.10 and using PostgreSQL v9.0.1. The database was installed with default parameters.
 
 = Creating the database =
 
@@ -27,7 +25,7 @@ CREATE TABLE
 ~/RDKit_trunk/Data/emolecules > sed '1d; s/\\/\\\\/' eMolecules-2010-03-01.smi | psql -c "copy raw_data (smiles,emol_id) from STDIN with delimiter ' '" emolecules
 }}}
 
-Now create the molecule table, but only for SMILES that the RDKit accepts:
+Create the molecule table, but only for SMILES that the RDKit accepts:
 {{{
 ~/RDKit_trunk/Data/emolecules > psql emolecules
 psql (9.0.1)
@@ -36,11 +34,124 @@ Type "help" for help.
 emolecules=# \timing
 Timing is on.
 emolecules=# select id,smiles::mol m into mols from raw_data where is_valid_smiles(smiles::cstring);
+SELECT 5017153
+Time: 4039006.013 ms
+
+emolecules=# create index molidx on mols using gist(m);
+CREATE INDEX
+Time: 7832764.891 ms
 }}}
 
 The last step is only required if you plan to do substructure searches.
 
 = Creating some fingerprints and the fingerprint indices =
+
+
+= Some substructure-search queries =
+
+Example query molecules taken from the [http://www.emolecules.com/ eMolecules home page].
+
+{{{
+emolecules=# select count(*) from mols where m@>'c1cccc2c1nncc2' ;
+ count 
+-------
+   996
+(1 row)
+
+Time: 2436.635 ms
+emolecules=# select count(*) from mols where m@>'c1ccnc2c1nccn2' ;
+ count 
+-------
+  1366
+(1 row)
+
+Time: 763.011 ms
+emolecules=# select count(*) from mols where m@>'c1cncc2n1ccn2' ;
+ count 
+-------
+   523
+(1 row)
+
+Time: 2281.622 ms
+emolecules=# select count(*) from mols where m@>'Nc1ncnc(N)n1' ;
+ count 
+-------
+ 14227
+(1 row)
+
+Time: 3833.766 ms
+}}}
+Notice that the last query is starting to take a while to execute and count all the results. This is even more extreme with the next few queries:
+{{{
+emolecules=# select count(*) from mols where m@>'c1scnn1' ;
+ count 
+-------
+ 88564
+(1 row)
+
+Time: 31649.670 ms
+emolecules=# select count(*) from mols where m@>'c1cccc2c1CNCCN2' ;
+ count 
+-------
+  2509
+(1 row)
+
+Time: 52627.068 ms
+emolecules=# select count(*) from mols where m@>'c1cccc2c1ncs2' ;
+ count 
+-------
+ 95288
+(1 row)
+
+Time: 55260.154 ms
+}}}
+
+Given we're searching through 5 million compounds these search times aren't incredibly slow, but it would be nice to have them quicker.
+
+One easy way to speed things up is to return the results in blocks and to present them in pages. This isn't possible to demonstrate on a static web page like this, but here's what the queries look like and how long they take to execute:
+
+{{{
+emolecules=# select * from mols where m@>'c1cccc2c1ncs2' limit 100 ;
+   id    |                                  m                                   
+---------+----------------------------------------------------------------------
+ 4008560 | Cc1nnnn1/C(=C\c1ccccc1)C(=O)N1C(c2sc3c(n2)cccc3)CCC1
+ 4009030 | O=C(CCCc1nc2ccccc2s1)N1CCN(C/C=C/c2ccccc2)CC1
+...
+ 4011636 | Cc1ccc(C(N[C@@H](C(C)C)C(Nc2ccc(-c3nc4ccc(C)cc4s3)cc2)=O)=O)cc1
+ 4011638 | Cc1ccc(-c2nn(-c3ccccc3)cc2/C=C/C(=O)Nc2ccc(-c3sc4cc(C)ccc4n3)cc2)cc1
+(100 rows)
+
+Time: 77.496 ms
+emolecules=# select * from mols where m@>'c1cccc2c1ncs2' limit 100 offset 100;
+   id    |                                      m                                       
+---------+------------------------------------------------------------------------------
+ 4011639 | Cc1cc2sc(-c3ccc(NC(=O)/C=C/c4cn(-c5ccccc5)nc4-c4ccc(-c5ccccc5)cc4)cc3)nc2cc1
+ 4011640 | Cc1ccc2nc(-c3ccc(NC([C@H]4N(C(c5cccs5)=O)CCC4)=O)cc3)sc2c1
+...
+ 4005886 | N#CC1(NC(COC(/C=C/c2nc3ccccc3s2)=O)=O)CCCC1
+ 4005887 | c1ccc2sc(/C=C/C(OCC(Nc3ccc(C(N(C)C)=O)cc3)=O)=O)nc2c1
+(100 rows)
+
+Time: 83.653 ms
+}}}
+
+=== SMARTS-based queries ===
+
+Oxadiazole or thiadiazole:
+{{{
+emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol limit 1000;
+   id    |                               m                                
+---------+----------------------------------------------------------------
+ 4438222 | CCCCCCCc1ccc(/C=C/c2onc(-c3ccncc3)n2)cc1
+ 4440841 | COc1ccc(Cc2noc(/C=C/c3ccc(C)cc3)n2)cc1OC
+...
+Time: 1757.302 ms
+emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol limit 1000 offset 1000;
+...
+Time: 4497.175 ms
+}}}
+
+Notice that this is substantially slower than the the pure SMILES query. Adding additional query features exacerbates the situation:
 
 
 ----
