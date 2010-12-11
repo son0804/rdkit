@@ -1,5 +1,5 @@
 #summary Creating and using a chemical database 2: Working with the eMolecules catalog.
-#labels cartridge,Tutorial
+#labels cartridge,Tutorial,InProgress
 
 *Note* This example relies on cartridge functionality that was added for the Q4 2010 release. It will not work with the Q3 2010 release.
 
