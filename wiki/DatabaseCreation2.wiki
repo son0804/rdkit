@@ -9,6 +9,13 @@ In this example I show how to load a database from the SMILES file of commercial
 
 If you choose to repeat this exact example yourself, please note that it takes several hours to load the 5 million row database and generate all fingerprints. The timing information below was collected on a commodity desktop PC (Dell Studio XPS with a 2.9GHz i7 CPU and 8GB of RAM) running Ubuntu 10.10 and using PostgreSQL v9.0.1. The database was installed with default parameters.
 
+I started experiencing performance problems when building the indices for the fingerprints (and maybe beforehand), so from that point forward I changed a couple of postgres configuration settings:
+{{{
+fsync = off				# turns forced synchronization on or off
+synchronous_commit = off		# immediate fsync at commit
+full_page_writes = off			# recover from partial page writes
+}}}
+
 = Creating the database =
 
 First create the database and install the cartridge:
@@ -43,9 +50,6 @@ Time: 7832764.891 ms
 }}}
 
 The last step is only required if you plan to do substructure searches.
-
-= Creating some fingerprints and the fingerprint indices =
-
 
 = Some substructure-search queries =
 
@@ -153,6 +157,74 @@ Time: 4497.175 ms
 
 Notice that this is substantially slower than the the pure SMILES query. Adding additional query features exacerbates the situation:
 
+= Creating some fingerprints and the fingerprint indices =
+{{{
+emolecules=# select id,atompairbv_fp(m) as pairbv,torsionbv_fp(m) as torsionbv,morganbv_fp(m,2) as morganbv into fps from mols;
+SELECT 5017153
+Time: 2076418.889 ms
+emolecules=# create index mfp2idx on fps using gist(mfp2);
+CREATE INDEX
+Time: 196840.650 ms
+emolecules=# create index torsionbvidx on fps using gist(torsionbv);  
+CREATE INDEX
+Time: 246857.303 ms
+emolecules=# create index apbvidx on fps using gist(pairbv);
+CREATE INDEX
+Time: 287168.672 ms
+}}}
+
+Add a couple of additional pieces of information to make doing useful similarity queries easier:
+{{{
+emolecules=# alter table mols add primary key (id);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "mols_pkey" for table "mols"
+ALTER TABLE
+Time: 4569.755 ms
+emolecules=# alter table fps add foreign key (id) references mols;
+ALTER TABLE
+Time: 13313.012 ms
+}}}
+
+= Similarity searches =
+
+Simple performance tests:
+{{{
+emolecules=# select count(*) from fps where mfp2%morganbv_fp('Cc1ccc2nc(-c3ccc(NC([C@H]4N(C(c5cccs5)=O)CCC4)=O)cc3)sc2c1',2);
+ count 
+-------
+   367
+(1 row)
+
+Time: 2765.546 ms
+emolecules=# select count(*) from fps where torsionbv%torsionbv_fp('Cc1ccc2nc(-c3ccc(NC([C@H]4N(C(c5cccs5)=O)CCC4)=O)cc3)sc2c1');
+ count 
+-------
+  1059
+(1 row)
+
+Time: 13277.728 ms
+}}}
+
+More realistic queries: give me the 50 most similar molecules:
+{{{
+emolecules=# select id,m,sim from (select
+  id,tanimoto_sml(mfp2,morganbv_fp('Cc1ccc2nc(-c3ccc(NC([C@H]4N(C(c5cccs5)=O)CCC4)=O)cc3)sc2c1',2)) sim
+  from fps where mfp2%morganbv_fp('Cc1ccc2nc(-c3ccc(NC([C@H]4N(C(c5cccs5)=O)CCC4)=O)cc3)sc2c1',2) 
+  order by sim desc limit 50) tmp 
+join mols using (id);
+   id    |                                 m                                 |        sim        
+---------+-------------------------------------------------------------------+-------------------
+ 4011640 | Cc1ccc2nc(-c3ccc(NC([C@H]4N(C(c5cccs5)=O)CCC4)=O)cc3)sc2c1        |                 1
+ 2048437 | Cc1ccc2sc(-c3ccc(NC(C4N(C(c5cccs5)=O)CCC4)=O)cc3)nc2c1            |             0.875
+ 4014354 | c1csc(C(N2[C@H](C(Nc3ccc(-c4nc5ccccc5s4)cc3)=O)CCC2)=O)c1         |          0.796875
+ 2388105 | Cc1ccc2nc(NC(=O)C3N(C(c4cccs4)=O)CCC3)sc2c1                       |          0.765625
+...
+ 2284219 | Cc1ccc(-c2noc(NC(C3N(C(c4cccs4)=O)CCC3)=O)c2)cc1                  | 0.591549295774648
+ 4019664 | FC(F)(F)c1ccc(NC(=O)[C@H]2N(C(c3cccs3)=O)CCC2)cc1                 | 0.590909090909091
+(50 rows)
+
+Time: 24431.555 ms
+}}}
+}}}
 
 ----
 [http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
