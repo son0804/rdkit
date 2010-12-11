@@ -1,0 +1,47 @@
+#summary Creating a chemical database, example 2
+#labels cartridge,Tutorial
+
+*_work in progress_*
+
+= Introduction =
+
+This example relies on cartridge functionality that was added for the Q4 2010 release. It will not work with the Q3 2010 release.
+ 
+In this example I show how to load a database from the SMILES file of commercially available compounds that is downloadable from emolecules.com at URL http://www.emolecules.com/doc/plus/download-database.php
+
+If you choose to repeat this exact example yourself, please note that it takes a couple of hours to load the 5 million row database and generate all fingerprints. The timing information below was collected on a standard PC (Dell Studio XPS with a 2.9GHz i7 CPU and 8GB of RAM) running Ubuntu 10.10 and using postgreSQL v9.0.1.
+
+= Creating the database =
+
+First create the database and install the cartridge:
+{{{
+~/RDKit_trunk/Data/emolecules > createdb emolecules
+~/RDKit_trunk/Data/emolecules > psql emolecules < /usr/local/pgsql/share/contrib/rdkit.sql 
+}}}
+
+Now create and populate a table holding the raw data:
+{{{
+~/RDKit_trunk/Data/emolecules > psql -c 'create table raw_data (id SERIAL, smiles text, emol_id integer)' emolecules 
+NOTICE:  CREATE TABLE will create implicit sequence "raw_data_id_seq" for serial column "raw_data.id"
+CREATE TABLE
+~/RDKit_trunk/Data/emolecules > sed '1d; s/\\/\\\\/' eMolecules-2010-03-01.smi | psql -c "copy raw_data (smiles,emol_id) from STDIN with delimiter ' '" emolecules
+}}}
+
+Now create the molecule table, but only for SMILES that the RDKit accepts:
+{{{
+~/RDKit_trunk/Data/emolecules > psql emolecules
+psql (9.0.1)
+Type "help" for help.
+
+emolecules=# \timing
+Timing is on.
+emolecules=# select id,smiles::mol m into mols from raw_data where is_valid_smiles(smiles::cstring);
+}}}
+
+The last step is only required if you plan to do substructure searches.
+
+= Creating some fingerprints and the fingerprint indices =
+
+
+----
+[http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
