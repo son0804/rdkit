@@ -155,7 +155,7 @@ emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol limit 1000 offset 1
 Time: 4497.175 ms
 }}}
 
-Notice that this is substantially slower than the the pure SMILES query. Adding additional query features exacerbates the situation:
+Notice that this is substantially slower than the the pure SMILES query, this is generally true.
 
 = Creating some fingerprints and the fingerprint indices =
 {{{
