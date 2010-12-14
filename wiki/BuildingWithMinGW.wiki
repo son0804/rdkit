@@ -1,6 +1,8 @@
 #summary Building the RDKit code with MinGW.
 #labels Development,notes
 
+*NOTE* this document is badly out of date.
+
 = Downloads =
   * msys
   * mingw
