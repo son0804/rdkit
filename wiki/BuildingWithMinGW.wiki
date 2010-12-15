@@ -25,6 +25,7 @@ Here's a sample set of environment variables that I have tested.
 {{{
 export BOOST_ROOT="n:/boost_1_43_0"
 export RDBASE="n:\\RDKit_win32"
+export PYTHONPATH="n:/RDKit_win32"
 }}}
 
 === Process ===
@@ -35,3 +36,11 @@ From inside the msys shell:
   # `cd $BOOST_ROOT`
   # `bootstrap`
   # `./bjam --toolset=gcc --with-python --with-regex link=shared stage`
+  # `cp stage/lib/libboost_python-mgw45-mt-1_43.dll /n/RDKit_win32/lib/`
+  # `cd /n/RDKit_win32`
+  # `mkdir build`
+  # `cd build`
+  #  `cmake -G"MSYS Makefiles" -DPYTHON_LIBRARY="n:/python26/libs/libpython26.a" -DPYTHON_INCLUDE_DIR="n:/python26/include" -DBOOST_ROOT="n:/boost_1_43_0" ..`
+  # `make install`
+
+As of this writing (15 Dec 2010), this produces a working RDKit build. All the unit tests pass except testMolSupplier; the reasons for this failure are being investigated.
