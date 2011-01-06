@@ -1,0 +1,160 @@
+#summary RDKit build walk through for CentOS 5.5
+#labels Notes
+
+_Instructions courtesy of Kirk DeLisle_
+
+You may want to remove old versions of cmake, flex, and bison as these will be rebuilt with the latest versions.  I've completed the process with and without the old versions present and not had any problems with version conflicts.
+
+Build steps can be done as user or as root, but all install steps must be done as root.
+
+
+***************************
+install atlas, atlas-devel, blas, blas-devel, lapack, lapack-devel through yum.  
+
+These linear algebra libraries are required by NumPy 
+
+yum install atlas, atlas-devel, blas blas-devel lapack lapack-devel
+
+
+***************************
+GCC with MPFR 2.4.1
+
+I have upgraded GCC on my LINUX install to version 4.5.5.  Previously, I found the version of GCC on CentOS (4.1.2-48) to have many bugs, in particular template handling errors which prevented it from properly compiling boost and ultimately breaking the entire process at the last step.  The only remedy I've found is to completely rebuild GCC.  MPFR is a multi-precision floating point math library required for other libraries, so I've simply included it in this build.  I don't know if the newest version of CentOS' GCC (v4.1.2) has this problem, so I rebuilt as a precaution.
+For MPFR 2.4.1, copy the expanded mpfr directory into the top level gcc directory tree as 'mpfr' (no version numbers or dates).  The build process takes care of it after that so you don't have to build and link it on your own.
+
+Create a build directory OUTSIDE the gcc directory structure and do all build steps from there - the build process will take a few hours.
+
+mkdir gcc-build
+cd gcc-build
+../gcc-4.4.5/configure
+make
+make install
+
+
+***************************
+CMake 2.8.2
+
+./configure
+make
+make install
+
+
+***************************
+flex 2.5.35
+
+./configure
+make
+make install
+
+
+***************************
+bison 2.4.2
+
+./configure
+make
+make install
+
+
+***************************
+python 2.7
+
+Install with -fPIC flags set
+Enable Unicode UCS4 support.
+Enable shared library support.
+
+./configure CFLAGS=-fPIC --enable-unicode=ucs4 --enable-shared
+make
+make install
+
+I also made sure Python was built with the newly compiled GCC, and not the system GCC.  On the command line, you should see this:
+[GCC 4.4.5] on linux2
+
+At this point you will probably need to add /usr/local:/usr/local/lib:/usr/local/lib64 to the front of LD_LIBRARY_PATH in order for the system to know which version of Python and various libraries should be preferred.
+ 
+
+***************************
+NumPy 1.5.0
+
+python setup.py build
+python setup.py install
+
+Test this by:
+
+python
+>>> import numpy
+>>>
+
+If you get an error, you've done something wrong.
+
+
+
+***************************
+Boost 1.44.0
+
+./bootstrap.sh --with-libraries=python,regex
+./bjam address-model=64 cflags=-fPIC cxxflags=-fPIC install 
+
+
+
+***************************
+RDKit
+
+Make sure all envvars are set properly:
+
+$RDBASE = <the directory where you have installed the RDKit code>
+$LD_LIBRARY_PATH = /usr/local/lib:/$RDBASE/lib
+$PYTHONPATH = $RDBASE
+
+cd $RDBASE
+mkdir build
+cd build
+cmake -D BOOST_USE_STATIC_LIBS=OFF -D BOOST_ROOT=/usr/local ..
+make
+make install
+
+
+
+***************************
+FreeType 2.4.3
+
+./configure 
+make
+make install
+
+
+***************************
+PIL 1.1.7
+
+Modify the FREETYPE_ROOT environment variable (line 40) to point to the directory in which FreeType was built.  In my case, /opt/freetype-2.4.3.
+
+python setup.py build
+python setup.py install
+
+
+***************************
+Aggdraw
+
+If you use the standard aggdraw package (http://effbot.org/zone/aggdraw-index.htm) you have to use the following compiler flag on 64-bit systems.
+
+export CFLAGS="-fpermissive"
+
+On option is to modify the one line of code for 64-bit as discussed here: http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01107.html
+
+In /agg2/include/agg_array.h
+change line #523 from this:
+
+unsigned align = (alignment - unsigned(ptr) % > alignment) % alignment;
+
+to this:
+
+unsigned align = (alignment - (unsigned long)(ptr) % alignment) % alignment;
+
+You will also need to modify aggdraw's setup.py line 21 to point to your freetype directory.  Mine:   
+
+FREETYPE_ROOT="/opt/freetype-2.4.3"
+
+I can then get aggdraw to build, but running the selftest.py gives a segmentation fault.  If I go ahead and install, it seems to work just fine and the images produced from RDKit are much improved.  The full build process is:
+
+export CFLAGS="-fpermissive"
+python setup.py build_ext -i
+python setup.py install
