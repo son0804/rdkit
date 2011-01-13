@@ -24,7 +24,7 @@ _Notes_ :
   * Set the required environment variables (you can set this in cygwin or in windows. If you set them in windows, be sure to restart your cygwin window):
     * RDBASE = c:\RDKit  *Note* this variable is optional for the Q3 2010 release and later releases.
   * Make sure that the directory c:\Python26 is in your PATH
-  * Make sure that the directory c:\RDKit\bin is in your PATH
+  * Make sure that the directory c:\RDKit\lib is in your PATH
   * Make sure that the directory c:\boost\lib is in your PATH
   * Make sure that the directory c:\RDKit is in your PYTHONPATH
 
