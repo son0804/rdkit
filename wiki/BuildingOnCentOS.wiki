@@ -35,27 +35,27 @@ make install
 
 ***************************
 CMake 2.8.2
-
+{{{
 ./configure
 make
 make install
-
+}}}
 
 ***************************
 flex 2.5.35
-
+{{{
 ./configure
 make
 make install
-
+}}}
 
 ***************************
 bison 2.4.2
-
+{{{
 ./configure
 make
 make install
-
+}}}
 
 ***************************
 python 2.7
@@ -63,11 +63,11 @@ python 2.7
 Install with -fPIC flags set
 Enable Unicode UCS4 support.
 Enable shared library support.
-
+{{{
 ./configure CFLAGS=-fPIC --enable-unicode=ucs4 --enable-shared
 make
 make install
-
+}}}
 I also made sure Python was built with the newly compiled GCC, and not the system GCC.  On the command line, you should see this:
 [GCC 4.4.5] on linux2
 
@@ -76,26 +76,26 @@ At this point you will probably need to add /usr/local:/usr/local/lib:/usr/local
 
 ***************************
 NumPy 1.5.0
-
+{{{
 python setup.py build
 python setup.py install
-
+}}}
 Test this by:
-
+{{{
 python
 >>> import numpy
 >>>
-
+}}}
 If you get an error, you've done something wrong.
 
 
 
 ***************************
 Boost 1.44.0
-
+{{{
 ./bootstrap.sh --with-libraries=python,regex
 ./bjam address-model=64 cflags=-fPIC cxxflags=-fPIC install 
-
+}}}
 
 
 ***************************
@@ -106,57 +106,58 @@ Make sure all envvars are set properly:
 $RDBASE = <the directory where you have installed the RDKit code>
 $LD_LIBRARY_PATH = /usr/local/lib:/$RDBASE/lib
 $PYTHONPATH = $RDBASE
-
+{{{
 cd $RDBASE
 mkdir build
 cd build
 cmake -D BOOST_USE_STATIC_LIBS=OFF -D BOOST_ROOT=/usr/local ..
 make
 make install
-
+}}}
 
 
 ***************************
 FreeType 2.4.3
-
+{{{
 ./configure 
 make
 make install
-
+}}}
 
 ***************************
 PIL 1.1.7
 
 Modify the FREETYPE_ROOT environment variable (line 40) to point to the directory in which FreeType was built.  In my case, /opt/freetype-2.4.3.
-
+{{{
 python setup.py build
 python setup.py install
-
+}}}
 
 ***************************
 Aggdraw
 
 If you use the standard aggdraw package (http://effbot.org/zone/aggdraw-index.htm) you have to use the following compiler flag on 64-bit systems.
-
+{{{
 export CFLAGS="-fpermissive"
-
+}}}
 On option is to modify the one line of code for 64-bit as discussed here: http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01107.html
 
 In /agg2/include/agg_array.h
 change line #523 from this:
-
+{{{
 unsigned align = (alignment - unsigned(ptr) % > alignment) % alignment;
-
+}}}
 to this:
-
+{{{
 unsigned align = (alignment - (unsigned long)(ptr) % alignment) % alignment;
-
+}}}
 You will also need to modify aggdraw's setup.py line 21 to point to your freetype directory.  Mine:   
-
+{{{
 FREETYPE_ROOT="/opt/freetype-2.4.3"
-
+}}}
 I can then get aggdraw to build, but running the selftest.py gives a segmentation fault.  If I go ahead and install, it seems to work just fine and the images produced from RDKit are much improved.  The full build process is:
-
+{{{
 export CFLAGS="-fpermissive"
 python setup.py build_ext -i
 python setup.py install
+}}}
