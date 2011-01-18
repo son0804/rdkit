@@ -141,7 +141,7 @@ If you use the standard aggdraw package (http://effbot.org/zone/aggdraw-index.ht
 {{{
 export CFLAGS="-fpermissive"
 }}}
-On option is to modify the one line of code for 64-bit as discussed here: http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01107.html
+One option is to modify the one line of code for 64-bit as discussed here: http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01107.html
 
 In /agg2/include/agg_array.h
 change line #523 from this:
