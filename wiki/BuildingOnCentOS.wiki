@@ -102,10 +102,11 @@ Boost 1.44.0
 RDKit
 
 Make sure all envvars are set properly:
-
+{{{
 $RDBASE = <the directory where you have installed the RDKit code>
 $LD_LIBRARY_PATH = /usr/local/lib:/$RDBASE/lib
 $PYTHONPATH = $RDBASE
+}}}
 {{{
 cd $RDBASE
 mkdir build
