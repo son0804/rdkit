@@ -25,10 +25,15 @@ For MPFR 2.4.1, copy the expanded mpfr directory into the top level gcc director
 Create a build directory OUTSIDE the gcc directory structure and do all build steps from there - the build process will take a few hours.
 
 mkdir gcc-build
+
 cd gcc-build
+
 ../gcc-4.4.5/configure
+
 make
+
 make install
+
 
 
 ***************************
