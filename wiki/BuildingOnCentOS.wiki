@@ -20,7 +20,7 @@ yum install atlas, atlas-devel, blas blas-devel lapack lapack-devel
 ***************************
 GCC with MPFR 2.4.1
 
-I have upgraded GCC on my LINUX install to version 4.5.5.  Previously, I found the version of GCC on CentOS (4.1.2-48) to have many bugs, in particular template handling errors which prevented it from properly compiling boost and ultimately breaking the entire process at the last step.  The only remedy I've found is to completely rebuild GCC.  MPFR is a multi-precision floating point math library required for other libraries, so I've simply included it in this build.  I don't know if the newest version of CentOS' GCC (v4.1.2) has this problem, so I rebuilt as a precaution.
+I have upgraded GCC on my LINUX install to version 4.4.5.  Previously, I found the version of GCC on CentOS (4.1.2-48) to have many bugs, in particular template handling errors which prevented it from properly compiling boost and ultimately breaking the entire process at the last step.  The only remedy I've found is to completely rebuild GCC.  MPFR is a multi-precision floating point math library required for other libraries, so I've simply included it in this build.  I don't know if the newest version of CentOS' GCC (v4.1.2) has this problem, so I rebuilt as a precaution.  (Edit:  4.1.2-48 does have this issue, but I believe it is fixed in 4.1.2-49 - CentOS 5.5 doesn't have that update, however.)
 For MPFR 2.4.1, copy the expanded mpfr directory into the top level gcc directory tree as 'mpfr' (no version numbers or dates).  The build process takes care of it after that so you don't have to build and link it on your own.
 
 Create a build directory OUTSIDE the gcc directory structure and do all build steps from there - the build process will take a few hours.
