@@ -1,7 +1,7 @@
 #summary Pointers to information on getting started with the RDKit
 
 = Getting started as a user =
- # [https://rdkit.svn.sourceforge.net/svnroot/rdkit/trunk/Docs/RDKit_Overview.pdf Getting Started in Python PDF]
+ # [http://rdkit.svn.sourceforge.net/svnroot/rdkit/trunk/Docs/RDKit_Overview.pdf Getting Started in Python PDF]
  # [HowDoI How do I?] : a collection of simple tasks
 
 = Installing binary versions =
