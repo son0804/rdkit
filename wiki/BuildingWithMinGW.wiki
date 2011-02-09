@@ -1,6 +1,8 @@
 #summary Building the RDKit code with MinGW.
 #labels Development,notes,InProgress
 
+*NOTE:* These instructions seem to be causing problems.
+
 = Downloads =
   * msys
   * mingw
