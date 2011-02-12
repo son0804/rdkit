@@ -1,6 +1,9 @@
 #summary Getting explanations of the bits in a Morgan fingerprint
 #labels Tutorial
 
+*Note:* this capability is available in the Q1 2011 and later releases of the RDKit.
+
+
 = Introduction =
 
 
