@@ -69,3 +69,33 @@ and to display that directly:
 In [46]: Draw.ShowMol(m,highlightAtoms=amap.keys())
 
 }}}
+The resulting image:
+
+http://rdkit.svn.sourceforge.net/svnroot/rdkit/trunk/Docs/Images/wiki/morganfp_atomenv1.png
+
+The same method can be used to explain bits in fingerprints that have been generated as a bit vector:
+{{{
+In [8]: info={}
+
+In [9]: fp = AllChem.GetMorganFingerprintAsBitVect(m,2,2048,bitInfo=info)
+
+In [10]: info
+Out[10]: 
+{378: ((4, 0),),
+ 448: ((3, 2),),
+ 889: ((4, 2),),
+ 1043: ((5, 2),),
+ 1057: ((6, 0),),
+ 1088: ((1, 1), (2, 1)),
+ 1155: ((2, 2),),
+ 1199: ((1, 2),),
+ 1203: ((0, 2),),
+ 1380: ((5, 0),),
+ 1452: ((4, 1),),
+ 1722: ((6, 1),),
+ 1731: ((5, 1),),
+ 1750: ((0, 1),),
+ 1866: ((3, 1),),
+ 1873: ((0, 0), (1, 0), (2, 0), (3, 0))}
+
+}}}
