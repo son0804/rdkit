@@ -25,6 +25,28 @@ The last step will take a few minutes. The last step will probably fail on debia
 
 *Note:* With PostgreSQL v9.0 the `props` test may fail. This is only due to a difference in output formatting and is not an indication of a real problem.
 
+= Postmaster configuration =
+
+Add the following line in your postgresql.conf:
+
+{{{
+shared_preload_libraries = 'rdkit'
+}}}
+
+This way configuration variables provided by the cartridge will be available since server startup and you could avoid errors like this:
+
+{{{
+how rdkit.tanimoto_threshold;
+
+ERROR:  unrecognized configuration parameter "rdkit.tanimoto_threshold"
+
+********** Error **********
+
+ERROR: unrecognized configuration parameter "rdkit.tanimoto_threshold"
+SQL state: 42704
+}}}
+
+
 = Adding the cartridge to a database =
 
 Install rdkit cartridge into the database DB: 
