@@ -8,7 +8,9 @@ You may want to remove old versions of cmake, flex, and bison as these will be r
 Build steps should be done as user, but all install steps must be done as root.
 
 
----
+----
+*Linear Algebra Libraries*
+
 install atlas, atlas-devel, blas, blas-devel, lapack, lapack-devel through yum.  
 
 These linear algebra libraries are recommended by NumPy 
@@ -37,8 +39,8 @@ rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noar
 
 I also have RPMFusion repositories enabled, but they are not required.  http://www.rpmfusion.org/Configuration
 
----
-GCC with MPFR 2.4.1
+----
+*GCC with MPFR 2.4.1*
 
 I have upgraded GCC on my LINUX install to version 4.4.5.  Previously, I found the version of GCC on CentOS (4.1.2-48) to have many bugs, in particular template handling errors which prevented it from properly compiling boost and ultimately breaking the entire process at the last step.  The only remedy I've found is to completely rebuild GCC.  MPFR is a multi-precision floating point math library required for other libraries, so I've simply included it in this build.  I don't know if the newest version of CentOS' GCC (v4.1.2) has this problem, so I rebuilt as a precaution.  (Edit:  4.1.2-48 does have this issue, but I believe it is fixed in 4.1.2-49 - CentOS 5.5 doesn't have that update, however.)
 For MPFR 2.4.1, copy the expanded mpfr directory into the top level gcc directory tree as 'mpfr' (no version numbers or dates).  The build process takes care of it after that so you don't have to build and link it on your own.
@@ -53,32 +55,32 @@ make
 make install
 }}}
 
----
-CMake 2.8.2
+----
+*CMake 2.8.2*
 {{{
 ./configure
 make
 make install
 }}}
 
----
-flex 2.5.35
+----
+*flex 2.5.35*
 {{{
 ./configure
 make
 make install
 }}}
 
----
-bison 2.4.2
+----
+*bison 2.4.2*
 {{{
 ./configure
 make
 make install
 }}}
 
----
-python 2.7
+----
+*python 2.7*
 
 Install with -fPIC flags set.
 Enable Unicode UCS4 support.
@@ -94,8 +96,8 @@ I also made sure Python was built with the newly compiled GCC, and not the syste
 At this point you will probably need to add /usr/local:/usr/local/lib:/usr/local/lib64 to the front of LD_LIBRARY_PATH in order for the system to know which version of Python and various libraries should be preferred.
  
 
----
-NumPy 1.5.0
+----
+*NumPy 1.5.0*
 {{{
 python setup.py build
 python setup.py install
@@ -110,15 +112,15 @@ If you get an error, you've done something wrong.
 
 
 
----
-Boost 1.44.0
+----
+*Boost 1.44.0*
 {{{
 ./bootstrap.sh --with-libraries=python,regex
 ./bjam address-model=64 cflags=-fPIC cxxflags=-fPIC install 
 }}}
 
----
-RDKit
+----
+*RDKit*
 
 Make sure all envvars are set properly:
 {{{
@@ -136,16 +138,16 @@ make install
 }}}
 
 
----
-FreeType 2.4.3
+----
+*FreeType 2.4.3*
 {{{
 ./configure 
 make
 make install
 }}}
 
----
-PIL 1.1.7
+----
+*PIL 1.1.7*
 
 Modify the FREETYPE_ROOT environment variable (line 40) to point to the directory in which FreeType was built.  In my case, /opt/freetype-2.4.3.
 {{{
@@ -153,8 +155,8 @@ python setup.py build
 python setup.py install
 }}}
 
----
-Aggdraw
+----
+*Aggdraw*
 
 If you use the standard aggdraw package (http://effbot.org/zone/aggdraw-index.htm) you have to use the following compiler flag on 64-bit systems.
 {{{
