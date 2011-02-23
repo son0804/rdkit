@@ -3,19 +3,39 @@
 
 _Instructions courtesy of Kirk DeLisle_
 
-You may want to remove old versions of cmake, flex, and bison as these will be rebuilt with the latest versions.  I've completed the process with and without the old versions present and not had any problems with version conflicts.
+You may want to remove old versions of cmake, flex, and bison as these will be rebuilt with the latest versions.  I've completed the process with and without the old versions present and not had any problems with version conflicts. 
 
-Build steps can be done as user or as root, but all install steps must be done as root.
+Build steps should be done as user, but all install steps must be done as root.
 
 
 ***************************
 install atlas, atlas-devel, blas, blas-devel, lapack, lapack-devel through yum.  
 
-These linear algebra libraries are required by NumPy 
+These linear algebra libraries are recommended by NumPy 
 
 {{{
 yum install atlas, atlas-devel, blas blas-devel lapack lapack-devel
 }}}
+
+
+_EDIT 23 Feb 2011:_
+There has been some discussion as to whether these libraries are required or not to build NumPy.  The NumPy documentation states that they are recommended but not required:
+
+http://docs.scipy.org/doc/numpy/user/install.html:
+"NumPy does not require any external linear algebra libraries to be
+installed. However, if these are available, NumPy’s setup script can
+detect them and use them for building. A number of different LAPACK
+library setups can be used, including optimized LAPACK libraries such
+as ATLAS, MKL or the Accelerate/vecLib framework on OS X."
+
+In my experience, I received errors during the build process when I didn't have at least one of these installed.  It is likely that all three are not necessary, but I have not isolated them individually to see which ones are disposable.
+
+The standard CentOS repo (base) has blas, blas-devel, lapack, and lapack-devel. For atlas and atlas-devel, you need to enable the epel repository:
+
+rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+
+I also have RPMFusion repositories enabled, but they are not required.  http://www.rpmfusion.org/Configuration
+
 
 ***************************
 GCC with MPFR 2.4.1
