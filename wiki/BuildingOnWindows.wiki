@@ -41,6 +41,7 @@ _Notes_ :
     * click "Generate"
   * Build:
     * open the solution file that cmake created (c:/RDKit/build/RDKit.sln) with Visual Studio.
+    * check to be sure that you're building a Release build (for some reason CMake produces solution files that default to doing a Debug build)
     * build the "ALL_BUILD" target; this will take a while and generate warnings, but there should be no errors.
     * build the "INSTALL" target
 
