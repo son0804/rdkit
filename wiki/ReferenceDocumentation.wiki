@@ -27,6 +27,8 @@ There are additional operators defined in the cartridge, but these are used for 
 = Functions =
 
 == Fingerprint Related ==
+
+=== Generating fingerprints ===
   * `morgan_fp(mol,int)` : returns an `sfp` which is the count-based Morgan fingerprint for a molecule using connectivity invariants. The second argument provides the radius. This is an ECFP-like fingerprint.
   * `morganbv_fp(mol,int)` : returns a `bfp` which is the bit vector Morgan fingerprint for a molecule using connectivity invariants. The second argument provides the radius. This is an ECFP-like fingerprint.
   * `featmorgan_fp(mol,int)` : returns an `sfp` which is the count-based Morgan fingerprint for a molecule using chemical-feature invariants. The second argument provides the radius. This is an FCFP-like fingerprint.
@@ -36,15 +38,24 @@ There are additional operators defined in the cartridge, but these are used for 
   * `atompairbv_fp(mol)` : returns a `bfp` which is the bit vector atom-pair fingerprint for a molecule.
   * `torsion_fp(mol)` : returns an `sfp` which is the count-based topological-torsion fingerprint for a molecule.
   * `torsionbv_fp(mol)` : returns a `bfp` which is the bit vector topological-torsion fingerprint for a molecule.
-
   * `layered_fp(mol)` : returns a `bfp` which is the layered fingerprint for a molecule. This is an experimental substructure fingerprint using hashed molecular subgraphs. 
 
+=== Working with fingerprints ===
+  * `tanimoto_sml(fp,fp)` : returns the Tanimoto similarity between two fingerprints of the same type (either two `sfp` or two `bfp` values).
+  * `dice_sml(fp,fp)` : returns the Dice similarity between two fingerprints of the same type (either two `sfp` or two `bfp` values).
+  * `size(bfp)` : returns the length of (number of bits in) a `bfp`.
+  * 'add(sfp,sfp)` : returns an `sfp` formed by the element-wise addition of the two `sfp` arguments.
+  * 'subtract(sfp,sfp)` : returns an `sfp` formed by the element-wise subtraction of the two `sfp` arguments.
 
 == Molecule Related ==
   * `is_valid_smiles(smiles)` : returns whether or not a SMILES string produces a valid RDKit molecule.
   * `is_valid_smarts(smarts)` : returns whether or not a SMARTS string produces a valid RDKit molecule.
-
-
+  * `mol_amw(mol)` : returns the AMW for a molecule.
+  * `mol_logp(mol)` : returns the MolLogp for a molecule.
+  * `mol_hba(mol)` : returns the number of Lipinski H-bond acceptors (i.e. number of Os and Ns) for a molecule.
+  * `mol_hbd(mol)` : returns the number of Lipinski H-bond donors (i.e. number of Os and Ns that have at least one H) for a molecule.
+  * `mol_numatoms(mol)` : returns the total number of atoms in a molecule.
+  * `mol_numheavyatoms(mol)` : returns the number of heavy atoms in a molecule.
 
 == Other ==
   * `rdkit_version()` : returns a string with the cartridge version number.
