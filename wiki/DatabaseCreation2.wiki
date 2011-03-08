@@ -162,7 +162,7 @@ Notice that this is substantially slower than the the pure SMILES query, this is
 emolecules=# select id,atompairbv_fp(m) as pairbv,torsionbv_fp(m) as torsionbv,morganbv_fp(m,2) as morganbv into fps from mols;
 SELECT 5017153
 Time: 2076418.889 ms
-emolecules=# create index mfp2idx on fps using gist(mfp2);
+emolecules=# create index mfp2idx on fps using gist(morganbv);
 CREATE INDEX
 Time: 196840.650 ms
 emolecules=# create index torsionbvidx on fps using gist(torsionbv);  
