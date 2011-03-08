@@ -9,6 +9,18 @@
   * `bfp` : a bit vector fingerprint (`ExplicitBitVect` in C++ and Python)
 
 
+= Parameters =
+
+  * `rdkit.tanimoto_threshold` : threshold value for the Tanimoto similarity operator. Searches done using Tanimoto similarity will only return results with a similarity of at least this value.
+  * `rdkit.dice_threshold` : threshold value for the Dice similiarty operator. Searches done using Dice similarity will only return results with a similarity of at least this value.
+
+= Operators =
+
+  * `%` : operator used for similarity searches using Tanimoto similarity. Returns whether or not the Tanimoto similarity between two fingerprints (either two `sfp` or two `bfp` values) exceeds `rdkit.tanimoto_threshold`.
+  * `#` : operator used for similarity searches using Dice similarity. Returns whether or not the Dice similarity between two fingerprints (either two `sfp` or two `bfp` values) exceeds `rdkit.dice_threshold`.
+
+
+
+
 = Functions =
 
-= Parameters =
