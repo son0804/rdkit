@@ -31,6 +31,7 @@ know about it and relay the information.
   * DatabaseCreation
   * ExampleSimilarityQueries
   * ExampleStructureQueries
+  * DatabaseCreation2 : an example using the emolecules.com database
 
 ----
 [http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
