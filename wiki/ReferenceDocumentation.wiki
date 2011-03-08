@@ -3,6 +3,12 @@
 
 = New Types =
 
+  * `mol` : an rdkit molecule
+  * `qmol` : an rdkit molecule containing query features (i.e. constructed from SMARTS)
+  * `sfp` : a sparse count vector fingerprint (`SparseIntVect` in C++ and Python)
+  * `bfp` : a bit vector fingerprint (`ExplicitBitVect` in C++ and Python)
+
+
 = Functions =
 
 = Parameters =
