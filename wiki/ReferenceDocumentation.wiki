@@ -16,11 +16,28 @@
 
 = Operators =
 
+== Similarity search ==
   * `%` : operator used for similarity searches using Tanimoto similarity. Returns whether or not the Tanimoto similarity between two fingerprints (either two `sfp` or two `bfp` values) exceeds `rdkit.tanimoto_threshold`.
   * `#` : operator used for similarity searches using Dice similarity. Returns whether or not the Dice similarity between two fingerprints (either two `sfp` or two `bfp` values) exceeds `rdkit.dice_threshold`.
+
+== Substructure and exact structure search ==
   * `@>` : substructure search operator. Returns whether or not the `mol` or `qmol` on the right is a substructure of the `mol` on the left.
   * `<@` : substructure search operator. Returns whether or not the `mol` or `qmol` on the left is a substructure of the `mol` on the right.
   * `@=` : returns whether or not two molecules are the same.
+
+== Molecule comparison ==
+  * `<` : returns whether or not the left `mol` is less than the right `mol`
+  * `>` : returns whether or not the left `mol` is greater than the right `mol`
+  * `=` : returns whether or not the left `mol` is equal to the right `mol`
+  * `<=` : returns whether or not the left `mol` is less than or equal to the right `mol`
+  * `>=` : returns whether or not the left `mol` is greater than or equal to the right `mol`
+
+_Note_: Two molecules are compared by making the following comparisons in order. Later comparisons are only made if the preceding values are equal:
+  # Number of atoms
+  # Number of bonds
+  # Molecular weight
+  # Number of rings
+If all of the above are the same and the second molecule is a substructure of the first, the molecules are declared equal, Otherwise (should not happen) the first molecule is arbitrarily defined to be less than the second.
 
 There are additional operators defined in the cartridge, but these are used for internal book keeping purposes.
 
@@ -44,8 +61,8 @@ There are additional operators defined in the cartridge, but these are used for 
   * `tanimoto_sml(fp,fp)` : returns the Tanimoto similarity between two fingerprints of the same type (either two `sfp` or two `bfp` values).
   * `dice_sml(fp,fp)` : returns the Dice similarity between two fingerprints of the same type (either two `sfp` or two `bfp` values).
   * `size(bfp)` : returns the length of (number of bits in) a `bfp`.
-  * 'add(sfp,sfp)` : returns an `sfp` formed by the element-wise addition of the two `sfp` arguments.
-  * 'subtract(sfp,sfp)` : returns an `sfp` formed by the element-wise subtraction of the two `sfp` arguments.
+  * `add(sfp,sfp)` : returns an `sfp` formed by the element-wise addition of the two `sfp` arguments.
+  * `subtract(sfp,sfp)` : returns an `sfp` formed by the element-wise subtraction of the two `sfp` arguments.
 
 == Molecule Related ==
   * `is_valid_smiles(smiles)` : returns whether or not a SMILES string produces a valid RDKit molecule.
