@@ -8,7 +8,6 @@
   * `sfp` : a sparse count vector fingerprint (`SparseIntVect` in C++ and Python)
   * `bfp` : a bit vector fingerprint (`ExplicitBitVect` in C++ and Python)
 
-
 = Parameters =
 
   * `rdkit.tanimoto_threshold` : threshold value for the Tanimoto similarity operator. Searches done using Tanimoto similarity will only return results with a similarity of at least this value.
@@ -39,7 +38,7 @@ _Note_: Two molecules are compared by making the following comparisons in order.
   # Number of rings
 If all of the above are the same and the second molecule is a substructure of the first, the molecules are declared equal, Otherwise (should not happen) the first molecule is arbitrarily defined to be less than the second.
 
-There are additional operators defined in the cartridge, but these are used for internal book keeping purposes.
+There are additional operators defined in the cartridge, but these are used for internal purposes.
 
 = Functions =
 
@@ -77,4 +76,4 @@ There are additional operators defined in the cartridge, but these are used for 
 == Other ==
   * `rdkit_version()` : returns a string with the cartridge version number.
 
-There are additional functions defined in the cartridge, but these are used for internal book keeping purposes.
+There are additional functions defined in the cartridge, but these are used for internal purposes.
