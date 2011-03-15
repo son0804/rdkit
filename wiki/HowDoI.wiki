@@ -10,4 +10,5 @@
 
 ==Working with groups of molecules==
 
-  * [UsingTheDbCLI Using The Db CLI] to quickly create and search molecular databases.
+  * [UsingTheDbCLI Using The Db CLI] to quickly create and search molecular databases
+  * [UsingTheDbCLI Using The Db CLI] calculate RMSD distances between two (or more) molecules
