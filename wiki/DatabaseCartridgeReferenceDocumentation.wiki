@@ -72,6 +72,7 @@ There are additional operators defined in the cartridge, but these are used for 
   * `mol_hbd(mol)` : returns the number of Lipinski H-bond donors (i.e. number of Os and Ns that have at least one H) for a molecule.
   * `mol_numatoms(mol)` : returns the total number of atoms in a molecule.
   * `mol_numheavyatoms(mol)` : returns the number of heavy atoms in a molecule.
+  * `mol_numrotatablebonds(mol)` : returns the number of rotatable bonds in a molecule (_available from {{{2011_03}}} release_).
 
 == Other ==
   * `rdkit_version()` : returns a string with the cartridge version number.
