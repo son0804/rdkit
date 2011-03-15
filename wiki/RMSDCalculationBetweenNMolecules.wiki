@@ -9,7 +9,7 @@ We sometimes need to calculate [http://en.wikipedia.org/wiki/Root_mean_square_de
 
 The following program (written in python 2.6) takes an SDF file as an input and generates all the RMSD distances between the molecules in that file.  These distances are written to an output file (user defined).
 
-So for an SDF with 5 conformers we will get 10 RMSD scores (typical n choose k problem, without repetition i.e. 5! / 2!(5-2)!  
+So for an SDF with 5 conformers we will get 10 RMSD scores - typical n choose k problem, without repetition i.e. 5! / 2!(5-2)!  
 
 {{{
 #!/usr/bin/python
@@ -111,4 +111,11 @@ if __name__ == "__main__":
     main()
 }}}
 
-*TL;DR : The line AllChem.AlignMol(mol1, mol2) returns the RMSD as a float and is the gist of this program.*
+This program may be executed at the command line in the following manner (provided you have your python interpreter at `/usr/bin/python`, otherwise edit the first line; the funnily named [http://en.wikipedia.org/wiki/Shebang_(Unix) shebang])
+
+{{{
+calculate_spread.py -f my_conformers.sdf -o my_conformers.rmsd_spread.txt
+}}}
+
+
+*TL;DR : The line `AllChem.AlignMol(mol1, mol2)` returns the RMSD as a float and is the gist of this program.*
