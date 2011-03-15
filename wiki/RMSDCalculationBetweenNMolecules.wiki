@@ -1,4 +1,4 @@
-#summary Some python code which calculates the RMSD distances for all the compounds in an SDF file.
+#summary Some python code which calculates the RMSD distances for all the molecules in an SDF file.
 #labels Tutorial
 
 = Introduction =
