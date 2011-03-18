@@ -66,7 +66,8 @@ def calculate_spread(molecules_file):
             # show something is being done ... because for large mol_count this will take some time
             print "Aligning molecule #%d with molecule #%d (%d molecules in all)" % (i, j, mol_count)
             # calculate RMSD and store in an array
-            spread_values.append(str(AllChem.AlignMol(mols[i], mols[j])))
+            # unlike AlignMol this takes care of symettry
+            spread_values.append(str(AllChem.GetBestRMS(mols[i], mols[j])))
     # return that array
     return spread_values
 
@@ -118,4 +119,4 @@ calculate_spread.py -f my_conformers.sdf -o my_conformers.rmsd_spread.txt
 }}}
 
 
-*TL;DR : The line `AllChem.AlignMol(mol1, mol2)` returns the RMSD as a float and is the gist of this program.*
+*TL;DR : The line `AllChem.GetBestRMS(mol1, mol2)` returns the RMSD as a float and is the gist of this program.  `GetBestRMS()` takes care of symettry unlike `AlignMol()`*
