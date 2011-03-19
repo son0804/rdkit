@@ -67,12 +67,16 @@ There are additional operators defined in the cartridge, but these are used for 
   * `is_valid_smiles(smiles)` : returns whether or not a SMILES string produces a valid RDKit molecule.
   * `is_valid_smarts(smarts)` : returns whether or not a SMARTS string produces a valid RDKit molecule.
   * `mol_amw(mol)` : returns the AMW for a molecule.
-  * `mol_logp(mol)` : returns the MolLogp for a molecule.
+  * `mol_logp(mol)` : returns the MolLogP for a molecule.
   * `mol_hba(mol)` : returns the number of Lipinski H-bond acceptors (i.e. number of Os and Ns) for a molecule.
   * `mol_hbd(mol)` : returns the number of Lipinski H-bond donors (i.e. number of Os and Ns that have at least one H) for a molecule.
   * `mol_numatoms(mol)` : returns the total number of atoms in a molecule.
   * `mol_numheavyatoms(mol)` : returns the number of heavy atoms in a molecule.
-  * `mol_numrotatablebonds(mol)` : returns the number of rotatable bonds in a molecule (_available from {{{2011_03}}} release_).
+  * `mol_numrotatablebonds(mol)` : returns the number of rotatable bonds in a molecule (_available from Q1 2011 (2011_03) release_).
+  * `mol_numheteroatoms(mol)` : returns the number of heteroatoms in a molecule (_available from Q1 2011 (2011_03) release_).
+  * `mol_numrings(mol)` : returns the number of rings in a molecule (_available from Q1 2011 (2011_03) release_).
+  * `mol_tpsa(mol)` : returns the topological polar surface area for a molecule (_available from Q1 2011 (2011_03) release_).
+
 
 == Other ==
   * `rdkit_version()` : returns a string with the cartridge version number.
