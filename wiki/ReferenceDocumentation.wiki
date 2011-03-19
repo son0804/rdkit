@@ -1,1 +1,2 @@
+#labels Deprecated
 This page has been moved to DatabaseCartridgeReferenceDocumentation
