@@ -19,15 +19,15 @@ If the descriptor is written in C++ it is normally also accessible from Python. 
 || MolWt || C++ (`$RDBASE/Code/GraphMol/Descriptors/MolDescriptors.h:CalcAMW()`) || ||
 || HeavyAtomCount || Python || ||
 || HeavyAtomMolWt || Python || ||
-|| NHOHCount || Python || ||
-|| NOCount || Python || ||
-|| NumHAcceptors || Python || ||
-|| NumHDonors || Python || ||
-|| NumHeteroatoms || Python || ||
-|| NumRotatableBonds || Python || ||
+|| NHOHCount || C++ || ||
+|| NOCount || C++ || ||
+|| NumHAcceptors || C++ || ||
+|| NumHDonors || C++ || ||
+|| NumHeteroatoms || C++ || ||
+|| NumRotatableBonds || C++ || ||
 || NumValenceElectrons || Python || ||
-|| RingCount || Python || ||
-|| TPSA || Python || _J. Med. Chem._ *43*:3714-7, (2000) ||
+|| RingCount || C++n || ||
+|| TPSA || C++ || _J. Med. Chem._ *43*:3714-7, (2000) ||
 || LabuteASA || C++ (`$RDBASE/Code/GraphMol/Descriptors/MolSurf.h:calcLabuteASA()`) || _J. Mol. Graph. Mod._  *18*:464-77 (2000) ||
 || PEOE_VSA1 - PEOE_VSA14 || Python || MOE-type descriptors using partial charges and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ||
 || SMR_VSA1 - SMR_VSA10  || Python || MOE-type descriptors using MR contributions and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ||
