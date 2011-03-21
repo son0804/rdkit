@@ -9,7 +9,7 @@ If the fingerprint is written in C++ it is normally also accessible from Python.
 || Atom pairs || C++ || _JCICS_ *25*:64-73 (1985) || `Chem.AtomPairs.Pairs.GetAtomPairFingerprint` || `.../GraphMol/Descriptors/AtomPairs.h` ||
 || Topological Torsions || C++ || _JCICS_ *27*:82-5 (1987) || `Chem.AtomPairs.Pairs.GetTopologicalTorsionFingerprint` || `.../GraphMol/Descriptors/AtomPairs.h` ||
 || MACCS Keys || Python || Using the 166 public keys implemented as SMARTS || `Chem.MACCSKeys.GenMACCSKeys` || N/A ||
-|| Morgan (circular) || C++ || A general implementation of circular fingerprints. Include ECFP-like and FCFP-like variants || `Chem.rdMolDescriptors.GetMorganFingerprint` || `.../GraphMol/Fingerprints/MorganFingerprints.h` ||
+|| Morgan (circular) || C++ || A general implementation of circular fingerprints. Includes ECFP-like and FCFP-like variants || `Chem.rdMolDescriptors.GetMorganFingerprint` || `.../GraphMol/Fingerprints/MorganFingerprints.h` ||
 || Layered || C++ || an experimental topological fingerprint intended to make fingerprinting queries more straightforward || `Chem.LayeredFingerprint` || `.../GraphMol/Fingerprints/Fingerprints.h` ||
 
 {{{
