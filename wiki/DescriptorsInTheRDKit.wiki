@@ -5,7 +5,7 @@ Here's a summary table of the available descriptors. Fingerprints are covered [F
 If the descriptor is written in C++ it is normally also accessible from Python. There's a sample code snippet at the bottom of the page showing how to use the descriptors
 
 || *Descriptor/Descriptor Family* || *Language* || *Notes* ||
-|| Gasteiger/Marsili Partial Charges || C++ (`$RDBASE/Code/GraphMol/PartialCharges/GasteigerCharges.h:computeGasteigerCharges()`) || _Tetrahedron_ *36*:3219-28 (1980) || 
+|| Gasteiger/Marsili Partial Charges || C++ || _Tetrahedron_ *36*:3219-28 (1980) || 
 || BalabanJ || Python ||  _Chem. Phys. Lett._ *89*:399-404 (1982)||
 || BertzCT || Python || _J. Am. Chem. Soc._ *103*:3599-601 (1981) ||
 || Ipc || Python || _J. Chem. Phys._ *67*:4517-33 (1977) ||
@@ -14,9 +14,9 @@ If the descriptor is written in C++ it is normally also accessible from Python. 
 || Chi0, Chi1 || Python || _Rev. Comput. Chem._ *2*:367-422 (1991) ||
 || Chi0n - Chi4n || Python || _Rev. Comput. Chem._ *2*:367-422 (1991) ||
 || Chi0v - Chi4v || Python || _Rev. Comput. Chem._ *2*:367-422 (1991) ||
-|| MolLogP || C++ (`$RDBASE/Code/GraphMol/Descriptors/Crippen.h:CalcCrippenDescriptors()`) || Wildman and Crippen _JCICS_ *39*:868-73 (1999) ||
-|| MolMR || C++ (`$RDBASE/Code/GraphMol/Descriptors/Crippen.h:CalcCrippenDescriptors()`) || Wildman and Crippen _JCICS_ *39*:868-73 (1999) ||
-|| MolWt || C++ (`$RDBASE/Code/GraphMol/Descriptors/MolDescriptors.h:CalcAMW()`) || ||
+|| MolLogP || C++ || Wildman and Crippen _JCICS_ *39*:868-73 (1999) ||
+|| MolMR || C++  || Wildman and Crippen _JCICS_ *39*:868-73 (1999) ||
+|| MolWt || C++ || ||
 || HeavyAtomCount || Python || ||
 || HeavyAtomMolWt || Python || ||
 || NHOHCount || C++ || ||
@@ -26,12 +26,12 @@ If the descriptor is written in C++ it is normally also accessible from Python. 
 || NumHeteroatoms || C++ || ||
 || NumRotatableBonds || C++ || ||
 || NumValenceElectrons || Python || ||
-|| RingCount || C++n || ||
+|| RingCount || C++ || ||
 || TPSA || C++ || _J. Med. Chem._ *43*:3714-7, (2000) ||
-|| LabuteASA || C++ (`$RDBASE/Code/GraphMol/Descriptors/MolSurf.h:calcLabuteASA()`) || _J. Mol. Graph. Mod._  *18*:464-77 (2000) ||
-|| PEOE_VSA1 - PEOE_VSA14 || Python || MOE-type descriptors using partial charges and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ||
-|| SMR_VSA1 - SMR_VSA10  || Python || MOE-type descriptors using MR contributions and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ||
-|| SlogP_VSA1 - SlogP_VSA12 || Python || MOE-type descriptors using LogP contributions and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ||
+|| LabuteASA || C++ || _J. Mol. Graph. Mod._  *18*:464-77 (2000) ||
+|| PEOE_VSA1 - PEOE_VSA14 || Python/C++ || MOE-type descriptors using partial charges and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ; underlying calculations, `calcPEOE_VSA`, is in C++, the assignment to functions for individual descriptors is in Python||
+|| SMR_VSA1 - SMR_VSA10  || Python/C++ || MOE-type descriptors using MR contributions and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ; underlying calculations, `calcSMR_VSA`, is in C++, the assignment to functions for individual descriptors is in Python ||
+|| SlogP_VSA1 - SlogP_VSA12 || Python/C++ || MOE-type descriptors using LogP contributions and surface area contributions http://www.chemcomp.com/journal/vsadesc.htm ; underlying calculations, `calcSlogP_VSA`, is in C++, the assignment to functions for individual descriptors is in Python ||
 || EState_VSA1 - EState_VSA11 || Python || MOE-type descriptors using EState indices and surface area contributions (developed at RD, not described in the CCG paper) ||
 || VSA_EState1 - VSA_EState10 || Python || MOE-type descriptors using EState indices and surface area contributions (developed at RD, not described in the CCG paper) ||
 || Topliss fragments || Python || implemented using a set of SMARTS definitions in `$(RDBASE)/Data/FragmentDescriptors.csv` ||
