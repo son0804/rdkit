@@ -36,13 +36,13 @@ If the descriptor is written in C++ it is normally also accessible from Python. 
 || VSA_EState1 - VSA_EState10 || Python || MOE-type descriptors using EState indices and surface area contributions (developed at RD, not described in the CCG paper) ||
 || Topliss fragments || Python || implemented using a set of SMARTS definitions in `$(RDBASE)/Data/FragmentDescriptors.csv` ||
 
-Most of the descriptors are straightforward to use from Python via the centralized `AvailDescriptors` module :
+Most of the descriptors are straightforward to use from Python via the centralized `Descriptors` module (prior to the Q4 2010 release this was called `AvailDescriptors` and the usage was somewhat different ) :
 {{{
-from rdkit.Chem import AvailDescriptors
+from rdkit.Chem import Descriptors
 from rdkit import Chem
 m = Chem.MolFromSmiles('c1ccccc1C(=O)O')
-AvailDescriptors.descDict['TPSA'](m)  # returns 37.30
-AvailDescriptors.descDict['MolLogP'](m) # returns 1.3848
+Descriptors.TPSA(m)  # returns 37.30
+Descriptors.MolLogP(m) # returns 1.3848
 }}}
 
 Partial charges are handled a bit differently:
