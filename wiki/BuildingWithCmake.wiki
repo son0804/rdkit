@@ -33,8 +33,8 @@ The instructions below are for the Q42009 release and subsequent releases.
   * follow the Installing Boost instructions above.
   * environment variables:
     * RDBASE: the root directory of the RDKit distribution (e.g. ~/RDKit)
-    * *Linux:* LD_LIBRARY_PATH: make sure it includes $RDBASE/bin and wherever the boost shared libraries were installed
-    * *Mac:* DYLD_LIBRARY_PATH: make sure it includes $RDBASE/bin and wherever the boost shared libraries were installed
+    * *Linux:* LD_LIBRARY_PATH: make sure it includes $RDBASE/lib and wherever the boost shared libraries were installed
+    * *Mac:* DYLD_LIBRARY_PATH: make sure it includes $RDBASE/lib and wherever the boost shared libraries were installed
     * The following are required if you are planning on using the Python wrappers:
       * PYTHONPATH: make sure it includes $RDBASE
   * Building: 
