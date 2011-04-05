@@ -125,7 +125,7 @@ If you get an error, you've done something wrong.
 Make sure all envvars are set properly:
 {{{
 $RDBASE = <the directory where you have installed the RDKit code>
-$LD_LIBRARY_PATH = /usr/local/lib:/$RDBASE/lib
+$LD_LIBRARY_PATH = /$RDBASE/lib:/usr/local/lib
 $PYTHONPATH = $RDBASE
 }}}
 {{{
