@@ -122,7 +122,7 @@ If you get an error, you've done something wrong.
 ----
 *RDKit*
 
-Make sure all environment variables are set properly.  For LD_LIBRARY_PATH, you may or may not need /usr/local/lib64 - it seems necessary for me.
+Make sure all environment variables are set properly.  For LD_LIBRARY_PATH, you may or may not need /usr/local/lib64 - it is necessary for me due to the way I've installed and built various pieces.
 {{{
 $RDBASE = <the directory where you have installed the RDKit code>
 $LD_LIBRARY_PATH = /$RDBASE/lib:/usr/local/lib:/usr/local/lib64
