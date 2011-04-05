@@ -3,6 +3,15 @@
 
 _Instructions courtesy of Kirk DeLisle_
 
+
+---
+
+The original instructions were performed on CentOS 5.5 using an SVN version of RDKit as of 15 Nov 2010.  
+
+5 Apr 2011:  On the system previously used to build RDKit (above), I was able to build RDKit_2011_03_1beta1 by following only the RDKit section of the instructions below.  
+
+---
+
 You may want to remove old versions of cmake, flex, and bison as these will be rebuilt with the latest versions.  I've completed the process with and without the old versions present and not had any problems with version conflicts. 
 
 Build steps should be done as user, but all install steps must be done as root.
