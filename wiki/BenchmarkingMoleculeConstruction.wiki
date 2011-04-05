@@ -1,0 +1,18 @@
+#summary Aspects of building a molecule
+#labels Development,Notes
+
+= Details =
+
+  * Test data set: the usual 10K pubchem compounds.
+  * Code version: svn, 5 April 2011
+  * Platform: Gulo/Windows, Python2.7, Boost1.45
+  
+= Results =
+
+|| What || Time || Command ||
+|| Parse with sanitization || 9.1s || `m2s=[x for x in Chem.SDMolSupplier('PubChemBackground.sdf')]` ||
+|| Parse with no sanitization || 4.6s || `ms=[x for x in Chem.SDMolSupplier('PubChemBackground.sdf',sanitize=False)]` ||
+|| Full Sanitization || 2.4s || `[Chem.SanitizeMol(x) for x in ms]` ||
+|| Assign Stereochemistry || 3.1s || `[Chem.AssignStereochemistry(x) for x in ms]`||
+|| Find SSSR || 1.2s || `[Chem.GetSSSR(x) for x in ms]` ||
+|| Symmetrize SSSR || 0.1s || `[Chem.GetSymmSSSR(x) for x in ms]` ||
