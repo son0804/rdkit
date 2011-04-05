@@ -122,10 +122,10 @@ If you get an error, you've done something wrong.
 ----
 *RDKit*
 
-Make sure all envvars are set properly:
+Make sure all environment variables are set properly.  For LD_LIBRARY_PATH, you may or may not need /usr/local/lib64 - it seems necessary for me.
 {{{
 $RDBASE = <the directory where you have installed the RDKit code>
-$LD_LIBRARY_PATH = /$RDBASE/lib:/usr/local/lib
+$LD_LIBRARY_PATH = /$RDBASE/lib:/usr/local/lib:/usr/local/lib64
 $PYTHONPATH = $RDBASE
 }}}
 {{{
