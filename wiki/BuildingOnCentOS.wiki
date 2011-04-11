@@ -147,6 +147,14 @@ make
 make install
 }}}
 
+*Testing the Build (optional, but recommended)*
+from the Building with CMake wiki
+
+    * create the databases used by the Python tests, requires sqlite3 to be installed:
+          o sqlite3 $RDBASE/Data/RDTests.sqlt < $RDBASE/rdkit/Dbase/test_data/RDTests.sqlite
+          o sqlite3 $RDBASE/Data/RDData.sqlt < $RDBASE/rdkit/Dbase/test_data/RDData.sqlite 
+    * cd to $RDBASE/build and do ctest 
+
 
 ----
 *FreeType 2.4.3*
