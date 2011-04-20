@@ -4,7 +4,7 @@
 = Successful Build and Test =
 
 || *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
-|| 20/04/2011 || svn || Scientific Linux v6 || g++-4.4.4 || 1.41.0 || 2.6.5 || Greg Landrum || system boost and python ||
+|| 20/04/2011 || svn || Scientific Linux v6 || g++-4.4.4 || 1.41.0 || 2.6.5 || Greg Landrum || system boost and python; cairo MolDraw tests fail ||
 || 14/02/2011 || svn || Windows 7 (64bit) || VS10-Express || 1.44.0 || 2.6.6 || Greg Landrum || 64bit windows, 32bit RDKit build, used boostpro binary boost distribution ||
 || 1/12/2010 || svn || Windows 7 (64bit) || VS9-Express || 1.44.0 || 2.7.1 || Greg Landrum || 64bit windows, 32bit RDKit build ||
 || 24/11/2010 || svn || Ubuntu(10.10) || g++-4.4.4 || 1.42.0 || 2.6.6 || Greg Landrum || ||
