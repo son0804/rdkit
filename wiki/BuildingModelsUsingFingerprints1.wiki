@@ -31,9 +31,100 @@ cPickle.dump(pts,file('pts.pkl','wb+'))
 }}}
 
 
-= Details =
+= Building a single decision tree =
+{{{
+import cPickle,numpy
+from rdkit.ML.DecTree.BuildSigTree import BuildSigTree
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+pts = cPickle.load(file('pts.pkl','rb'))
+t = BuildSigTree(pts,nPossibleRes=2,maxDepth=3)
+
+# simple results report:
+confusionMat=numpy.zeros((2,2),numpy.int)
+for pt in pts:
+    confusionMat[pt[-1]][t.ClassifyExample(pt)]+=1
+
+print confusionMat
+}}}
+
+The `maxDepth` argument above is the maximum number of layers below the root that will be added to the decision tree. It's a useful way to lower the risk of overfitting.
+
+The name `SigTree` is historic: we frequently used pharmacophoric fingerprints that we called signatures.
+
+= Building a bag of decision trees =
+
+For historic reasons, bagged classifiers in the RDKit are known as "composite models".
+
+{{{
+import cPickle
+from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
+from rdkit.ML.Composite.Composite import Composite
+from rdkit.ML.DecTree import CrossValidate
+from rdkit.ML import ScreenComposite
+
+pts = cPickle.load(file('pts.pkl','rb'))
+
+# build a composite (bag) with 10 trees:
+cmp = Composite()
+cmp.Grow(pts,attrs=[1],nPossibleVals=[2],nTries=10,
+         buildDriver=CrossValidate.CrossValidationDriver,
+         treeBuilder=SigTreeBuilder,needsQuantization=False,maxDepth=3)
+
+# calculate and print error statistics using the OOB approach:
+res = ScreenComposite.ShowVoteResults(range(len(pts)),pts,cmp,2,0,errorEstimate=True)
+}}}
+
+Here's what that outputs to console:
+{{{
+	*** Vote Results ***
+misclassified: 93/242 (%38.43)	93/242 (%38.43)
+
+average correct confidence:    0.8520
+average incorrect confidence:  0.7673
+
+	Results Table:
+
+          72      61      |  68.57
+          32      77      |  55.40
+     ------- ------- 
+       69.23   55.80 
+}}}
+
+This helps to understand the contents of the tuple returned by `ShowVoteResults`:
+{{{
+(149, 93, 0, 0.8520, 0.7673, 0.0, 
+array([[72, 32],
+       [61, 77]]))
+}}}
+
+Predictions from the composite model each have a "confidence" associated with them. This is the fraction of trees that agreed on the prediction (so for a binary model prediction confidence ranges from 0.5 to 1.0). By ignoring predictions with low confidence, the accuracy of the model can sometimes be improved:
+
+{{{
+>>> res = ScreenComposite.ShowVoteResults(range(len(pts)),pts,cmp,2,0.6,errorEstimate=True)
+
+	*** Vote Results ***
+misclassified: 65/242 (%26.86)	65/188 (%34.57)
+skipped: 54/242 (% 22.31)
+
+average correct confidence:    0.9142
+average incorrect confidence:  0.8747
+
+	Results Table:
+
+          53      35      |  63.10
+          30      70      |  66.04
+     ------- ------- 
+       63.86   66.67 
+
+>>> res
+(123,
+ 65,
+ 54,
+ 0.9142082849399924,
+ 0.87472527472527439,
+ 0.5370370370370372,
+ array([[53, 30],
+       [35, 70]]))
+}}}
+
+In this case it doesn't really help since the model isn't particularly predictive.
