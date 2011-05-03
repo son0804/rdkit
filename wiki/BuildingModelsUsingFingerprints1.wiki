@@ -70,7 +70,7 @@ cmp.Grow(pts,attrs=[1],nPossibleVals=[2],nTries=10,
          buildDriver=CrossValidate.CrossValidationDriver,
          treeBuilder=SigTreeBuilder,needsQuantization=False,maxDepth=3)
 
-# calculate and print error statistics using the OOB approach:
+# calculate and print error statistics using the out-of-bag approach:
 res = ScreenComposite.ShowVoteResults(range(len(pts)),pts,cmp,2,0,errorEstimate=True)
 }}}
 
@@ -138,3 +138,15 @@ Composite models can be also be pickled to disk and then reloaded to classify ne
 (1, 0.90000000000000002)
 }}}
 Each result is a `(prediction,confidence)` tuple.
+
+= Building a random forest =
+
+This requires one additional parameter to the `Grow` method - `randomDescriptors`, the number of random bits to consider at each tree node:
+
+{{{
+# build a composite (bag) with 10 trees:
+cmp = Composite()
+cmp.Grow(pts,attrs=[1],nPossibleVals=[2],nTries=10,randomDescriptors=20,
+         buildDriver=CrossValidate.CrossValidationDriver,
+         treeBuilder=SigTreeBuilder,needsQuantization=False,maxDepth=3)
+}}}
