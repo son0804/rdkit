@@ -128,3 +128,13 @@ average incorrect confidence:  0.8747
 }}}
 
 In this case it doesn't really help since the model isn't particularly predictive.
+
+Composite models can be also be pickled to disk and then reloaded to classify new points:
+{{{
+>>> cmp = cPickle.load(file('cmp.pkl','rb'))
+>>> cmp.ClassifyExample(pts[0])
+(0, 0.5)
+>>> cmp.ClassifyExample(pts[1])
+(1, 0.90000000000000002)
+}}}
+Each result is a `(prediction,confidence)` tuple.
