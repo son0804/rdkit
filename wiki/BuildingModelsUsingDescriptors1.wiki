@@ -73,7 +73,7 @@ For historic reasons, bagged classifiers in the RDKit are known as "composite mo
 
 {{{
 import cPickle
-from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
+from rdkit.ML.DecTree.BuildQuantTree import BuildQuantTree
 from rdkit.ML.Composite.Composite import Composite
 from rdkit.ML.DecTree import CrossValidate
 from rdkit.ML import ScreenComposite
@@ -82,9 +82,9 @@ pts = cPickle.load(file('pts.pkl','rb'))
 
 # build a composite (bag) with 10 trees:
 cmp = Composite()
-cmp.Grow(pts,attrs=[1],nPossibleVals=[2],nTries=10,
+cmp.Grow(pts,attrs=attrs,nPossibleVals=nPossible,nTries=10,
          buildDriver=CrossValidate.CrossValidationDriver,
-         treeBuilder=SigTreeBuilder,needsQuantization=False,maxDepth=3)
+         treeBuilder=QuantTreeBoot,needsQuantization=False,nQuantBounds=boundsPerVar,maxDepth=3)
 
 # calculate and print error statistics using the out-of-bag approach:
 res = ScreenComposite.ShowVoteResults(range(len(pts)),pts,cmp,2,0,errorEstimate=True)
