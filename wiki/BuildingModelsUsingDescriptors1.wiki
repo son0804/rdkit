@@ -17,8 +17,14 @@ import cPickle
 ms = [x for x in Chem.SDMolSupplier('hERG_inhibition_dataset.sdf') if x is not None]
 
 nms=[x[0] for x in Descriptors._descList]
+# "MolecularFormula" shows up in the list of descriptors, but it's
+# not numeric, so remove it from the list:
 nms.remove('MolecularFormula')
+
+# a descriptor calculator makes it easy to generate sets of descriptors:
 calc = MoleculeDescriptors.MolecularDescriptorCalculator(nms)
+
+# generate the descriptors (can take a while):
 descrs = [calc.CalcDescriptors(x) for x in ms]
 ndescrs = len(calc.GetDescriptorNames())
 
@@ -30,6 +36,7 @@ for i,m in enumerate(ms):
         act=0
     pts.append([m.GetProp('CompoundName')]+list(descrs[i])+[act])
 
+# now write to disk so we don't have to ever repeat the calculation:
 cPickle.dump(pts,file('descrs.pkl','wb+'))
 }}}
 
@@ -38,11 +45,17 @@ cPickle.dump(pts,file('descrs.pkl','wb+'))
 {{{
 from rdkit.ML.DecTree.BuildQuantTree import BuildQuantTree,QuantTreeBoot
 
+# number of quantization bounds to automatically find for each descriptor:
 boundsPerVar = [0]+[1]*ndescrs+[0]
+# number of possible values of each descriptor:
 nPossible = [0]+[2]*ndescrs+[2]
+# list of descriptors to use:
 attrs = range(1,ndescrs+1)
+
+# build the tree:
 t = QuantTreeBoot(pts,attrs,nPossible,boundsPerVar)
 
+# generate the confusion matrix:
 confusionMat=numpy.zeros((2,2),numpy.int)
 for pt in pts:
     confusionMat[pt[-1]][t.ClassifyExample(pt)]+=1
@@ -52,7 +65,7 @@ print confusionMat
 
 The `maxDepth` argument above is the maximum number of layers below the root that will be added to the decision tree. It's a useful way to lower the risk of overfitting.
 
-*FIX* info about descriptor quantization
+Decision trees require quantized descriptors (i.e. a small number of possible integer values). QuantTrees (built in the example above) can automatically generate appropriate quantization bounds.
 
 = Building a bag of decision trees =
 
