@@ -73,7 +73,7 @@ For historic reasons, bagged classifiers in the RDKit are known as "composite mo
 
 {{{
 import cPickle
-from rdkit.ML.DecTree.BuildQuantTree import BuildQuantTree
+from rdkit.ML.DecTree.BuildQuantTree import BuildQuantTree, QuantTreeBoot
 from rdkit.ML.Composite.Composite import Composite
 from rdkit.ML.DecTree import CrossValidate
 from rdkit.ML import ScreenComposite
