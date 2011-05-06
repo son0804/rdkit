@@ -78,16 +78,24 @@ from rdkit.ML.Composite.Composite import Composite
 from rdkit.ML.DecTree import CrossValidate
 from rdkit.ML import ScreenComposite
 
-pts = cPickle.load(file('pts.pkl','rb'))
+pts = cPickle.load(file('descrs.pkl','rb'))
+ndescrs = len(pts[0])-2
+# number of quantization bounds to automatically find for each descriptor:
+boundsPerVar = [0]+[1]*ndescrs+[0]
+# number of possible values of each descriptor:
+nPossible = [0]+[2]*ndescrs+[2]
+# list of descriptors to use:
+attrs = range(1,ndescrs+1)
 
 # build a composite (bag) with 10 trees:
 cmp = Composite()
 cmp.Grow(pts,attrs=attrs,nPossibleVals=nPossible,nTries=10,
          buildDriver=CrossValidate.CrossValidationDriver,
-         treeBuilder=QuantTreeBoot,needsQuantization=False,nQuantBounds=boundsPerVar,maxDepth=3)
+         treeBuilder=QuantTreeBoot, needsQuantization=False,
+         nQuantBounds=boundsPerVar, maxDepth=3)
 
 # calculate and print error statistics using the out-of-bag approach:
-res = ScreenComposite.ShowVoteResults(range(len(pts)),pts,cmp,2,0,errorEstimate=True)
+res = ScreenComposite.ShowVoteResults(range(len(pts)), pts, cmp, 2, 0, errorEstimate=True)
 }}}
 
 Here's what that outputs to console:
@@ -139,8 +147,3 @@ average incorrect confidence:  0.9702
 }}}
 
 There is some improvement in accuracy at the expense of not classifying 22% of the data.
-
-Composite models can be also be pickled to disk and then reloaded to classify new points:
-{{{
-}}}
-Each result is a `(prediction,confidence)` tuple.
