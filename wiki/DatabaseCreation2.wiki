@@ -29,7 +29,7 @@ Now create and populate a table holding the raw data:
 ~/RDKit_trunk/Data/emolecules > psql -c 'create table raw_data (id SERIAL, smiles text, emol_id integer)' emolecules 
 NOTICE:  CREATE TABLE will create implicit sequence "raw_data_id_seq" for serial column "raw_data.id"
 CREATE TABLE
-~/RDKit_trunk/Data/emolecules > sed '1d; s/\\/\\\\/' eMolecules-2010-03-01.smi | psql -c "copy raw_data (smiles,emol_id) from STDIN with delimiter ' '" emolecules
+~/RDKit_trunk/Data/emolecules > sed '1d; s/\\/\\\\/g' eMolecules-2010-03-01.smi | psql -c "copy raw_data (smiles,emol_id) from STDIN with delimiter ' '" emolecules
 }}}
 
 Create the molecule table, but only for SMILES that the RDKit accepts:
