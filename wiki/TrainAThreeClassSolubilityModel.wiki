@@ -1,0 +1,56 @@
+= Under Construction =
+
+Inspired by Greg's mail to share code and write user tutorials, I decided to show an example how I would use RDKit for training QSAR models
+
+== Train a DecisionTree based on the Huuskonen data set ==
+
+{{{
+from rdkit import Chem
+from rdkit import ML
+from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
+from rdkit.ML.Composite.Composite import Composite
+from rdkit.ML.DecTree import CrossValidate
+
+from rdkit.Chem import AllChem
+ms = [x for x in Chem.SDMolSupplier('train.sdf') if x is not None]
+
+# build fingerprints:
+fps = [AllChem.GetMorganFingerprintAsBitVect(x,2,2048) for x in ms]
+
+nPossible = [0]+[2]*2048+[3]
+
+# now build our list of points:
+pts = []
+for i,m in enumerate(ms):
+    if m.GetProp('SOL_classification')=='(A) low':
+        act=2
+    elif m.GetProp('SOL_classification')=='(B) medium':
+        act=1
+    else: 
+        act=0
+    pts.append([m.GetProp('NAME'),fps[i],act])
+
+# and save them to a file:
+import cPickle
+cPickle.dump(pts,file('pts.pkl','wb+'))
+
+# Building a single decision tree
+
+import cPickle,numpy
+from rdkit.ML.DecTree.BuildSigTree import BuildSigTree
+
+pts = cPickle.load(file('pts.pkl','rb'))
+
+cmp = Composite()
+cmp.Grow(pts,attrs=[1],nPossibleVals=[3],nTries=10,
+         buildDriver=CrossValidate.CrossValidationDriver,
+         treeBuilder=SigTreeBuilder,needsQuantization=False,maxDepth=3)
+
+t = BuildSigTree(pts,nPossibleRes=3,maxDepth=3)
+
+# simple results report:
+confusionMat=numpy.zeros((3,3),numpy.int)
+for pt in pts:
+    confusionMat[pt[-1]][t.ClassifyExample(pt)]+=1
+print confusionMat
+}}}
