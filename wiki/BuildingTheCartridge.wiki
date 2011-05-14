@@ -36,7 +36,7 @@ shared_preload_libraries = 'rdkit'
 This way configuration variables provided by the cartridge will be available since server startup and you could avoid errors like this:
 
 {{{
-how rdkit.tanimoto_threshold;
+show rdkit.tanimoto_threshold;
 
 ERROR:  unrecognized configuration parameter "rdkit.tanimoto_threshold"
 
