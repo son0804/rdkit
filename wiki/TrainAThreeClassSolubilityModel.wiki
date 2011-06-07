@@ -1,3 +1,5 @@
+#summary Train a DecisionTree based on the Huuskonen data set
+
 = Under Construction =
 
 This is the trainig set 
