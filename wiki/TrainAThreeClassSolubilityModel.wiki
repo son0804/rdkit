@@ -16,7 +16,7 @@ solu  > -3.0 and solu <= -1.0 : SOL_classification = (B) medium
 solu  > -1.0                  : SOL_classification = (C) high
 }}}
 
-== Train a DecisionTree based on the Huuskonen data set ==
+== Train a DecisionTree ==
 
 {{{
 from rdkit import Chem
@@ -67,4 +67,11 @@ confusionMat=numpy.zeros((3,3),numpy.int)
 for pt in pts:
     confusionMat[pt[-1]][t.ClassifyExample(pt)]+=1
 print confusionMat
+}}}
+
+== The output ==
+{{{
+[[  4  16 186]
+ [  0 100 302]
+ [  0  23 394]]
 }}}
