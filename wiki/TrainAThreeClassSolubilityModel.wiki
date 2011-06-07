@@ -17,10 +17,9 @@ solu  > -1.0                  : SOL_classification = (C) high
 }}}
 This gives the following statistics:
 {{{
-   
-e (A) low     417 compounds
-x (B) medium  402 compounds
-p (C) high    206 compounds
+(A) low     417 compounds
+(B) medium  402 compounds
+(C) high    206 compounds
 }}}
 == Train a DecisionTree ==
 
