@@ -15,7 +15,13 @@ solu <= -3.0                  : SOL_classification = (A) low
 solu  > -3.0 and solu <= -1.0 : SOL_classification = (B) medium
 solu  > -1.0                  : SOL_classification = (C) high
 }}}
-
+This gives the following statistics:
+{{{
+   calc
+e (A) low     417 compounds
+x (B) medium  402 compounds
+p (C) high    206 compounds
+}}}
 == Train a DecisionTree ==
 
 {{{
