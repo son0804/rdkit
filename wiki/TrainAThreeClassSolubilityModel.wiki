@@ -86,5 +86,5 @@ print confusionMat
      (A) (B)  (C)
 e (A)  4  16  186
 x (B)  0 100  302
-p (C)  0  23 394
+p (C)  0  23  394
 }}}
