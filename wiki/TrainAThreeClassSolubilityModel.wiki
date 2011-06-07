@@ -17,7 +17,7 @@ solu  > -1.0                  : SOL_classification = (C) high
 }}}
 This gives the following statistics:
 {{{
-   calc
+   
 e (A) low     417 compounds
 x (B) medium  402 compounds
 p (C) high    206 compounds
@@ -76,8 +76,12 @@ print confusionMat
 }}}
 
 == The output ==
-{{{
+{{{ 
 [[  4  16 186]
  [  0 100 302]
  [  0  23 394]]
 }}}
+    *calc*
+*e* 4  16 186
+*x* 0 100 302
+*p* 0  23 394
