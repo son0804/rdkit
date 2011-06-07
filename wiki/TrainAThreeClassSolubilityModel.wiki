@@ -81,7 +81,9 @@ print confusionMat
  [  0  23 394]]
 }}}
 
+{{{
     calc
 e 4  16 186
 x 0 100 302
 p 0  23 394
+}}}
