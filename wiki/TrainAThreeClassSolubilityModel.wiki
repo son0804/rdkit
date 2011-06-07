@@ -1,6 +1,8 @@
 = Under Construction =
 
+This is the trainig set 
 [http://rdkit.svn.sourceforge.net/viewvc/rdkit/trunk/Docs/Book/data/solubility.train.sdf?revision=1724]
+Downloaded from [http://www.cheminformatics.org/]
 
 Inspired by Greg's mail to share code and write user tutorials, I decided to show an example how I would use RDKit for training QSAR models
 
