@@ -10,13 +10,9 @@ Inspired by Greg's mail to share code and write user tutorials, I decided to sho
 
 == The Data Set ==
 In the training set, there is a total number of 1025 molecules. The solubility classes are defined as follows:
-if SOL <= -3.0 then 
-	SOL_classification := '(A) low';
-elsif (SOL > -3.0) and (SOL <= -1.0) THEN
-	SOL_classification := '(B) medium';
-else
-	SOL_classification := '(C) high';
-end if;
+solubility <= -3.0                        : SOL_classification = (A) low
+solubility  > -3.0 and solubility <= -1.0 : SOL_classification = (B) medium
+solubility  > -1.0                        : SOL_classification = (C) high
 
 == Train a DecisionTree based on the Huuskonen data set ==
 
