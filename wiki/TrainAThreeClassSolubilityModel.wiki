@@ -8,6 +8,16 @@ Downloaded from [http://www.cheminformatics.org/datasets/huuskonen/index.html]
 
 Inspired by Greg's mail to share code and write user tutorials, I decided to show an example how I would use RDKit for training QSAR models
 
+== The Data Set ==
+In the training set, there is a total number of 1025 molecules. The solubility classes are defined as follows:
+if SOL <= -3.0 then 
+	SOL_classification := '(A) low';
+elsif (SOL > -3.0) and (SOL <= -1.0) THEN
+	SOL_classification := '(B) medium';
+else
+	SOL_classification := '(C) high';
+end if;
+
 == Train a DecisionTree based on the Huuskonen data set ==
 
 {{{
