@@ -83,10 +83,10 @@ print confusionMat
 
 {{{
     calc
-     (A) (B)  (C)
-e (A)  4  16  186
+     (C) (B)  (A)
+e (C)  4  16  186
 x (B)  0 100  302
-p (C)  0  23  394
+p (A)  0  23  394
 }}}
 Rather bad, isn't it?
 
