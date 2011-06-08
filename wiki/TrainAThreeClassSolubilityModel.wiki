@@ -121,3 +121,19 @@ cmp = Composite()
 cmp.Grow(pts,attrs=attrs,nPossibleVals=nPossible,nTries=10,buildDriver=CrossValidate.CrossValidationDriver,treeBuilder=QuantTreeBoot, needsQuantization=False,nQuantBounds=boundsPerVar, maxDepth=3)
 res = ScreenComposite.ShowVoteResults(range(len(pts)), pts, cmp, 3, 0,errorEstimate=True)
 }}}
+This gives much better statistics:
+{{{
+        *** Vote Results ***
+misclassified: 237/1025 (%23.12)        237/1025 (%23.12)
+
+average correct confidence:    0.9222
+average incorrect confidence:  0.8135
+
+        Results Table:
+
+         135      50       0      |  65.22
+          71     307      71      |  76.18
+           0      45     346      |  82.78
+     ------- ------- ------- 
+       65.53   76.37   82.97
+}}}
