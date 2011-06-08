@@ -137,3 +137,5 @@ average incorrect confidence:  0.8135
      ------- ------- ------- 
        65.53   76.37   82.97
 }}}
+How well does the model perform on a test set?
+_STILL TO WRITE_
