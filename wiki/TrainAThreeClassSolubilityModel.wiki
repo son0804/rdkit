@@ -88,3 +88,36 @@ e (A)  4  16  186
 x (B)  0 100  302
 p (C)  0  23  394
 }}}
+Rather bad, isn't it?
+
+Let's go with a descriptor-based model
+{{{
+nms=[x[0] for x in Descriptors._descList]
+nms.remove('MolecularFormula')
+calc = MoleculeDescriptors.MolecularDescriptorCalculator(nms)
+descrs = [calc.CalcDescriptors(x) for x in ms]
+ndescrs = len(calc.GetDescriptorNames())
+
+pts=[]
+
+for i,m in enumerate(ms):
+    if m.GetProp('SOL_classification')=='(A) low':
+        act=2
+    elif m.GetProp('SOL_classification')=='(B) medium':
+        act=1
+    else:
+        act = 0
+    pts.append([m.GetProp('NAME')]+list(descrs[i])+[act])
+
+cPickle.dump(pts,file('descrs.pkl','wb+'))
+
+from rdkit.ML import ScreenComposite
+pts = cPickle.load(file('descrs.pkl','rb'))
+ndescrs = len(pts[0])-2
+boundsPerVar = [0]+[1]*ndescrs+[0]
+nPossible = [0]+[2]*ndescrs+[3]
+attrs = range(1,ndescrs+1)
+cmp = Composite()
+cmp.Grow(pts,attrs=attrs,nPossibleVals=nPossible,nTries=10,buildDriver=CrossValidate.CrossValidationDriver,treeBuilder=QuantTreeBoot, needsQuantization=False,nQuantBounds=boundsPerVar, maxDepth=3)
+res = ScreenComposite.ShowVoteResults(range(len(pts)), pts, cmp, 3, 0,errorEstimate=True)
+}}}
