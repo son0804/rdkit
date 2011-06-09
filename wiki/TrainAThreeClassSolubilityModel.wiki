@@ -156,5 +156,5 @@ for i,m in enumerate(test1):
 cPickle.dump(pts_test1,file('descrs_test1.pkl','wb+'))
 
 #cmp_test1 = cPickle.load(file('descrs_test1.pkl','rb'))
-cmp.ClassifyExample(pts_test1[0]
+cmp.ClassifyExample(pts_test1[0])
 }}}
