@@ -140,11 +140,11 @@ average incorrect confidence:  0.8135
 How well does the model perform on a test set?
 {{{
 test1 = [x for x in Chem.SDMolSupplier('test1.sdf') if x is not None]
-nms1=[x[0] for x in Descriptors._descList]
-nms1.remove('MolecularFormula')
-calc1 = MoleculeDescriptors.MolecularDescriptorCalculator(nms1)
-descrs1 = [calc1.CalcDescriptors(x) for x in test1]
-test1_pts = []
+nms_test1=[x[0] for x in Descriptors._descList]
+nms_test1.remove('MolecularFormula')
+calc_test1 = MoleculeDescriptors.MolecularDescriptorCalculator(nms_test1)
+descrs_test1 = [calc_test1.CalcDescriptors(x) for x in test1]
+pts_test1 = []
 for i,m in enumerate(test1):
     if m.GetProp('SOL_classification')=='(A) low':
         act=2
@@ -152,9 +152,9 @@ for i,m in enumerate(test1):
         act=1
     else:
         act = 0
-    test1_pts.append([m.GetProp('NAME')]+list(descrs1[i])+[act])
-cPickle.dump(test1_pts,file('descrs_test1.pkl','wb+'))
-'''
-cmp_test1 = cPickle.load(file('descrs_test1.pkl','rb'))
-cmp.ClassifyExample(test1_pts[0])
+    pts_test1.append([m.GetProp('NAME')]+list(descrs_test1[i])+[act])
+cPickle.dump(pts_test1,file('descrs_test1.pkl','wb+'))
+
+#cmp_test1 = cPickle.load(file('descrs_test1.pkl','rb'))
+cmp.ClassifyExample(pts_test1[0]
 }}}
