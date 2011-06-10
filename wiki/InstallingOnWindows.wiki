@@ -4,8 +4,8 @@
 = Pre-requisites =
 
 == Required ==
- * The windows binary build from http://rdkit.googlecode.com/files/RDKit_Q22009_1.win32.tgz
- * Python 2.5 or 2.6 (from http://www.python.org/)
+ * The windows binary build from http://rdkit.googlecode.com/files/RDKit_2011_03_2.win32.py26.zip
+ * Python 2.6 (from http://www.python.org/)
  * numpy (from http://numpy.scipy.org/)
  * PIL: (from http://www.pythonware.com/products/pil/index.htm)
 
@@ -19,10 +19,10 @@
 
 Put it somewhere without a space in the name, i.e. `c:/`
 
-The rest of this will assume that the installation is in `c:/RDKit_Q22009_1`
+The rest of this will assume that the installation is in `c:/RDKit_Q12011_2`
 
 = Environment variables =
- * `RDBASE`: `c:/RDKit_Q22009_1`  *Note* this is optional for the Q3 2010 and later releases.
+ * `RDBASE`: `c:/RDKit_Q12011_2`  *Note* this is optional for the Q3 2010 and later releases.
  * `PYTHONPATH`: `%RDBASE%` if there is already a PYTHONPATH, put `;%RDBASE` at the end.
  * *Releases prior to Q3 2010*: `PATH`: add `;%RDBASE%/bin` to the end
  * *Q3 2010 and more recent releases*: `PATH`: add `;%RDBASE%/lib` to the end
