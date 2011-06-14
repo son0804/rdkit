@@ -152,8 +152,25 @@ for i,m in enumerate(test1):
     else:
         act = 0
     pts_test1.append([m.GetProp('NAME')]+list(descrs_test1[i])+[act])
-cPickle.dump(pts_test1,file('descrs_test1.pkl','wb+'))
+cPickle.dump(pts_test1,file('descrs_simple_test1.pkl','wb+'))
 
-#cmp_test1 = cPickle.load(file('descrs_test1.pkl','rb'))
+cmp_test1 = cPickle.load(file('descrs_test1.pkl','rb'))
 cmp.ClassifyExample(pts_test1[0])
+res = ScreenComposite.ShowVoteResults(range(len(pts_test1)), pts, cmp, 3, 0,errorEstimate=False)
+}}}
+This gives a very good statistics:
+{{{
+        *** Vote Results ***
+misclassified: 24/257 (%9.34)   24/257 (%9.34)
+
+average correct confidence:    0.9635
+average incorrect confidence:  0.6833
+
+        Results Table:
+
+          19       4       0      |  76.00
+           5      74      14      |  92.50
+           0       1     140      |  90.32
+     ------- ------- ------- 
+       79.17   93.67   90.91 
 }}}
