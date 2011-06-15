@@ -17,7 +17,7 @@ The instructions below are for the Q42009 release and subsequent releases.
 *Mac Note* : I have tested this under Leopard using the standard MacOS development tools and python 2.5 distribution.
 
 == Installing Boost ==
-  * *NOTE*: if your linux distribution has a boost-devel package including the python,thre and regex libraries, you may be able to use that and save yourself the steps below. I haven't tested this. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults._
+  * *NOTE*: if your linux distribution has a boost-devel package including the python,thre and regex libraries, you may be able to use that and save yourself the steps below. I haven't tested this. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults. There is a workaround for this below in the [#Frequently_Encountered_Problems Frequently Encountered Problems] section._
   * download the boost source distribution from [http://www.boost.org the boost web site]
   * extract the source somewhere on your machine, you're going to need it to build the RDKit as well as boost. (e.g. `/usr/local/src/boost_1_40_0`)
   * The following are required if you are planning on using the Python wrappers:
@@ -82,7 +82,7 @@ You can completely disable building of the python wrappers by setting the config
 
 In each case I've replaced specific pieces of the path with `...`.
 
-*Problem*
+*Problem:*
 {{{
 Linking CXX shared library libSLNParse.so
 /usr/bin/ld: .../libboost_regex.a(cpp_regex_traits.o): relocation R_X86_64_32S against `std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep::_S_empty_rep_storage' can not be used when making a shared object; recompile with -fPIC
@@ -93,13 +93,15 @@ make[1]: *** [Code/GraphMol/SLNParse/CMakeFiles/SLNParse.dir/all] Error 2
 make: *** [all] Error 2
 }}}
 
-*Solution*
+*Solution:*
 
 Add this to the arguments when you call cmake: `-DBoost_USE_STATIC_LIBS=OFF`
 
 [http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01119.html more information here]
 
 ---- 
+
+*Problem:*
 
 {{{
  .../Code/GraphMol/Wrap/EditableMol.cpp:114:   instantiated from here
@@ -118,3 +120,17 @@ make: *** [all] Error 2
 Add `#define BOOST_PYTHON_NO_PY_SIGNATURES` at the top of `Code/GraphMol/Wrap/EditableMol.cpp`
 
 [http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01178.html more information here]
+
+
+---- 
+
+*Problem:*
+
+Your system has a version of boost installed in /usr/lib, but you would like to force the RDKit to use a more recent one.
+
+*Solution:*
+
+This can be solved by using cmake version 2.8.3 (or more recent) and providing the `-D Boost_NO_SYSTEM_PATHS=ON` argument :
+{{{
+cmake -D BOOST_ROOT=/usr/local -D Boost_NO_SYSTEM_PATHS=ON ..
+}}}
