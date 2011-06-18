@@ -51,7 +51,7 @@ See below for a list of [#Frequently_Encountered_Problems frequently encountered
   * cd to $RDBASE/build and do `ctest`
   * you're done!
 
-== Advanced : Configuring the Build ==
+== Advanced ==
 
 === Specifying an alternate Boost installation ===
 
@@ -76,6 +76,31 @@ The `PYTHON_EXECUTABLE` part is optional if the correct python is the first vers
 You can completely disable building of the python wrappers by setting the configuration variable RDK_BUILD_PYTHON_WRAPPERS to nil:
 
 {{{cmake -D RDK_BUILD_PYTHON_WRAPPERS= ..}}}
+
+=== Building the Java wrappers ===
+
+*Additional Requirements*
+  * SWIG v2.0.x: http://www.swig.org
+  * Junit: get a copy of the junit .jar file from https://github.com/KentBeck/junit/downloads and put it in the directory `$RDBASE/External/java_lib` (you will need to create the directory).
+
+*Building*
+  * When you invoke cmake add `-D RDK_BUILD_SWIG_WRAPPERS=ON` to the arguments. For example:
+{{{cmake -D RDK_BUILD_SWIG_WRAPPERS=ON ..}}}
+  * Build and install normally using `make`. The directory `$RDBASE/Code/JavaWrappers/gmwrapper` will contain the three required files: libGraphMolWrap.so (libGraphMolWrap.jnilib on the Mac), org.RDKit.jar, and org.RDKitDoc.jar.
+
+*Using the wrappers*
+To use the wrappers, the three files need to be in the same directory, and that should be on your CLASSPATH and in the java.library.path. An example using jython:
+{{{
+% CLASSPATH=$CLASSPATH:$RDBASE/Code/JavaWrappers/gmwrapper/org.RDKit.jar; jython -Djava.library.path=$RDBASE/Code/JavaWrappers/gmwrapper
+Jython 2.2.1 on java1.6.0_20
+Type "copyright", "credits" or "license" for more information.
+>>> from org.RDKit import *
+>>> from java import lang
+>>> lang.System.loadLibrary('GraphMolWrap')
+>>> m = RWMol.MolFromSmiles('c1ccccc1')
+>>> m.getNumAtoms()
+6L
+}}}
 
 
 == Frequently Encountered Problems ==
