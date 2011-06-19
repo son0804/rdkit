@@ -81,7 +81,7 @@ You can completely disable building of the python wrappers by setting the config
 
 *Additional Requirements*
   * SWIG v2.0.x: http://www.swig.org
-  * Junit: get a copy of the junit .jar file from https://github.com/KentBeck/junit/downloads and put it in the directory `$RDBASE/External/java_lib` (you will need to create the directory).
+  * Junit: get a copy of the junit .jar file from https://github.com/KentBeck/junit/downloads and put it in the directory `$RDBASE/External/java_lib` (you will need to create the directory) and rename it to junit.jar.
 
 *Building*
   * When you invoke cmake add `-D RDK_BUILD_SWIG_WRAPPERS=ON` to the arguments. For example:
