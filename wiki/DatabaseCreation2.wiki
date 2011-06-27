@@ -115,7 +115,7 @@ Given we're searching through 5 million compounds these search times aren't incr
 One easy way to speed things up is to return the results in blocks and to present them in pages. This isn't possible to demonstrate on a static web page like this, but here's what the queries look like and how long they take to execute:
 
 {{{
-emolecules=# select * from mols where m@>'c1cccc2c1ncs2' limit 100 ;
+emolecules=# select * from mols where m@>'c1cccc2c1ncs2' order by id limit 100 ;
    id    |                                  m                                   
 ---------+----------------------------------------------------------------------
  4008560 | Cc1nnnn1/C(=C\c1ccccc1)C(=O)N1C(c2sc3c(n2)cccc3)CCC1
@@ -126,7 +126,7 @@ emolecules=# select * from mols where m@>'c1cccc2c1ncs2' limit 100 ;
 (100 rows)
 
 Time: 77.496 ms
-emolecules=# select * from mols where m@>'c1cccc2c1ncs2' limit 100 offset 100;
+emolecules=# select * from mols where m@>'c1cccc2c1ncs2' order by id limit 100 offset 100;
    id    |                                      m                                       
 ---------+------------------------------------------------------------------------------
  4011639 | Cc1cc2sc(-c3ccc(NC(=O)/C=C/c4cn(-c5ccccc5)nc4-c4ccc(-c5ccccc5)cc4)cc3)nc2cc1
@@ -143,14 +143,14 @@ Time: 83.653 ms
 
 Oxadiazole or thiadiazole:
 {{{
-emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol limit 1000;
+emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol order by id limit 1000;
    id    |                               m                                
 ---------+----------------------------------------------------------------
  4438222 | CCCCCCCc1ccc(/C=C/c2onc(-c3ccncc3)n2)cc1
  4440841 | COc1ccc(Cc2noc(/C=C/c3ccc(C)cc3)n2)cc1OC
 ...
 Time: 1757.302 ms
-emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol limit 1000 offset 1000;
+emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol order by id limit 1000 offset 1000;
 ...
 Time: 4497.175 ms
 }}}
