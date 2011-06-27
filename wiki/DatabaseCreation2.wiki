@@ -114,6 +114,8 @@ Given we're searching through 5 million compounds these search times aren't incr
 
 One easy way to speed things up is to return the results in blocks and to present them in pages. This isn't possible to demonstrate on a static web page like this, but here's what the queries look like and how long they take to execute:
 
+*NOTE:* [27 June, 2011] The rest of this section is under construction: the original version contained an error that could lead to inconsistent results. The fix for that (reflected in the queries below) has a significant negative impact on query performance.
+
 {{{
 emolecules=# select * from mols where m@>'c1cccc2c1ncs2' order by id limit 100 ;
    id    |                                  m                                   
