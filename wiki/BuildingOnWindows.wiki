@@ -42,7 +42,7 @@ _Notes_ :
   * Build:
     * open the solution file that cmake created (c:/RDKit/build/RDKit.sln) with Visual Studio.
     * check to be sure that you're building a Release build (for some reason CMake produces solution files that default to doing a Debug build)
-    * build the "ALL_BUILD" target; this will take a while and generate warnings, but there should be no errors.
+    * build the "ALL_BUILD" target; this will take a while and generate warnings, but there should be no errors. *Note:* if you are building the SWIG wrappers you may get an error the first time you try to build them. If you see this error, try building ALL_BUILD again; it should work the second time.
     * build the "INSTALL" target
 
 == Testing the Build (optional, but recommended) ==
