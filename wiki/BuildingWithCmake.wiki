@@ -13,19 +13,19 @@ The instructions below are for the Q42009 release and subsequent releases.
       * The python headers. This probably means that you need to install the python-dev package (or whatever it's called) for your linux distribution.
       * sqlite3. You also need the shared libraries. This may require that you install a sqlite3-dev package.
       * You need to have numpy (http://www.scipy.org/NumPy) installed.
-
-*Mac Note* : I have tested this under Leopard using the standard MacOS development tools and python 2.5 distribution.
+ * Optional packages
+   * If you would like to install the RDKit InChI support (first available in the Q2 2011 release), follow the instructions in $RDBASE/External/INCHI-API to get a copy of the InChI source and put it in the appropriate place.
 
 == Installing Boost ==
-  * *NOTE*: if your linux distribution has a boost-devel package including the python,thre and regex libraries, you may be able to use that and save yourself the steps below. I haven't tested this. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults. There is a workaround for this below in the [#Frequently_Encountered_Problems Frequently Encountered Problems] section._
+  * *NOTE*: if your linux distribution has a boost-devel package including the python and regex libraries, you can use that and save yourself the steps below. _Update: if you *do* have a version of the boost libraries pre-installed and you want to use your own version, be careful when you build the code. We've seen at least one example on a Fedora system where cmake compiled using a user-installed version of boost and then linked against the system version. This led to segmentation faults. There is a workaround for this below in the [#Frequently_Encountered_Problems Frequently Encountered Problems] section._
   * download the boost source distribution from [http://www.boost.org the boost web site]
-  * extract the source somewhere on your machine, you're going to need it to build the RDKit as well as boost. (e.g. `/usr/local/src/boost_1_40_0`)
-  * The following are required if you are planning on using the Python wrappers:
-    * build and install the required boost shared libraries: 
-     * `cd $BOOST`
-     * `./bootstrap.sh --with-libraries=python,regex`
-     * Building on 32 bit systems: `./bjam install`
-     * Building on 64 bit systems: `./bjam address-model=64 cflags=-fPIC cxxflags=-fPIC install`
+  * extract the source somewhere on your machine (e.g. `/usr/local/src/boost_1_45_0`)
+  * build the required boost libraries:
+    * `cd $BOOST`
+    * If you want to use the python wrappers: `./bootstrap.sh --with-libraries=python,regex`
+    * If not using the python wrappers: `./bootstrap.sh --with-libraries=regex`
+    * Building on 32 bit systems: `./bjam install`
+    * Building on 64 bit systems: `./bjam address-model=64 cflags=-fPIC cxxflags=-fPIC install`
 
     If you have any problems with this step, check the boost [http://www.boost.org/more/getting_started/unix-variants.html installation instructions].
 
