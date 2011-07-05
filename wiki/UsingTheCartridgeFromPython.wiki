@@ -1,0 +1,34 @@
+#summary Using the database cartridge from python
+#labels Tutorial,cartridge,InProgress
+
+*Note* This example relies on cartridge functionality that was added for the Q4 2010 release. It will not work with earlier releases.
+
+= Introduction =
+ 
+This example uses Python to query the database created on the DatabaseCreation2 page of the wiki. It assumes that you have the [http://www.initd.org/psycopg/ pyscopg2 module] installed.
+
+*Note* [https://github.com/rvianello/razi Razi] a new project that uses SQLAlchemy to make interactions with the PostgreSQL cartridge may also be interesting if you would prefer to avoid having to worry about SQL syntax. Docs and a tutorial are [http://razi.readthedocs.org/ here]
+
+= Some substructure-search queries =
+
+First we connect to the database and get a cursor we can use to query:
+{{{
+>>> import psycopg2
+>>> conn = psycopg2.connect(host='localhost',database='emolecules',user='cadd_user_r',password='smiles')
+>>> curs = conn.cursor()
+}}}
+
+Do a query and show some results:
+{{{
+>>> curs.execute("select * from mols where m@>'c1cccc2c1ncs2' limit 100")>>> row = curs.fetchone()
+>>> row
+(4008560, 'Cc1nnnn1/C(=C\\c1ccccc1)C(=O)N1C(c2sc3c(n2)cccc3)CCC1')
+>>> row = curs.fetchone()
+>>> row
+(4009030, 'O=C(CCCc1nc2ccccc2s1)N1CCN(C/C=C/c2ccccc2)CC1')
+}}}
+
+
+
+----
+[http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
