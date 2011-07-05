@@ -28,7 +28,15 @@ Do a query and show some results:
 (4009030, 'O=C(CCCc1nc2ccccc2s1)N1CCN(C/C=C/c2ccccc2)CC1')
 }}}
 
-
+If you want to do more work with the molecules after getting them from the database, it's more efficient to retrieve them in binary form and convert that into an RDKit molecule than to convert the SMILES:
+{{{
+>>> curs.execute("select id,mol_send(m) from mols where m@>'c1cccc2c1ncs2' limit 100")
+>>> row = curs.fetchone()
+>>> from rdkit import Chem
+>>> m = Chem.Mol(str(row[1]))
+>>> Chem.MolToSmiles(m,True)
+'Cc1nnnn1/C(=C\\c1ccccc1)C(=O)N1C(c2sc3c(n2)cccc3)CCC1'
+}}}
 
 ----
 [http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
