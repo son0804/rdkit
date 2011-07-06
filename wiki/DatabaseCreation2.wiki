@@ -112,12 +112,9 @@ Time: 55260.154 ms
 
 Given we're searching through 5 million compounds these search times aren't incredibly slow, but it would be nice to have them quicker.
 
-One easy way to speed things up is to return the results in blocks and to present them in pages. This isn't possible to demonstrate on a static web page like this, but here's what the queries look like and how long they take to execute:
-
-*NOTE:* [27 June, 2011] The rest of this section is under construction: the original version contained an error that could lead to inconsistent results. The fix for that (reflected in the queries below) has a significant negative impact on query performance.
-
+One easy way to speed things up, particularly for queries that return a large number of results, is to only retrieve a limited number of results:
 {{{
-emolecules=# select * from mols where m@>'c1cccc2c1ncs2' order by id limit 100 ;
+emolecules=# select * from mols where m@>'c1cccc2c1ncs2' limit 100 ;
    id    |                                  m                                   
 ---------+----------------------------------------------------------------------
  4008560 | Cc1nnnn1/C(=C\c1ccccc1)C(=O)N1C(c2sc3c(n2)cccc3)CCC1
@@ -128,7 +125,50 @@ emolecules=# select * from mols where m@>'c1cccc2c1ncs2' order by id limit 100 ;
 (100 rows)
 
 Time: 77.496 ms
-emolecules=# select * from mols where m@>'c1cccc2c1ncs2' order by id limit 100 offset 100;
+}}}
+
+Of course, this doesn't help if the rows you're interested in are not in the first block. There it's more useful to display the results in pages. This isn't possible to demonstrate on a static web page like this, but here's what the queries look like and how long they take to execute:
+
+{{{
+emolecules=# select * from mols where m@>'c1cccc2c1ncs2' order by id limit 100 ;
+   id   |                                         m                                          
+--------+------------------------------------------------------------------------------------
+  73500 | CCc1ccc2nc(N)sc2c1
+  73501 | Nc1nc2ccc(Br)cc2s1
+...
+ 116209 | Cc1ccc2nc(-c3ccc(NC(=O)c4c(O)c5c(n(CCC(C)C)c4=O)cccc5)cc3)sc2c1
+ 116210 | CCCCCCCCn1c2c(c(O)c(C(Nc3ccc(-c4nc5ccc(C)cc5s4)cc3)=O)c1=O)cccc2
+(100 rows)
+
+Time: 3422.037 ms
+emolecules=# select * from mols where m@>'c1cccc2c1ncs2' order by id limit 100 offset 100 ;
+   id   |                                     m                                      
+--------+----------------------------------------------------------------------------
+ 116211 | CCCCCCCCCn1c2c(c(O)c(C(Nc3ccc(-c4nc5ccc(C)cc5s4)cc3)=O)c1=O)cccc2
+ 116212 | Cc1cc2sc(NC(=O)c3c(=O)[nH]c4ccccc4c3O)nc2cc1
+...
+ 122243 | COc1cc(OC)c(C2C(C(Nc3nc4cc(Br)ccc4s3)=O)=C(C)NC3=C2C(=O)CC(C)(C)C3)cc1OC
+ 122244 | CC1=C(C(Nc2nc3ccccc3s2)=O)C(c2cc(F)ccc2)C2=C(N1)CC(C)(C)CC2=O
+(100 rows)
+
+Time: 9990.053 ms
+}}}
+
+The performance hit is associated with the `order by` clause, which is [http://www.postgresql.org/docs/current/static/queries-limit.html required] to be sure to get consistent results. If you are willing to accept a results browsing interface that may not (probably will not) display all hits, you can leave out the `order by` clause :
+
+{{{
+emolecules=# select * from mols where m@>'c1cccc2c1ncs2' limit 100 ;
+   id    |                                  m                                   
+---------+----------------------------------------------------------------------
+ 4008560 | Cc1nnnn1/C(=C\c1ccccc1)C(=O)N1C(c2sc3c(n2)cccc3)CCC1
+ 4009030 | O=C(CCCc1nc2ccccc2s1)N1CCN(C/C=C/c2ccccc2)CC1
+...
+ 4011636 | Cc1ccc(C(N[C@@H](C(C)C)C(Nc2ccc(-c3nc4ccc(C)cc4s3)cc2)=O)=O)cc1
+ 4011638 | Cc1ccc(-c2nn(-c3ccccc3)cc2/C=C/C(=O)Nc2ccc(-c3sc4cc(C)ccc4n3)cc2)cc1
+(100 rows)
+
+Time: 80.874 ms
+emolecules=# select * from mols where m@>'c1cccc2c1ncs2' limit 100 offset 100 ;
    id    |                                      m                                       
 ---------+------------------------------------------------------------------------------
  4011639 | Cc1cc2sc(-c3ccc(NC(=O)/C=C/c4cn(-c5ccccc5)nc4-c4ccc(-c5ccccc5)cc4)cc3)nc2cc1
@@ -138,26 +178,27 @@ emolecules=# select * from mols where m@>'c1cccc2c1ncs2' order by id limit 100 o
  4005887 | c1ccc2sc(/C=C/C(OCC(Nc3ccc(C(N(C)C)=O)cc3)=O)=O)nc2c1
 (100 rows)
 
-Time: 83.653 ms
-}}}
+Time: 83.887 ms
+}}} 
 
 === SMARTS-based queries ===
 
 Oxadiazole or thiadiazole:
 {{{
-emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol order by id limit 1000;
-   id    |                               m                                
----------+----------------------------------------------------------------
- 4438222 | CCCCCCCc1ccc(/C=C/c2onc(-c3ccncc3)n2)cc1
- 4440841 | COc1ccc(Cc2noc(/C=C/c3ccc(C)cc3)n2)cc1OC
+emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol limit 500;
+   id   |                             m                             
+--------+-----------------------------------------------------------
+ 733179 | CCN(C(=O)Nc1cc(Cl)ccc1)Cc1onc(-c2ccccc2)n1
+ 733194 | Cc1nn(Cc2onc(-c3ccc(F)cc3)n2)c(C)c1Cl
 ...
-Time: 1757.302 ms
-emolecules=# select * from mols where m@>'c1[o,s]ncn1'::qmol order by id limit 1000 offset 1000;
-...
-Time: 4497.175 ms
+ 752119 | c1csc(-c2noc(-c3c(Cl)cc(Cl)cc3)n2)c1
+ 752130 | O=C(Nc1ccc(-c2noc(-c3ccncc3)n2)cc1)c1cc(Cl)ccc1
+(500 rows)
+
+Time: 1102.030 ms
 }}}
 
-Notice that this is substantially slower than the the pure SMILES query, this is generally true.
+Notice that this is substantially slower than the the pure SMILES query, this is generally true of SMARTS-based queries.
 
 = Creating some fingerprints and the fingerprint indices =
 {{{
@@ -226,7 +267,7 @@ join mols using (id);
 
 Time: 24431.555 ms
 }}}
-}}}
+
 
 ----
 [http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
