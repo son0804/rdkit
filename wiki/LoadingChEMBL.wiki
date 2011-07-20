@@ -1,0 +1,4 @@
+#summary Loading the full ChEMBL database into PostgreSQL
+#labels cartridge,Notes
+
+= Introduction =
