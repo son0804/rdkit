@@ -63,7 +63,7 @@ cmp = Composite()
 cmp.Grow(pts,attrs=[1],nPossibleVals=[3],nTries=10,
          buildDriver=CrossValidate.CrossValidationDriver,
          treeBuilder=SigTreeBuilder,needsQuantization=False,maxDepth=3)
-
+res = ScreenComposite.ShowVoteResults(range(len(pts)), pts, cmp, 3, 0,errorEstimate=True)
 t = BuildSigTree(pts,nPossibleRes=3,maxDepth=3)
 
 # simple results report:
