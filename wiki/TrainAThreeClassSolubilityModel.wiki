@@ -29,7 +29,8 @@ from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
 from rdkit.ML.Composite.Composite import Composite
 from rdkit.ML.DecTree import CrossValidate
 
-from rdkit.Chem import AllChem
+from rdkit.Chem import AllChemfrom rdkit.ML.DecTree.BuildSigTree import BuildSigTree
+from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
 ms = [x for x in Chem.SDMolSupplier('train.sdf') if x is not None]
 
 # build fingerprints:
