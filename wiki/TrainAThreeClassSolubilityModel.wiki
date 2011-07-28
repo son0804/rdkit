@@ -100,7 +100,7 @@ e (C)  4  16  186
 x (B)  0 100  302
 p (A)  0  23  394
 }}}
-
+After dumping out the predictions to a temporary sd file (needed for independent visualisation), the following confusion matrix is outputted
 {{{
 file_01 = sys.argv[1]
 ms = [x for x in  Chem.SDMolSupplier(file_01) if x is not None]
