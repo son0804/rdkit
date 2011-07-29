@@ -28,9 +28,9 @@ from rdkit import ML
 from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
 from rdkit.ML.Composite.Composite import Composite
 from rdkit.ML.DecTree import CrossValidate
-
 from rdkit.Chem import AllChemfrom rdkit.ML.DecTree.BuildSigTree import BuildSigTree
 from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
+
 ms = [x for x in Chem.SDMolSupplier('train.sdf') if x is not None]
 
 # build fingerprints:
@@ -92,7 +92,7 @@ average incorrect confidence:  0.9298
 [[  4  16 186]
  [  0 100 302]
  [  0  23 394]]
-}}}.
+}}}
 
 The *first* confusion matrix contains the out-of-bag predictions of the composite model for the data set.
 The *second* confusion matrix is the confusion matrix for a single decision tree. It has essentially no connection to the first one at all.
