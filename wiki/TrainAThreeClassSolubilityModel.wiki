@@ -102,17 +102,22 @@ Now let's print my "own confusion matrix"
 {{{
 # create my own confusion matrix
 exp_list = []
+pred_list = []
 for mol in ms:
   exp  =  int(mol.GetProp('solu_class'))
   exp_list.append(exp)
-
-pred_list = []
 i=0
 for x in pts:
   pred,conf=cmp.ClassifyExample(pts[i])
   NAME=x[0]
   pred_list.append(pred)
   i+=1
+def create_conf_matrix(expected, predicted, n_classes):
+  m = [[0] * n_classes for i in range(n_classes)]
+  for pred, exp in zip(predicted, expected):
+    m[pred][exp] += 1
+  return m
+print create_conf_matrix(exp_list, pred_list, 3)
 }}}
 which gives this output
 {{{
