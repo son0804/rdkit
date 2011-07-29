@@ -73,7 +73,6 @@ for pt in pts:
     confusionMat[pt[-1]][t.ClassifyExample(pt)]+=1
 print confusionMat
 }}}
-
 == The output ==
 {{{ 
         *** Vote Results ***
@@ -93,7 +92,28 @@ average incorrect confidence:  0.9298
 [[  4  16 186]
  [  0 100 302]
  [  0  23 394]]
+}}}.
+
+The *first* confusion matrix contains the out-of-bag predictions of the composite model for the data set.
+The *second* confusion matrix is the confusion matrix for a single decision tree. It has essentially no connection to the first one at all.
+
+
+Let's print my "own confusion matrix"
+{{{
+
+
+# create my own confusion matrix
+pred_list = []
+i=0
+for x in pts:
+  pred,conf=cmp.ClassifyExample(pts[i])
+  NAME=x[0]
+  pred_list.append(pred)
+  i+=1
+
 }}}
+
+
 {{{
     calc
      (C) (B)  (A)
