@@ -98,10 +98,8 @@ The *first* confusion matrix contains the out-of-bag predictions of the composit
 The *second* confusion matrix is the confusion matrix for a single decision tree. It has essentially no connection to the first one at all.
 
 
-Let's print my "own confusion matrix"
+Now let's print my "own confusion matrix"
 {{{
-
-
 # create my own confusion matrix
 pred_list = []
 i=0
@@ -110,42 +108,9 @@ for x in pts:
   NAME=x[0]
   pred_list.append(pred)
   i+=1
-
 }}}
 
 
-{{{
-    calc
-     (C) (B)  (A)
-e (C)  4  16  186
-x (B)  0 100  302
-p (A)  0  23  394
-}}}
-After dumping out the predictions to a temporary sd file (needed for independent visualisation), the following confusion matrix is outputted
-{{{
-file_01 = sys.argv[1]
-ms = [x for x in  Chem.SDMolSupplier(file_01) if x is not None]
-
-exp_list = []
-pred_list = []
-for mol in ms:
-  exp  =  int(mol.GetProp('solu_class'))
-  pred =  int(mol.GetProp('SOL_prediction'))
-  exp_list.append(exp)
-  pred_list.append(pred)
-
-def create_conf_matrix(expected, predicted, n_classes):
-  m = [[0] * n_classes for i in range(n_classes)]
-  for pred, exp in zip(predicted, expected):
-    m[pred][exp] += 1
-  return m
-
-print "confusion matrix: ",create_conf_matrix(exp_list,pred_list,3)
-}}}
-gives this confusion matrix
-{{{
-confusion matrix:  [[4, 0, 0], [11, 73, 12], [191, 329, 405]]
-}}}
 
 Let's go with a descriptor-based model
 {{{
