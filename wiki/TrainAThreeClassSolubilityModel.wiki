@@ -101,6 +101,11 @@ The *second* confusion matrix is the confusion matrix for a single decision tree
 Now let's print my "own confusion matrix"
 {{{
 # create my own confusion matrix
+exp_list = []
+for mol in ms:
+  exp  =  int(mol.GetProp('solu_class'))
+  exp_list.append(exp)
+
 pred_list = []
 i=0
 for x in pts:
@@ -109,7 +114,10 @@ for x in pts:
   pred_list.append(pred)
   i+=1
 }}}
-
+which gives this output
+{{{
+[[4, 0, 0], [16, 111, 26], [186, 291, 391]]
+}}}
 
 
 Let's go with a descriptor-based model
