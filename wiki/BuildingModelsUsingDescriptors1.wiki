@@ -1,4 +1,4 @@
-#summary Building simple predictive models using fingerprints
+#summary Building simple predictive models using descriptors
 #labels Tutorial,ML
 
 = Introduction =
