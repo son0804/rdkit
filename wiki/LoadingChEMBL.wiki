@@ -56,3 +56,80 @@ ALTER TABLE
 Time: 704.792 ms
 }}}
 
+To help with matched pair/activity cliff analyses, build a table with count-based topological torsion fingerprints:
+{{{
+chembl_10=# select molregno,torsion_fp(m) as torsionfp into rdk.pairfps from rdk.mols;
+SELECT 998577
+Time: 289626.695 ms
+chembl_10=# create index pairfps_torsionfp on rdk.pairfps using gist(torsionfp);
+CREATE INDEX
+Time: 116155.275 ms
+chembl_10=# alter table rdk.pairfps add primary key (molregno);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "pairfps_pkey" for table "pairfps"
+ALTER TABLE
+Time: 747.457 ms
+}}}
+
+
+= Benchmarking =
+
+{{{
+chembl_10=# select count(*) from rdk.mols where m @> 'c1ncncn1';
+ count 
+-------
+  4667
+(1 row)
+
+Time: 1448.236 ms
+chembl_10=# select count(*) from rdk.mols where m @> 'O=C1OC2=CC=CC=C2C=C1';
+ count 
+-------
+  8407
+(1 row)
+
+Time: 1689.301 ms
+chembl_10=# select count(*) from rdk.mols where m @> 'O=C(NC1=CC=CC=C1)C1=CC2=C(OC1=O)C=CC=C2' ;
+ count 
+-------
+   191
+(1 row)
+
+Time: 59.039 ms
+
+chembl_10=# select * from rdk.mols where m @> 'O=c:1:[o,n]:c:2:c:c:c:c:c:2:c:c:1'::qmol limit 500;
+ molregno |                                                      m                                                       
+----------+--------------------------------------------------------------------------------------------------------------
+   425830 | FC(F)(F)c1cc(=O)[nH]c2ccc3c(oc(=O)c4cccc(O)c43)c21
+   425832 | COc1cccc2c(=O)oc3c(ccc4[nH]c(=O)cc(C(F)(F)F)c43)c12
+   425925 | O=c1[nH]c2ccc3c(c2c(C(F)(F)F)c1)COc1cccc(O)c1-3
+   ... snip ...
+   426979 | O=c1[nH]c2c(c(C(F)(F)F)c1)cc1c(c2)OC[C@@H](Cc2ccccc2)N1CC(F)(F)F
+Time: 1586.931 ms
+chembl_10=# set rdkit.tanimoto_threshold=0.6
+;
+SET
+Time: 0.177 ms
+chembl_10=# select rdk.mols.*,tanimoto_sml(mfp2,morganbv_fp('CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21'::mol)) sim from rdk.fps join rdk.mols using (molregno) where mfp2%morganbv_fp('CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21'::mol) ;
+ molregno |                       m                       | sim  
+----------+-----------------------------------------------+------
+      823 | CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21    |    1
+   262773 | CC1=CC(C)(C)Nc2cc3n(C)c(=O)cc(C(F)(F)F)c3cc21 | 0.64
+(2 rows)
+
+Time: 1417.176 ms
+chembl_10=# select rdk.mols.*,tanimoto_sml(torsionfp,torsion_fp('CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21'::mol)) sim from rdk.pairfps join rdk.mols using (molregno) where torsionfp%torsion_fp('CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21'::mol) ;
+ molregno |                        m                         |        sim        
+----------+--------------------------------------------------+-------------------
+      791 | CC1(C)Nc2c(cc3c(oc(=O)cc3C(F)(F)F)c2)CC1         | 0.603448275862069
+      823 | CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21       |                 1
+   219275 | CC1=CC(C)(C)Nc2cc3nc(Cl)cc(C(F)(F)F)c3cc21       | 0.684210526315789
+   219277 | CC1=CC(C)(C)Nc2cc3nc(F)cc(C(F)(F)F)c3cc21        | 0.684210526315789
+   262707 | CCn1c(=O)cc(C(F)(F)F)c2c1cc1c(c2)C(C)=CC(C)(C)N1 | 0.645161290322581
+   262773 | CC1=CC(C)(C)Nc2cc3n(C)c(=O)cc(C(F)(F)F)c3cc21    | 0.666666666666667
+   262934 | CC1=CC(C)(C)Nc2cc3nc(O)cc(C(F)(F)F)c3cc21        | 0.684210526315789
+(7 rows)
+
+Time: 509.590 ms
+chembl_10=# 
+
+}}}
