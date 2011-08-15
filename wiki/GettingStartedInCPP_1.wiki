@@ -1,6 +1,8 @@
 #summary A sample application in C++
 #labels Tutorial,CPlusPlus
 
+=The Code=
+
 This is also available in the subversion repository: [http://rdkit.svn.sourceforge.net/viewvc/rdkit/trunk/Code/Demos/RDKit/GettingStarted/ http://rdkit.svn.sourceforge.net/viewvc/rdkit/trunk/Code/Demos/RDKit/GettingStarted/]
 
 {{{
@@ -207,21 +209,33 @@ main(int argc, char *argv[])
 
 }}}
 
-Here's the associated Jamfile:
+=Building it=
+
+==From the command line==
+The quickest way to build the sample file on linux is to make sure the environment variable `$RDBASE` is correctly defined and then to do:
 {{{
-project RDKit/DemoGettingStarted : : ;
+g++ -o sample.exe sample.cpp -I$RDBASE/Code \ 
+       -L$RDBASE/lib -lChemReactions -lFileParsers -lSmilesParse -lDepictor \ 
+       -lSubstructMatch -lGraphMol -lDataStructs -lRDGeometryLib -lRDGeneral
+}}}
 
-exe sample : sample.cpp
-  ../../../GraphMol/Substruct//Substruct
-  ../../../GraphMol/SmilesParse//SmilesParse
-  ../../../GraphMol/FileParsers//FileParsers
-  ../../../GraphMol/Depictor//Depictor
-  ../../../GraphMol//GraphMol
-  ../../../DataStructs//DataStructs
-  ../../../RDGeneral//RDGeneral ../../../Geometry//RDGeometry
-  ../../..//vflib ../../..//lapacklibs
-;
+==Using cmake==
 
-install sample.exe : sample
-  : <location>. ;
+*Note:* This section is only applicable to versions of the RDKit post 2011_06_1
+
+Use the following CMakeLists.txt file (also available in
+[http://rdkit.svn.sourceforge.net/viewvc/rdkit/trunk/Code/Demos/RDKit/GettingStarted/CMakeLists.txt the same directory in svn]):
+{{{
+cmake_minimum_required (VERSION 2.6)
+project (GettingStartedDemo)
+
+find_package (RDKit 1.2011.09 REQUIRED)
+
+include_directories (${RDKit_INCLUDE_DIRS})
+
+add_executable (sample sample.cpp)
+target_link_libraries (sample ChemReactions FileParsers
+   SmilesParse Depictor SubstructMatch GraphMol
+   DataStructs RDGeometryLib RDGeneral
+                      )
 }}}
