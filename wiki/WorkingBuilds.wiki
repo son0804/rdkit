@@ -3,8 +3,7 @@
 
 = Successful Build and Test =
 
-|| *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* 
-|| *Python version* || *Who* || *Notes* ||
+|| *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
 || 24/08/2011 || svn || MacOSX (Snow Leopard) || g++-4.2.1 || 1.47.0 || 2.6.1 || Greg Landrum || ||
 || 14/06/2011 || 2011_03_2 || CentOS 5.6 || g++-4.4.5 || 1.44.0 || 2.7  || Kirk DeLisle || See [http://code.google.com/p/rdkit/wiki/BuildingOnCentOS building on CentOS] in the wiki for more details. ||
 || 13/06/2010 || svn || Ubuntu(10.10) || g++-4.4.4 || 1.46.1 || 2.6.6 || Greg Landrum || ||
