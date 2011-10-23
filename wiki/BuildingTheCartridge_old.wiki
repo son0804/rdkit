@@ -1,0 +1,66 @@
+#summary How to build the PostgreSQL cartridge
+#labels cartridge
+
+*NOTE* These instructions are valid for versions of the RDKit up to and including Q3 2011 (v2011_09_1). Build instructions for newer versions can be found [BuildingTheCartridge here].
+
+= Requirements =
+
+Compatibility: PostgreSQL 8.4-9.0
+
+It should be possible to build the cartridge using either a version of PostgreSQL built from source or a package from your linux distribution (be sure to include the -devel package).
+
+Until the cartridge code is included in an RDKit release (Q3 2010), you also need to build the RDKit from subversion; earlier releases will not work.
+
+= Compilation and Testing = 
+
+The Makefile assumes that the RDKit is installed in $RDBASE and that $BOOSTHOME points to where boost is installed.
+You will need $RDBASE/lib in your $LD_LIBRARY_PATH
+
+Go to the cartridge directory: 
+ 
+{{{
+ cd $RDBASE/Code/PgSQL/rdkit
+ make && make install && make installcheck 
+}}}
+
+The last step will take a few minutes. The last step will probably fail on debian-based linux distributions such as Ubuntu because of a [http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=554166 bug in their postgresql packages]. To run the tests there you will need to install postgresql from source.
+
+*Note:* With PostgreSQL v9.0 the `props` test may fail. This is only due to a difference in output formatting and is not an indication of a real problem.
+
+= Postmaster configuration =
+
+Add the following line in your postgresql.conf:
+
+{{{
+shared_preload_libraries = 'rdkit'
+}}}
+
+This way configuration variables provided by the cartridge will be available since server startup and you could avoid errors like this:
+
+{{{
+show rdkit.tanimoto_threshold;
+
+ERROR:  unrecognized configuration parameter "rdkit.tanimoto_threshold"
+
+********** Error **********
+
+ERROR: unrecognized configuration parameter "rdkit.tanimoto_threshold"
+SQL state: 42704
+}}}
+
+
+= Adding the cartridge to a database =
+
+Install rdkit cartridge into the database DB: 
+   `psql DB < $RDBASE/Code/PgSQL/rdkit.sql`
+or:
+   `psql DB < /usr/share/postgresql/8.4/contrib/rdkit.sql`
+the actual path in the second form depends on where postgresql is installed.
+
+Uninstall rdkit cartridge from database DB:
+   `psql DB < $RDBASE/Code/PgSQL/uninstall_rdkit.sql`
+or:
+   `psql DB < /usr/share/postgresql/8.4/contrib/uninstall_rdkit.sql`
+
+----
+[http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
