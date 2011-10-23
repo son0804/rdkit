@@ -5,11 +5,10 @@
 
 = Requirements =
 
-Compatibility: PostgreSQL 8.4+ (PostgreSQL 9.0 is supported)
+Compatibility: PostgreSQL 8.4+. Tested through PostgreSQL 9.1.
 
 It should be possible to build the cartridge using either a version of PostgreSQL built from source or a package from your linux distribution (be sure to include the -devel package).
 
-Until the cartridge code is included in an RDKit release (Q3 2010), you also need to build the RDKit from subversion; earlier releases will not work.
 
 = Compilation and Testing = 
 
@@ -17,11 +16,27 @@ The Makefile assumes that the RDKit is installed in $RDBASE and that $BOOSTHOME 
 You will need $RDBASE/lib in your $LD_LIBRARY_PATH
 
 Go to the cartridge directory: 
- 
-{{{
- cd $RDBASE/Code/PgSQL/rdkit
- make && make install && make installcheck 
+
+{{{ 
+cd $RDBASE/Code/PgSQL/rdkit
 }}}
+
+==For versions of PostgreSQL < 9.1==
+
+{{{
+make -f Makefile-pre91 && make -f Makefile-pre91 install && make -f Makefile-pre91 installcheck 
+}}}
+
+==For versions of PostgreSQL >= 9.1==
+
+{{{
+make -f Makefile-91 && make -f Makefile-91 install && make -f Makefile-91 installcheck 
+}}}
+
+
+
+
+
 
 The last step will take a few minutes. The last step will probably fail on debian-based linux distributions such as Ubuntu because of a [http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=554166 bug in their postgresql packages]. To run the tests there you will need to install postgresql from source.
 
@@ -51,6 +66,8 @@ SQL state: 42704
 
 = Adding the cartridge to a database =
 
+== For versions of PostgreSQL < 9.1 ==
+
 Install rdkit cartridge into the database DB: 
    `psql DB < $RDBASE/Code/PgSQL/rdkit.sql`
 or:
@@ -61,6 +78,15 @@ Uninstall rdkit cartridge from database DB:
    `psql DB < $RDBASE/Code/PgSQL/uninstall_rdkit.sql`
 or:
    `psql DB < /usr/share/postgresql/8.4/contrib/uninstall_rdkit.sql`
+
+== For versions of PostgreSQL >= 9.1 ==
+
+To install rdkit cartridge into the database DB: 
+   `psql -c 'CREATE EXTENSION rdkit' DB`
+
+Uninstall cartridge from database DB:
+   `psql -c 'DROP EXTENSION rdkit CASCADE' DB`
+
 
 ----
 [http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
