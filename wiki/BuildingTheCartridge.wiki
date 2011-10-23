@@ -1,6 +1,8 @@
 #summary How to build the PostgreSQL cartridge
 #labels cartridge
 
+*NOTE* These instructions are valid for versions of the RDKit newer than Q3 2011 (v2011_09_1). Build instructions for older versions can be found [BuildingTheCartridge_old here].
+
 = Requirements =
 
 Compatibility: PostgreSQL 8.4+ (PostgreSQL 9.0 is supported)
