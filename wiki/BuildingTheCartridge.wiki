@@ -33,11 +33,6 @@ make -f Makefile-pre91 && make -f Makefile-pre91 install && make -f Makefile-pre
 make -f Makefile-91 && make -f Makefile-91 install && make -f Makefile-91 installcheck 
 }}}
 
-
-
-
-
-
 The last step will take a few minutes. The last step will probably fail on debian-based linux distributions such as Ubuntu because of a [http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=554166 bug in their postgresql packages]. To run the tests there you will need to install postgresql from source.
 
 *Note:* With PostgreSQL v9.0 the `props` test may fail. This is only due to a difference in output formatting and is not an indication of a real problem.
