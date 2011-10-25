@@ -19,19 +19,9 @@ Go to the cartridge directory:
 
 {{{ 
 cd $RDBASE/Code/PgSQL/rdkit
+make && make install && make installcheck 
 }}}
 
-==For versions of PostgreSQL < 9.1==
-
-{{{
-make -f Makefile-pre91 && make -f Makefile-pre91 install && make -f Makefile-pre91 installcheck 
-}}}
-
-==For versions of PostgreSQL >= 9.1==
-
-{{{
-make -f Makefile-91 && make -f Makefile-91 install && make -f Makefile-91 installcheck 
-}}}
 
 The last step will take a few minutes. The last step will probably fail on debian-based linux distributions such as Ubuntu because of a [http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=554166 bug in their postgresql packages]. To run the tests there you will need to install postgresql from source.
 
