@@ -6,11 +6,29 @@ _in progress_
 
 By default the RDKit does a lot of work when constructing molecules. The work includes ring-finding, perception of chemistry, and correction of stereochemistry.
  
+== The Sanitization Process ==
+
+  # m.ClearComputedProps()
+  # Chem.Cleanup(m)
+  # m.UpdatePropertyCache()
+  # Chem.Kekulize(m)  <- includes GetSymmSSSR()
+  # Chem.AssignRadicals(m)
+  # Chem.SetAromaticity(m)
+  # Chem.SetConjugation(m)
+  # Chem.AssignStereochemistry(m,True)
+  # Chem.AdjustHs(m)   <- only available from python in 2011_12 release and later
 
 
-= Details =
+== Timing ==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * Dataset: 100000 molecules from ChEMBL
+  * Code version: SVN, streambuf branch, 21 Nov 2011
+  * Host: gulo_linux: Intel i7 870 (2.93 GHz), Ubuntu 10.10 x64, g++ 4.4.4
+
+|| Action || Time (sec) || Notes ||
+|| Mols from sdf, full sanitization || 71.9 ||  ||
+|| Mols from sdf, partial sanitization || 29.6 || steps through SetAromaticity ||
+|| Mols from smiles, full sanitization || 74.1 ||  ||
+|| Mols from smiles, partial sanitization || 17.04 || just UpdatePropertyCache() ||
+|| Mols from smiles, partial sanitization || 17.5 || just UpdatePropertyCache() and Chem.GetSymmSSSR() ||
+|| Mols from pickles || 7.0 || ||
