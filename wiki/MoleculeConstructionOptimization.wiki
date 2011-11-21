@@ -29,6 +29,7 @@ By default the RDKit does a lot of work when constructing molecules. The work in
 || Mols from sdf, full sanitization || 71.9 ||  ||
 || Mols from sdf, partial sanitization || 29.6 || steps through SetAromaticity ||
 || Mols from smiles, full sanitization || 74.1 ||  ||
-|| Mols from smiles, partial sanitization || 17.04 || just UpdatePropertyCache() ||
-|| Mols from smiles, partial sanitization || 17.5 || just UpdatePropertyCache() and Chem.GetSymmSSSR() ||
-|| Mols from pickles || 7.0 || ||
+|| Mols from smiles, partial sanitization || 17.0 || just UpdatePropertyCache() ||
+|| Mols from smiles, partial sanitization || 27.6 || just UpdatePropertyCache() and Chem.GetSymmSSSR() ||
+|| Mols from smiles, partial sanitization || 29.1 || about everything except AssignStereochemistry() ||
+|| Mols from pickles || 10.2 || includes time to load pkls from disk ||
