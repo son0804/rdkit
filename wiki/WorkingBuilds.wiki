@@ -4,6 +4,8 @@
 = Successful Build and Test =
 
 || *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
+|| 17/12/2011 || svn || CentOS 5.7 || g++-4.1.2-51 || 1.48.0 || 2.7.2 || Greg Landrum ||  See [http://code.google.com/p/rdkit/wiki/BuildingOnCentOS57 building on CentOS 5.7] in the wiki for more details. ||
+|| 17/12/2011 || svn || MacOSX (Snow Leopard), XCode4 || g++-4.2.1 || 1.48.0 || 2.6.1 || Greg Landrum || custom numpy build required ||
 || 24/10/2011 || 2011_09_1 || MacOSX (Lion) || g++-4.2.1 || 1.46.1 || 2.7 || Sarah Langdon || ||
 || 24/08/2011 || svn || MacOSX (Snow Leopard) || g++-4.2.1 || 1.47.0 || 2.6.1 || Greg Landrum || ||
 || 14/06/2011 || 2011_03_2 || CentOS 5.6 || g++-4.4.5 || 1.44.0 || 2.7  || Kirk DeLisle || See [http://code.google.com/p/rdkit/wiki/BuildingOnCentOS building on CentOS] in the wiki for more details. ||
