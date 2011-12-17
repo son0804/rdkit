@@ -12,7 +12,7 @@ The instructions below are for the Q42009 release and subsequent releases.
    * The following are required if you are planning on using the Python wrappers:
       * The python headers. This probably means that you need to install the python-dev package (or whatever it's called) for your linux distribution.
       * sqlite3. You also need the shared libraries. This may require that you install a sqlite3-dev package.
-      * You need to have numpy (http://www.scipy.org/NumPy) installed.
+      * You need to have numpy (http://www.scipy.org/NumPy) installed. _Note for building with XCode4 on the MacOS:_ There seems to be a problem with the version of numpy that comes with XCode4. Please see below in the [#Frequently_Encountered_Problems Frequently Encountered Problems] section] for a workaround. 
  * Optional packages
    * If you would like to install the RDKit InChI support (first available in the Q2 2011 release), follow the instructions in $RDBASE/External/INCHI-API to get a copy of the InChI source and put it in the appropriate place.
 
