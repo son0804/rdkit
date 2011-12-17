@@ -41,7 +41,6 @@
 = Unsuccessful Builds =
 
 || *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
-|| 8/07/2009 || Q1_2009_2 || Ubuntu(9.04) 64bit || g++-4.3.3 || 1.39.0 || 2.6.2 || Abhinav Chawade || ||
 ||  ||  ||  ||  ||  ||  ||  || ||
 
 = Unsuccessful Tests =
