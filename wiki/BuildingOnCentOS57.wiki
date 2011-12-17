@@ -1,4 +1,5 @@
 #summary Building the RDKit on CentOS 5.7
+#labels Notes,Development
 
 For older versions of CentOS, where things are more difficult, see [BuildingOnCentOS this page]
 
