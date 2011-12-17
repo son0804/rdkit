@@ -159,3 +159,33 @@ This can be solved by using cmake version 2.8.3 (or more recent) and providing t
 {{{
 cmake -D BOOST_ROOT=/usr/local -D Boost_NO_SYSTEM_PATHS=ON ..
 }}}
+
+----
+
+*Problem:*
+
+Building on the Mac with XCode 4
+
+The problem seems to be caused by the version of numpy that is distributed with XCode 4, so you need to build a fresh copy.
+
+
+*Solution:*
+Get a copy of numpy and build it like this as root:
+as root:
+{{{
+export MACOSX_DEPLOYMENT_TARGET=10.6
+export LDFLAGS="-Wall -undefined dynamic_lookup -bundle -arch x86_64"
+export CFLAGS="-arch x86_64"
+ln -s /usr/bin/gcc /usr/bin/gcc-4.2
+ln -s /usr/bin/g++ /usr/bin/g++-4.2
+python setup.py build
+python setup.py install
+}}}
+
+Be sure that the new numpy is used in the build:
+`PYTHON_NUMPY_INCLUDE_PATH        /Library/Python/2.6/site-packages/numpy/core/include`
+
+and is at the beginning of the PYTHONPATH:
+`export PYTHONPATH="/Library/Python/2.6/site-packages:$PYTHONPATH"`
+
+Now it's safe to build boost and the RDKit.
