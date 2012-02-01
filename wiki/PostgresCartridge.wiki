@@ -17,9 +17,9 @@ that this can be made faster by tuning database parameters (the
 results here are for the standard PostgreSQL settings), but we're
 pretty happy with things already.
 
-The cartridge also allows substructure searching (using SMILES), but
+The cartridge also allows substructure searching (using SMILES or SMARTS), but
 that's not as highly optimized as the similarity searching. We'll
-continue to work on this and will add SMARTS support in the future.
+continue to work on this.
 
 The cartridge builds on linux and the mac. I don't plan to support it
 on Windows, but if someone else can get it working there, I'd be happy to
@@ -32,6 +32,7 @@ know about it and relay the information.
   * ExampleSimilarityQueries
   * ExampleStructureQueries
   * DatabaseCreation2 : an example using the emolecules.com database
+  * LoadingChEMBL : working with ChEMBL Data
   * DatabaseCartridgeReferenceDocumentation : a reference manual for the cartridge functionality.
 
 ----
