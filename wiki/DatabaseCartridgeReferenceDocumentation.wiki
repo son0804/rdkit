@@ -62,9 +62,12 @@ There are additional operators defined in the cartridge, but these are used for 
   * `size(bfp)` : returns the length of (number of bits in) a `bfp`.
   * `add(sfp,sfp)` : returns an `sfp` formed by the element-wise addition of the two `sfp` arguments.
   * `subtract(sfp,sfp)` : returns an `sfp` formed by the element-wise subtraction of the two `sfp` arguments.
+  * `all_values_lt(sfp,int)` : returns a boolean indicating whether or not all elements of the `sfp` argument are less than the `int` argument.
+  * `all_values_gt(sfp,int)` : returns a boolean indicating whether or not all elements of the `sfp` argument are greater than the `int` argument.
 
 == Molecule Related ==
   * `is_valid_smiles(smiles)` : returns whether or not a SMILES string produces a valid RDKit molecule.
+  * `is_valid_ctab(ctab)` : returns whether or not a CTAB (mol block) string produces a valid RDKit molecule.
   * `is_valid_smarts(smarts)` : returns whether or not a SMARTS string produces a valid RDKit molecule.
   * `mol_amw(mol)` : returns the AMW for a molecule.
   * `mol_logp(mol)` : returns the MolLogP for a molecule.
@@ -76,6 +79,8 @@ There are additional operators defined in the cartridge, but these are used for 
   * `mol_numheteroatoms(mol)` : returns the number of heteroatoms in a molecule (_available from Q1 2011 (2011_03) release_).
   * `mol_numrings(mol)` : returns the number of rings in a molecule (_available from Q1 2011 (2011_03) release_).
   * `mol_tpsa(mol)` : returns the topological polar surface area for a molecule (_available from Q1 2011 (2011_03) release_).
+  * `mol_inchi(mol)` : returns an InChI for the molecule. (_available from the 2011_06 release, requires that the RDKit be built with InChI support_).
+  * `mol_inchikey(mol)` : returns an InChI key for the molecule. (_available from the 2011_06 release, requires that the RDKit be built with InChI support_).
 
 
 == Other ==
