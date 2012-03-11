@@ -1,0 +1,22 @@
+#summary The RDKit and thread-safety.
+#labels Development,Notes
+
+= Notes about this document = 
+  * This document only applies to release v2012_03_1 and later releases of the RDKit.
+  * This document does not apply to using the RDKit from Python threads. `Boost.Python` ensures that only one thread is calling into the C++ code at any point. To get concurrent execution in Python, use the `multiprocessing` module.
+
+
+= What has been tested =
+
+  * Reading molecules from SMILES/SMARTS/Mol blocks
+  * Writing molecules to SMILES/SMARTS/Mol blocks
+  * Generating conformations with the DistGeom code.
+  * Optimizing molecules with the UFF code.
+  * Generating fingerprints.
+  * The descriptor calculators in `$RDBASE/Code/GraphMol/Descriptors`
+
+
+= Known problems =
+
+  * InChI generation and (probably) parsing. This seems to be a limitation of the IUPAC InChI code. In order to allow the code to be used in a multi-threaded environment, a mutex is used to ensure that only one thread is using the IUPAC code at a time. This is only enabled if the RDKit is built with the `RDK_TEST_MULTITHREADED` option enabled.
+  * The MolSuppliers (e.g. SDMolSupplier, SmilesMolSupplier) change their internal state when a molecule is read. It is *not* safe to use one supplier on more than one thread.
