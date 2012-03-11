@@ -8,6 +8,9 @@
 
 = What has been tested =
 
+Everything used in the [http://tech.knime.org/community/rdkit RDKit knime nodes] has been tested in multi-threaded mode.
+
+Some specifics:
   * Reading molecules from SMILES/SMARTS/Mol blocks
   * Writing molecules to SMILES/SMARTS/Mol blocks
   * Generating conformations with the DistGeom code.
@@ -16,7 +19,9 @@
   * The descriptor calculators in `$RDBASE/Code/GraphMol/Descriptors`
   * Substructure searching (*Note:* if a query molecule contains recursive queries, it is not safe to use it concurrently on multiple threads, see below).
   * The 2D coordinate generation (depiction) code.
-
+  * The Subgraph code.
+  * The ChemTransforms code.
+  * The chemical reactions code.
 
 = Known problems =
 
