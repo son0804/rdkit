@@ -25,6 +25,12 @@ Thanks to Adrian Schreyer for the pointer to my2pg.
 
 = Creating the RDKit tables =
 
+You need to start by making sure the RDKit cartridge is loaded into the chembl database:
+{{{
+chembl_10=# create extension if not exists rdkit;
+}}}
+
+
 Because there are problems with the SMILES that are present in the ChEMBL data, I build the RDKit molecules from the CTABS:
 {{{
 chembl_10=# create schema rdk;
