@@ -23,11 +23,11 @@ make && make install && make installcheck
 }}}
 
 
-The last step will take a few minutes. The last step will probably fail on debian-based linux distributions such as Ubuntu because of a [http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=554166 bug in their postgresql packages]. To run the tests there you will need to install postgresql from source.
+The last step will take a few minutes. The last step will probably fail on older debian-based linux distributions such as Ubuntu because of a [http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=554166 bug in their postgresql packages]. To run the tests there you will need to install postgresql from source.
 
 *Note:* With PostgreSQL v9.0 the `props` test may fail. This is only due to a difference in output formatting and is not an indication of a real problem.
 
-= Postmaster configuration =
+= Postmaster configuration (pre v9.0) =
 
 Add the following line in your postgresql.conf:
 
@@ -71,6 +71,50 @@ To install rdkit cartridge into the database DB:
 
 Uninstall cartridge from database DB:
    `psql -c 'DROP EXTENSION rdkit CASCADE' DB`
+
+
+= Example installations =
+
+== Ubuntu 11.10 ==
+
+Installed packages:
+  * RDKit from svn
+  * boost from libboost-all-dev package
+  * postgresql packages (some of these may be redundant):
+    * postgresql
+    * postgresql-client
+    * postgresql-client-common
+    * postgresql-common
+    * postgresql-contrib
+    * postgresql-doc
+    * postgresql-server-dev-all
+  * development packages:
+    * flex
+    * bison
+    * g++
+
+To make postgresql useable, you have to create a database user for yourself:
+{{{
+% sudo su postgres  
+postgres@ubuntu:% createuser glandrum
+}}}
+
+Building the RDKit:
+{{{
+% cd $RDBASE
+% mkdir build
+% cd build
+% cmake ..
+% make -j4 install
+}}}
+
+Building and installing the cartridge:
+{{{
+% cd $RDBASE/Code/PgSQL/rdkit
+% make
+% sudo make install
+% make installcheck
+}}}
 
 
 ----
