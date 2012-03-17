@@ -116,6 +116,28 @@ Building and installing the cartridge:
 % make installcheck
 }}}
 
+Another quick check to make sure it really works:
+{{{
+% createdb gregdb
+% psql gregdb
+psql (9.1.3)
+Type "help" for help.
+
+gregdb=# create extension "rdkit";
+CREATE EXTENSION
+
+gregdb=# show rdkit.tanimoto_threshold;
+ rdkit.tanimoto_threshold 
+--------------------------
+ 0.5
+(1 row)
+
+gregdb=# select 'c1ccccc1O'::mol;
+    mol    
+-----------
+ Oc1ccccc1
+(1 row)
+}}}
 
 ----
 [http://www.postgresql.org http://www.postgresql.org/files/community/propaganda/95x51_4.gif]
