@@ -1,0 +1,153 @@
+#summary Using scikit-learn together with the RDKit
+#labels ML,Tutorial
+
+= Introduction =
+
+A simple tutorial on building predictive models using the RDKit's molecular descriptors and the machine-learning methods in [http://scikit-learn.org/stable/ scikit-learn]
+
+Notes:
+  * This tutorial is based on scikit-learn v0.10. 
+  * Further information about the dataset is available on the BuildingModelsUsingDescriptors1 page.
+
+= Imports and generating descriptors =
+{{{
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.cross_validation import cross_val_score
+from sklearn import tree,metrics
+import numpy
+from rdkit import Chem
+from rdkit.Chem import Descriptors
+from rdkit.ML.Descriptors import MoleculeDescriptors
+trainMols = [x for x in Chem.SDMolSupplier("data/solubility.train.sdf") if x is not None]
+testMols = [x for x in Chem.SDMolSupplier("data/solubility.test.sdf") if x is not None]
+nms=[x[0] for x in Descriptors._descList]
+# "MolecularFormula" shows up in the list of descriptors, but it's
+# not numeric, so remove it from the list:
+nms.remove('MolecularFormula')
+
+# a descriptor calculator makes it easy to generate sets of descriptors:
+calc = MoleculeDescriptors.MolecularDescriptorCalculator(nms)
+
+# generate the descriptors (can take a while):
+trainDescrs = [calc.CalcDescriptors(x) for x in trainMols]
+testDescrs = [calc.CalcDescriptors(x) for x in testMols]
+}}}
+
+= Classification models =
+
+_This was copied from an ipython notebook session, so it's somewhat ugly_
+
+== Start with a three-class model ==
+{{{
+In [4]:
+
+classes={'(A) low':0,'(B) medium':1,'(C) high':2}
+trainActs = [classes[x.GetProp('SOL_classification')] for x in trainMols]
+testActs = [classes[x.GetProp('SOL_classification')] for x in testMols]
+In [5]:
+
+clf = RandomForestClassifier(n_estimators=100, max_depth=5,min_split=5,random_state=0,n_jobs=-1)
+scores = cross_val_score(clf, trainDescrs, trainActs, cv=10)
+scores
+Out[5]:
+array([ 0.82524272,  0.78640777,  0.84466019,  0.76699029,  0.73786408,
+        0.84313725,  0.83333333,  0.81372549,  0.80392157,  0.8627451 ])
+In [6]:
+
+nclf = RandomForestClassifier(n_estimators=100, max_depth=5,min_split=5,random_state=0,n_jobs=4)
+nclf = nclf.fit(trainDescrs,trainActs)
+nclf.score(testDescrs,testActs)
+Out[6]:
+0.84046692607003892
+In [7]:
+
+preds = nclf.predict(testDescrs)
+metrics.confusion_matrix(testActs,preds)
+Out[7]:
+array([[92, 10,  0],
+       [16, 93,  6],
+       [ 1,  8, 31]])
+}}}
+
+== Try two-clss ==
+{{{
+In [8]:
+
+classes={'(A) low':0,'(B) medium':1,'(C) high':1}
+trainActs = [classes[x.GetProp('SOL_classification')] for x in trainMols]
+testActs = [classes[x.GetProp('SOL_classification')] for x in testMols]
+clf = RandomForestClassifier(n_estimators=100, max_depth=5,min_split=5,random_state=0,n_jobs=-1)
+scores = cross_val_score(clf, trainDescrs, trainActs, cv=10)
+scores
+Out[8]:
+array([ 0.87378641,  0.90291262,  0.88349515,  0.9223301 ,  0.91262136,
+        0.91176471,  0.90196078,  0.91176471,  0.88235294,  0.91176471])
+In [9]:
+
+nclf = RandomForestClassifier(n_estimators=100, max_depth=5,min_split=5,random_state=0,n_jobs=4)
+nclf = nclf.fit(trainDescrs,trainActs)
+nclf.score(testDescrs,testActs)
+Out[9]:
+0.90272373540856032
+In [10]:
+
+preds = nclf.predict(testDescrs)
+metrics.confusion_matrix(testActs,preds)
+Out[10]:
+array([[ 93,   9],
+       [ 16, 139]])
+}}}
+
+
+= Regression models =
+
+_This was copied from an ipython notebook session, so it's somewhat ugly_
+
+{{{
+In [11]:
+
+trainActs = [float(x.GetProp('SOL')) for x in trainMols]
+testActs = [float(x.GetProp('SOL')) for x in testMols]
+
+In [12]:
+
+from sklearn.ensemble import RandomForestRegressor
+In [13]:
+
+nclf = RandomForestRegressor(n_estimators=100, max_depth=5,min_split=5,random_state=0,n_jobs=4)
+nclf = nclf.fit(trainDescrs,trainActs)
+In [14]:
+
+trainPreds=nclf.predict(trainDescrs)
+metrics.r2_score(trainActs,trainPreds)
+Out[14]:
+0.92994153116733513
+In [15]:
+
+metrics.mean_square_error(trainActs,trainPreds)
+Out[15]:
+298.36181461290539
+In [16]:
+
+testPreds = nclf.predict(testDescrs)
+metrics.r2_score(testActs,testPreds)
+Out[16]:
+0.89330411239460261
+In [17]:
+
+metrics.mean_square_error(testActs,testPreds)
+Out[17]:
+111.41236146515278
+
+In [18]:
+
+figure()
+scatter(trainActs,trainPreds,label="train")
+scatter(testActs,testPreds,c=(1,0,0),label="test")
+legend(loc="upper left")
+ylabel("pred")
+xlabel("measured")
+
+}}}
+
+There's unfortunately no straightforward way I can come up with get the images into the wiki.
