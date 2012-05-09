@@ -5,7 +5,7 @@
 
 || *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
 || 09/05/2012 || svn || Ubuntu 12.04 (64bit) || g++-4.6.3 || 1.46.0 || 2.7.3 || Greg Landrum || ||
-|| 08/05/2012 || svn || CentOS 6.2 (64bit) || g++-4.4.6 || 1.49.0 || 2.6.6 || Christos Nicolaou ||  problems encountered with SLN parser ||
+|| 08/05/2012 || 2012_03_1 || CentOS 6.2 (64bit) || g++-4.4.6 || 1.49.0 || 2.6.6 || Christos Nicolaou ||  problems encountered with SLN parser ||
 || 17/12/2011 || svn || CentOS 5.7 || g++-4.1.2-51 || 1.48.0 || 2.7.2 || Greg Landrum ||  See [http://code.google.com/p/rdkit/wiki/BuildingOnCentOS57 building on CentOS 5.7] in the wiki for more details. ||
 || 17/12/2011 || svn || MacOSX (Snow Leopard), XCode4 || g++-4.2.1 || 1.48.0 || 2.6.1 || Greg Landrum || custom numpy build required ||
 || 24/10/2011 || 2011_09_1 || MacOSX (Lion) || g++-4.2.1 || 1.46.1 || 2.7 || Sarah Langdon || ||
