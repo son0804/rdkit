@@ -1,5 +1,5 @@
 #summary A recipe on installing the PostgreSQL cartridge on Max OS X 10.7
-#labels osx10.7,Cartridge,Tutorial
+#labels osx10.7,cartridge,Tutorial
 
 = Introduction =
 
