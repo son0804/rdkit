@@ -1,5 +1,5 @@
-#labels osx10.7,postgreSQL,RDKit
-A recipe on installing the PostgreSQL cartridge on Max OS X 10.7 
+#summary A recipe on installing the PostgreSQL cartridge on Max OS X 10.7
+#labels osx10.7,Cartridge,Tutorial
 
 = Introduction =
 
