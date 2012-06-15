@@ -1,0 +1,23 @@
+#summary Clustering molecules with the RDKit
+#labels Tutorial
+
+= Using Butina clustering =
+
+For large sets of molecules (more than 1000-2000), it's most efficient to use the Butina clustering algorithm.
+
+{{{
+def ClusterFps(fps,cutoff=0.2):
+    from rdkit import DataStructs
+    from rdkit.ML.Cluster import Butina
+
+    # first generate the distance matrix:
+    dists = []
+    nfps = len(fps)
+    for i in range(nfps):
+        sims = DataStructs.BulkTanimotoSimilarity(fps[i],fps[i+1:])
+        dists.extend([1-x for x in sims])
+
+    # now cluster the data:
+    cs = Butina.ClusterData(dists,nfps,cutoff,isDistData=True)
+    return cs
+}}}
