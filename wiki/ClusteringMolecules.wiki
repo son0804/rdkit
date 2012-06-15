@@ -30,13 +30,13 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 import gzip
 ms = [x for x in Chem.ForwardSDMolSupplier(gzip.open('zdd.sdf.gz')) if x is not None]
-fps = [AllChem.GetMorganFingerprintAsBitVect(x,2,1024) for x in ms]
-clusters=ClusterFps(fps,cutoff=0.4)
+fps = [AllChem.GetMorganFingerprintAsBitVect(x,3,1024) for x in ms]
+clusters=ClusterFps(fps,cutoff=0.3)
 }}}
 
 The variable `clusters` contains the results:
 {{{
 >>> print clusters[200]
-(6164, 1400, 1403, 1537, 1543, 6575, 6759)
+(8080, 1490, 4821, 7845)
 }}}
-That cluster contains 7 points, the centroid is point 6164.
+That cluster contains 4 points, the centroid is point 8080.
