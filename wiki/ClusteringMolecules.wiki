@@ -21,3 +21,22 @@ def ClusterFps(fps,cutoff=0.2):
     cs = Butina.ClusterData(dists,nfps,cutoff,isDistData=True)
     return cs
 }}}
+
+The return value is a tuple of clusters, where each cluster is a tuple of ids.
+
+Example usage:
+{{{
+from rdkit import Chem
+from rdkit.Chem import AllChem
+import gzip
+ms = [x for x in Chem.ForwardSDMolSupplier(gzip.open('zdd.sdf.gz')) if x is not None]
+fps = [AllChem.GetMorganFingerprintAsBitVect(x,2,1024) for x in ms]
+clusters=ClusterFps(fps,cutoff=0.4)
+}}}
+
+The variable `clusters` contains the results:
+{{{
+>>> print clusters[200]
+(6164, 1400, 1403, 1537, 1543, 6575, 6759)
+}}}
+That cluster contains 7 points, the centroid is point 6164.
