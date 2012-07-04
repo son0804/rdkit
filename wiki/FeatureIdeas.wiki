@@ -1,0 +1,46 @@
+#summary Possible improvements to be implemented
+#labels Development,Phase-Requirements
+
+The initial set was brought over from the sf.net ideatorrent site.
+
+= Candidates =
+
+== Simplify Installation ==
+
+Notes from the ideatorrent site;
+  * Make installation as simple as possible. 
+  * Get rid of as many external dependencies as humanly possible. 
+  * Get rid of environment variables that have to be manually set up. 
+  * Separate code, compilation folder and installation folder - those should be three different locations. 
+
+  * Create and publish binary packages - rpm, deb etc. for all major OSes 
+(Linux/OSX/Windows).
+
+
+== Add C# Support to SWIG Wrappers ==
+
+== Add support for writing V3K CTABS ==
+
+== Add Python 3 support ==
+
+== Move Cairo support into the C++ code base ==
+
+== Add RDF support ==
+
+Biggest challenge here is getting a good collection of sample files.
+
+== Add SMIRKS support ==
+
+= Completed =
+
+== Improve Isotope Handling ==
+
+Thread here: http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01727.html
+
+Added for Q2 2012 release.
+
+== Add a return value to the sanitization function ==
+
+Added for Q1 2012 release.
+
+= Rejected =
