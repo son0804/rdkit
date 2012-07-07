@@ -21,7 +21,7 @@ full_page_writes = off			# recover from partial page writes
 First create the database and install the cartridge:
 {{{
 ~/RDKit_trunk/Data/emolecules > createdb emolecules
-~/RDKit_trunk/Data/emolecules > psql emolecules < /usr/local/pgsql/share/contrib/rdkit.sql 
+~/RDKit_trunk/Data/emolecules > psql -c 'create extension rdkit' emolecules 
 }}}
 
 Now create and populate a table holding the raw data:
