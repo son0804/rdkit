@@ -1,7 +1,7 @@
 #summary Loading the full ChEMBL database into PostgreSQL
 #labels cartridge,Notes
 
-  _*Note*_ : This example uses cartridge functionality, specifically   `mol_from_ctab`, that is not present in releases prior to 2011 Q3. Until that release happens, you will need to work with the svn version of the RDKit to follow these instructions.
+  _*Note*_ : This example uses cartridge functionality that is not present in releases prior to v2012.06. Until that release happens, you will need to work with the svn version of the RDKit to follow these instructions. The older version of these instructions can be found on the page LoadingChemblOld
 
 
 = Introduction =
