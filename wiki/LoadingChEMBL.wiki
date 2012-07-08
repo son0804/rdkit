@@ -134,7 +134,10 @@ That similarity search pattern is a common one, make it easier to use and more u
 chembl_13=# create or replace function get_mfp2_neighbors(smiles text)
   returns table(molregno int, m mol, similarity double precision) as
 $$
-select molregno,m,tanimoto_sml(morganbv_fp($1::mol),mfp2) as similarity from rdk.fps join rdk.mols using (molregno) where morganbv_fp($1::mol)%mfp2 order by morganbv_fp($1::mol)<%>mfp2;
+select molregno,m,tanimoto_sml(morganbv_fp($1::mol),mfp2) as similarity
+from rdk.fps join rdk.mols using (molregno) 
+where morganbv_fp($1::mol)%mfp2 
+order by morganbv_fp($1::mol)<%>mfp2;
 $$ language sql stable ;
 chembl_13=# select * from get_mfp2_neighbors('CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21');
  molregno |                       m                       | similarity 
