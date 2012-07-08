@@ -8,7 +8,7 @@
 
 = Getting the raw data into PostgreSQL =
 
-Start by downloading the MySQL dump of ChEMBL_10: (ftp://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/releases/chembl_10/chembl_10_mysql.tar.gz)
+Start by downloading the MySQL dump of ChEMBL_13: (ftp://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/releases/chembl_13/chembl_13_mysql.tar.gz)
 and creating a MySQL database from it.
 
 Convert that to a PostgreSQL database using [https://bitbucket.org/akuchling/mysql2pgsql mysql2pgsql] :
@@ -27,36 +27,33 @@ Thanks to Adrian Schreyer for the pointer to my2pg.
 
 You need to start by making sure the RDKit cartridge is loaded into the chembl database:
 {{{
-chembl_10=# create extension if not exists rdkit;
+chembl_13=# create extension if not exists rdkit;
 }}}
 
 
 Because there are problems with the SMILES that are present in the ChEMBL data, I build the RDKit molecules from the CTABS:
 {{{
-chembl_10=# create schema rdk;
-chembl_10=# select molregno,mol_from_ctab(molfile::cstring) m into rdk.mols from compound_structures where is_valid_ctab(molfile::cstring) ;
+chembl_13=# create schema rdk;
+chembl_13=# select * into rdk.mols from (select molregno,mol_from_ctab(molfile::cstring) m  from compound_structures) tmp where m is not null;
 SELECT 998577
-Time: 1134900.554 ms
-chembl_10=# create index molidx on rdk.mols using gist(m);
+chembl_13=# create index molidx on rdk.mols using gist(m);
 CREATE INDEX
-Time: 1400330.072 ms
-chembl_10=# select molregno,torsionbv_fp(m) as torsionbv,morganbv_fp(m,2) as mfp2,featmorganbv_fp(m,2) as ffp2 into rdk.fps from rdk.mols;
+chembl_13=# select molregno,torsionbv_fp(m) as torsionbv,morganbv_fp(m,2) as mfp2,featmorganbv_fp(m,2) as ffp2 into rdk.fps from rdk.mols;
 SELECT 998577
-Time: 734113.058 ms
-chembl_10=# create index fps_ttbv_idx on rdk.fps using gist(torsionbv);
+chembl_13=# create index fps_ttbv_idx on rdk.fps using gist(torsionbv);
 CREATE INDEX
 Time: 121170.006 ms
-chembl_10=# create index fps_mfp2_idx on rdk.fps using gist(mfp2);
+chembl_13=# create index fps_mfp2_idx on rdk.fps using gist(mfp2);
 CREATE INDEX
 Time: 88036.863 ms
-chembl_10=# create index fps_ffp2_idx on rdk.fps using gist(ffp2);
+chembl_13=# create index fps_ffp2_idx on rdk.fps using gist(ffp2);
 CREATE INDEX
 Time: 87593.358 ms
-chembl_10=# alter table rdk.mols add primary key (molregno);
+chembl_13=# alter table rdk.mols add primary key (molregno);
 NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "mols_pkey" for table "mols"
 ALTER TABLE
 Time: 832.436 ms
-chembl_10=# alter table rdk.fps add primary key (molregno);
+chembl_13=# alter table rdk.fps add primary key (molregno);
 NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "fps_pkey" for table "fps"
 ALTER TABLE
 Time: 704.792 ms
@@ -64,13 +61,13 @@ Time: 704.792 ms
 
 To help with matched pair/activity cliff analyses, build a table with count-based topological torsion fingerprints:
 {{{
-chembl_10=# select molregno,torsion_fp(m) as torsionfp into rdk.pairfps from rdk.mols;
+chembl_13=# select molregno,torsion_fp(m) as torsionfp into rdk.pairfps from rdk.mols;
 SELECT 998577
 Time: 289626.695 ms
-chembl_10=# create index pairfps_torsionfp on rdk.pairfps using gist(torsionfp);
+chembl_13=# create index pairfps_torsionfp on rdk.pairfps using gist(torsionfp);
 CREATE INDEX
 Time: 116155.275 ms
-chembl_10=# alter table rdk.pairfps add primary key (molregno);
+chembl_13=# alter table rdk.pairfps add primary key (molregno);
 NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "pairfps_pkey" for table "pairfps"
 ALTER TABLE
 Time: 747.457 ms
@@ -80,21 +77,21 @@ Time: 747.457 ms
 = Benchmarking =
 
 {{{
-chembl_10=# select count(*) from rdk.mols where m @> 'c1ncncn1';
+chembl_13=# select count(*) from rdk.mols where m @> 'c1ncncn1';
  count 
 -------
   4667
 (1 row)
 
 Time: 1448.236 ms
-chembl_10=# select count(*) from rdk.mols where m @> 'O=C1OC2=CC=CC=C2C=C1';
+chembl_13=# select count(*) from rdk.mols where m @> 'O=C1OC2=CC=CC=C2C=C1';
  count 
 -------
   8407
 (1 row)
 
 Time: 1689.301 ms
-chembl_10=# select count(*) from rdk.mols where m @> 'O=C(NC1=CC=CC=C1)C1=CC2=C(OC1=O)C=CC=C2' ;
+chembl_13=# select count(*) from rdk.mols where m @> 'O=C(NC1=CC=CC=C1)C1=CC2=C(OC1=O)C=CC=C2' ;
  count 
 -------
    191
