@@ -1,0 +1,141 @@
+#summary Loading the full ChEMBL database into PostgreSQL
+#labels Deprecated
+
+  _*Note*_ : This example uses cartridge functionality, specifically   `mol_from_ctab`, that is not present in releases prior to 2011 Q3. Until that release happens, you will need to work with the svn version of the RDKit to follow these instructions.
+
+
+= Introduction =
+
+= Getting the raw data into PostgreSQL =
+
+Start by downloading the MySQL dump of ChEMBL_10: (ftp://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/releases/chembl_10/chembl_10_mysql.tar.gz)
+and creating a MySQL database from it.
+
+Convert that to a PostgreSQL database using [https://bitbucket.org/akuchling/mysql2pgsql mysql2pgsql] :
+{{{
+./my2pg.py -v --mysql-user=username --mysql-password=password \
+ --pg-user=username --pg-password=password \
+ --drop-tables localhost chembl_10 localhost chembl_10
+}}}
+In order to process the data tables in ChEMBL I needed to make a few changes to `my2pg.py`. The modified version is here:
+http://pastebin.com/0hsZ7LxX
+
+Thanks to Adrian Schreyer for the pointer to my2pg.
+
+
+= Creating the RDKit tables =
+
+You need to start by making sure the RDKit cartridge is loaded into the chembl database:
+{{{
+chembl_10=# create extension if not exists rdkit;
+}}}
+
+
+Because there are problems with the SMILES that are present in the ChEMBL data, I build the RDKit molecules from the CTABS:
+{{{
+chembl_10=# create schema rdk;
+chembl_10=# select molregno,mol_from_ctab(molfile::cstring) m into rdk.mols from compound_structures where is_valid_ctab(molfile::cstring) ;
+SELECT 998577
+Time: 1134900.554 ms
+chembl_10=# create index molidx on rdk.mols using gist(m);
+CREATE INDEX
+Time: 1400330.072 ms
+chembl_10=# select molregno,torsionbv_fp(m) as torsionbv,morganbv_fp(m,2) as mfp2,featmorganbv_fp(m,2) as ffp2 into rdk.fps from rdk.mols;
+SELECT 998577
+Time: 734113.058 ms
+chembl_10=# create index fps_ttbv_idx on rdk.fps using gist(torsionbv);
+CREATE INDEX
+Time: 121170.006 ms
+chembl_10=# create index fps_mfp2_idx on rdk.fps using gist(mfp2);
+CREATE INDEX
+Time: 88036.863 ms
+chembl_10=# create index fps_ffp2_idx on rdk.fps using gist(ffp2);
+CREATE INDEX
+Time: 87593.358 ms
+chembl_10=# alter table rdk.mols add primary key (molregno);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "mols_pkey" for table "mols"
+ALTER TABLE
+Time: 832.436 ms
+chembl_10=# alter table rdk.fps add primary key (molregno);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "fps_pkey" for table "fps"
+ALTER TABLE
+Time: 704.792 ms
+}}}
+
+To help with matched pair/activity cliff analyses, build a table with count-based topological torsion fingerprints:
+{{{
+chembl_10=# select molregno,torsion_fp(m) as torsionfp into rdk.pairfps from rdk.mols;
+SELECT 998577
+Time: 289626.695 ms
+chembl_10=# create index pairfps_torsionfp on rdk.pairfps using gist(torsionfp);
+CREATE INDEX
+Time: 116155.275 ms
+chembl_10=# alter table rdk.pairfps add primary key (molregno);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "pairfps_pkey" for table "pairfps"
+ALTER TABLE
+Time: 747.457 ms
+}}}
+
+
+= Benchmarking =
+
+{{{
+chembl_10=# select count(*) from rdk.mols where m @> 'c1ncncn1';
+ count 
+-------
+  4667
+(1 row)
+
+Time: 1448.236 ms
+chembl_10=# select count(*) from rdk.mols where m @> 'O=C1OC2=CC=CC=C2C=C1';
+ count 
+-------
+  8407
+(1 row)
+
+Time: 1689.301 ms
+chembl_10=# select count(*) from rdk.mols where m @> 'O=C(NC1=CC=CC=C1)C1=CC2=C(OC1=O)C=CC=C2' ;
+ count 
+-------
+   191
+(1 row)
+
+Time: 59.039 ms
+
+chembl_10=# select * from rdk.mols where m @> 'O=c:1:[o,n]:c:2:c:c:c:c:c:2:c:c:1'::qmol limit 500;
+ molregno |                                                      m                                                       
+----------+--------------------------------------------------------------------------------------------------------------
+   425830 | FC(F)(F)c1cc(=O)[nH]c2ccc3c(oc(=O)c4cccc(O)c43)c21
+   425832 | COc1cccc2c(=O)oc3c(ccc4[nH]c(=O)cc(C(F)(F)F)c43)c12
+   425925 | O=c1[nH]c2ccc3c(c2c(C(F)(F)F)c1)COc1cccc(O)c1-3
+   ... snip ...
+   426979 | O=c1[nH]c2c(c(C(F)(F)F)c1)cc1c(c2)OC[C@@H](Cc2ccccc2)N1CC(F)(F)F
+Time: 1586.931 ms
+chembl_10=# set rdkit.tanimoto_threshold=0.6
+;
+SET
+Time: 0.177 ms
+chembl_10=# select rdk.mols.*,tanimoto_sml(mfp2,morganbv_fp('CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21'::mol)) sim from rdk.fps join rdk.mols using (molregno) where mfp2%morganbv_fp('CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21'::mol) ;
+ molregno |                       m                       | sim  
+----------+-----------------------------------------------+------
+      823 | CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21    |    1
+   262773 | CC1=CC(C)(C)Nc2cc3n(C)c(=O)cc(C(F)(F)F)c3cc21 | 0.64
+(2 rows)
+
+Time: 1417.176 ms
+chembl_10=# select rdk.mols.*,tanimoto_sml(torsionfp,torsion_fp('CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21'::mol)) sim from rdk.pairfps join rdk.mols using (molregno) where torsionfp%torsion_fp('CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21'::mol) ;
+ molregno |                        m                         |        sim        
+----------+--------------------------------------------------+-------------------
+      791 | CC1(C)Nc2c(cc3c(oc(=O)cc3C(F)(F)F)c2)CC1         | 0.603448275862069
+      823 | CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21       |                 1
+   219275 | CC1=CC(C)(C)Nc2cc3nc(Cl)cc(C(F)(F)F)c3cc21       | 0.684210526315789
+   219277 | CC1=CC(C)(C)Nc2cc3nc(F)cc(C(F)(F)F)c3cc21        | 0.684210526315789
+   262707 | CCn1c(=O)cc(C(F)(F)F)c2c1cc1c(c2)C(C)=CC(C)(C)N1 | 0.645161290322581
+   262773 | CC1=CC(C)(C)Nc2cc3n(C)c(=O)cc(C(F)(F)F)c3cc21    | 0.666666666666667
+   262934 | CC1=CC(C)(C)Nc2cc3nc(O)cc(C(F)(F)F)c3cc21        | 0.684210526315789
+(7 rows)
+
+Time: 509.590 ms
+chembl_10=# 
+
+}}}
