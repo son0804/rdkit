@@ -102,7 +102,7 @@ chembl_13=# select * from rdk.mols where m @> 'O=c:1:[o,n]:c:2:c:c:c:c:c:2:c:c:1
       109 | O=c1oc2ccccc2c2cc(O)c(O)cc12
       110 | O=c1oc2cc(O)c(O)cc2c2cc(O)c(O)cc12
    ... snip ...
-Time: 5567.521 ms
+Time: 1529.782 ms
 chembl_13=# set rdkit.tanimoto_threshold=0.6;
 SET
 Time: 0.177 ms
