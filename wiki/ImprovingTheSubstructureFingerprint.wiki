@@ -62,7 +62,37 @@ The new enum algorithm delivers substantially better search performance than the
 
 = Room for Improvement =
 
-Handling of query features needs to be improved to allow at least simple SMARTS queries to run faster.
+Handling of query features needs to be improved to allow at least simple SMARTS queries to run faster. The current implementation does some good, but it's really not optimal.
+
+Demonstration of this, query results from ChEMBL for a simple SMARTS:
+{{{
+chembl_13=# explain analyze select count(*) from rdk.mols where m @> 'O=c:1:n:c:2:c:c:c:c:c:2:c:c:1'::qmol;
+                                                           QUERY PLAN                                                            
+---------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=4236.25..4236.26 rows=1 width=0) (actual time=1041.552..1041.552 rows=1 loops=1)
+   ->  Bitmap Heap Scan on mols  (cost=130.29..4233.40 rows=1143 width=0) (actual time=173.793..1040.556 rows=3384 loops=1)
+         Recheck Cond: (m @> 'O=c2:n:c1:c:c:c:c:c:1:c:c:2'::qmol)
+         ->  Bitmap Index Scan on molidx  (cost=0.00..130.01 rows=1143 width=0) (actual time=172.938..172.938 rows=8124 loops=1)
+               Index Cond: (m @> 'O=c2:n:c1:c:c:c:c:c:1:c:c:2'::qmol)
+ Total runtime: 1042.160 ms
+(6 rows)
+
+Time: 1043.385 ms
+chembl_13=# explain analyze select count(*) from rdk.mols where m @> '[O,N]=c:1:n:c:2:c:c:c:c:c:2:c:c:1'::qmol;
+                                                            QUERY PLAN                                                            
+----------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=4236.25..4236.26 rows=1 width=0) (actual time=26081.705..26081.705 rows=1 loops=1)
+   ->  Bitmap Heap Scan on mols  (cost=130.29..4233.40 rows=1143 width=0) (actual time=382.327..26080.495 rows=3390 loops=1)
+         Recheck Cond: (m @> '[O,N]=c2:n:c1:c:c:c:c:c:1:c:c:2'::qmol)
+         ->  Bitmap Index Scan on molidx  (cost=0.00..130.01 rows=1143 width=0) (actual time=367.895..367.895 rows=71630 loops=1)
+               Index Cond: (m @> '[O,N]=c2:n:c1:c:c:c:c:c:1:c:c:2'::qmol)
+ Total runtime: 26081.977 ms
+(6 rows)
+
+Time: 26083.118 ms
+}}}
+
+The performance is much better than it previously was, but we still end up searching 9 times as many rows as the pure molecule query.
 
 = Sample Code =
 
