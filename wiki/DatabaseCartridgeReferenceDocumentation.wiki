@@ -18,6 +18,9 @@
 == Similarity search ==
   * `%` : operator used for similarity searches using Tanimoto similarity. Returns whether or not the Tanimoto similarity between two fingerprints (either two `sfp` or two `bfp` values) exceeds `rdkit.tanimoto_threshold`.
   * `#` : operator used for similarity searches using Dice similarity. Returns whether or not the Dice similarity between two fingerprints (either two `sfp` or two `bfp` values) exceeds `rdkit.dice_threshold`.
+  * `<%>` : used for Tanimoto KNN searches (to return ordered lists of neighbors).
+  * `<#>` : used for Dice KNN searches (to return ordered lists of neighbors).
+
 
 == Substructure and exact structure search ==
   * `@>` : substructure search operator. Returns whether or not the `mol` or `qmol` on the right is a substructure of the `mol` on the left.
@@ -69,6 +72,12 @@ There are additional operators defined in the cartridge, but these are used for 
   * `is_valid_smiles(smiles)` : returns whether or not a SMILES string produces a valid RDKit molecule.
   * `is_valid_ctab(ctab)` : returns whether or not a CTAB (mol block) string produces a valid RDKit molecule.
   * `is_valid_smarts(smarts)` : returns whether or not a SMARTS string produces a valid RDKit molecule.
+  * `mol_from_smiles(smiles)` : returns a molecule for a SMILES string, NULL if the molecule construction fails.
+  * `mol_from_smarts(smarts)` : returns a molecule for a SMARTS string, NULL if the molecule construction fails.
+  * `mol_from_ctab(ctab)` : returns a molecule for a CTAB (mol block) string, NULL if the molecule construction fails.
+  * `mol_to_smiles(mol)` : returns the canonical SMILES for a molecule.
+  * `mol_to_smarts(mol)` : returns SMARTS string for a molecule.
+
   * `mol_amw(mol)` : returns the AMW for a molecule.
   * `mol_logp(mol)` : returns the MolLogP for a molecule.
   * `mol_hba(mol)` : returns the number of Lipinski H-bond acceptors (i.e. number of Os and Ns) for a molecule.
