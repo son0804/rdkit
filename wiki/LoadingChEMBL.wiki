@@ -15,7 +15,7 @@ Convert that to a PostgreSQL database using [https://bitbucket.org/akuchling/mys
 {{{
 ./my2pg.py -v --mysql-user=username --mysql-password=password \
  --pg-user=username --pg-password=password \
- --drop-tables localhost chembl_10 localhost chembl_10
+ --drop-tables localhost chembl_13 localhost chembl_13
 }}}
 In order to process the data tables in ChEMBL I needed to make a few changes to `my2pg.py`. The modified version is here:
 http://pastebin.com/0hsZ7LxX
