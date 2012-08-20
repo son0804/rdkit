@@ -27,11 +27,12 @@ from rdkit import Chem
 from rdkit import ML
 from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
 from rdkit.ML.Composite.Composite import Composite
+from rdkit.ML import ScreenComposite
 from rdkit.ML.DecTree import CrossValidate
 from rdkit.Chem import AllChemfrom rdkit.ML.DecTree.BuildSigTree import BuildSigTree
 from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
 
-ms = [x for x in Chem.SDMolSupplier('train.sdf') if x is not None]
+ms = [x for x in Chem.SDMolSupplier('solubility.train.sdf') if x is not None]
 
 # build fingerprints:
 fps = [AllChem.GetMorganFingerprintAsBitVect(x,2,2048) for x in ms]
