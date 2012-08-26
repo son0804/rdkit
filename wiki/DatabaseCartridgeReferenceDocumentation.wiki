@@ -68,15 +68,25 @@ There are additional operators defined in the cartridge, but these are used for 
   * `all_values_lt(sfp,int)` : returns a boolean indicating whether or not all elements of the `sfp` argument are less than the `int` argument.
   * `all_values_gt(sfp,int)` : returns a boolean indicating whether or not all elements of the `sfp` argument are greater than the `int` argument.
 
+=== Fingerprint I/O ===
+  * `bfp_to_binary_text(bfp)` : returns a bytea with the binary string representation of the fingerprint that can be converted back into an RDKit fingerprint in other software. (_available from Q3 2012 (2012_09) release_)
+  * `bfp_from_binary_text(bytea)` : constructs a bfp from a binary string representation of the fingerprint. (_available from Q3 2012 (2012_09) release_)
+
+
 == Molecule Related ==
   * `is_valid_smiles(smiles)` : returns whether or not a SMILES string produces a valid RDKit molecule.
   * `is_valid_ctab(ctab)` : returns whether or not a CTAB (mol block) string produces a valid RDKit molecule.
   * `is_valid_smarts(smarts)` : returns whether or not a SMARTS string produces a valid RDKit molecule.
+  * `is_valid_mol_pkl(bytea)` : returns whether or not a binary string (bytea) can be converted into an RDKit molecule. (_available from Q3 2012 (2012_09) release_)
+
   * `mol_from_smiles(smiles)` : returns a molecule for a SMILES string, NULL if the molecule construction fails.
   * `mol_from_smarts(smarts)` : returns a molecule for a SMARTS string, NULL if the molecule construction fails.
   * `mol_from_ctab(ctab)` : returns a molecule for a CTAB (mol block) string, NULL if the molecule construction fails.
+  * `mol_from_pkl(bytea)` : returns a molecule for a binary string (bytea), NULL if the molecule construction fails. (_available from Q3 2012 (2012_09) release_)
+
   * `mol_to_smiles(mol)` : returns the canonical SMILES for a molecule.
   * `mol_to_smarts(mol)` : returns SMARTS string for a molecule.
+  * `mol_to_pkl(mol)` : returns binary string (bytea) for a molecule. (_available from Q3 2012 (2012_09) release_)
 
   * `mol_amw(mol)` : returns the AMW for a molecule.
   * `mol_logp(mol)` : returns the MolLogP for a molecule.
