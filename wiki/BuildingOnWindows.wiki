@@ -25,10 +25,11 @@ _Notes_ :
   * If you are planning on using a development version of the RDKit: get a copy of the current RDKit source using subversion. If you're using the command-line client the command is: `svn co http://rdkit.svn.sourceforge.net/svnroot/rdkit/trunk c:\RDKit` 
   * If you are planning on using a released version of the RDKit : get a copy of the most recent release and extract it into the directory c:\RDKit 
   * Set the required environment variables (you can set this in cygwin or in windows. If you set them in windows, be sure to restart your cygwin window):
-    * RDBASE = c:\RDKit  *Note* this variable is optional for the Q3 2010 release and later releases.
+    * RDBASE = c:\RDKit  *Note* in releases Q3 2010 and later this variable is only required to run the tests.
   * Make sure that the directory c:\Python26 is in your PATH
   * Make sure that the directory c:\RDKit\lib is in your PATH
   * Make sure that the directory c:\boost\lib is in your PATH _If you are using a precompiled version of boost, make sure the directory containing its DLLs is in your path._
+  * Make sure the cygwin bin/ directory, or wherever the flex and bison executables are installed, are in your PATH so that cmake can find flex and bison.
   * Make sure that the directory c:\RDKit is in your PYTHONPATH
 
 == Building the Code ==
