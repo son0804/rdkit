@@ -8,6 +8,8 @@
 
 = Getting the raw data into PostgreSQL =
 
+  _*Note*_ : As of ChEMBL release 14, this section is no longer necessary. A PostgreSQL version of the data is now directly available from the ChEMBL team: http://chembl.blogspot.ch/2012/08/chembl-postgresql.html
+
 Start by downloading the MySQL dump of ChEMBL_13: (ftp://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/releases/chembl_13/chembl_13_mysql.tar.gz)
 and creating a MySQL database from it.
 
