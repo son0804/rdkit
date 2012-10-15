@@ -31,23 +31,23 @@ from rdkit.Chem import AllChem
 def InitiateNeutralisationReactions():
     return {
         # Imidazoles
-        Chem.MolFromSmarts('[n+;H]'):					Chem.MolFromSmarts('n'),
+        Chem.MolFromSmarts('[n+;H]'):			Chem.MolFromSmarts('n'),
         # Amines
-        Chem.MolFromSmarts('[N+;H]'):					Chem.MolFromSmarts('N'),
+        Chem.MolFromSmarts('[N+;H]'):			Chem.MolFromSmarts('N'),
         # Carboxylic acids
         Chem.MolFromSmarts('[$([O-]);!$([O-][#7])]'):	Chem.MolFromSmarts('O'),
         # Thiols
-        Chem.MolFromSmarts('[S-;X1]'):					Chem.MolFromSmarts('S'),
+        Chem.MolFromSmarts('[S-;X1]'):			Chem.MolFromSmarts('S'),
       	# Sulfonamides
-        Chem.MolFromSmarts('[N-;X2]S(=O)=O'):			Chem.MolFromSmarts('N'),
+        Chem.MolFromSmarts('[N-;X2]S(=O)=O'):		Chem.MolFromSmarts('N'),
         # Enamines
-        Chem.MolFromSmarts('[N-;X2][C,N]=C'):			Chem.MolFromSmarts('N'),
+        Chem.MolFromSmarts('[N-;X2][C,N]=C'):		Chem.MolFromSmarts('N'),
         # Tetrazoles
-        Chem.MolFromSmarts('[n-]'):						Chem.MolFromSmarts('n'),
+        Chem.MolFromSmarts('[n-]'):			Chem.MolFromSmarts('n'),
         # Sulfoxides
-        Chem.MolFromSmarts('[S-]=O'):					Chem.MolFromSmarts('S'),
+        Chem.MolFromSmarts('[S-]=O'):			Chem.MolFromSmarts('S'),
         # Amides
-        Chem.MolFromSmarts('[N-]C=O'):					Chem.MolFromSmarts('N'),
+        Chem.MolFromSmarts('[N-]C=O'):			Chem.MolFromSmarts('N'),
     }
 
 
