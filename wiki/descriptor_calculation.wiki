@@ -1,4 +1,5 @@
-# read in SDF, calculate descriptors, dump into 2nd SDF
+#summary read in SDF, calculate descriptors, dump into 2nd SDF
+
 
 {{{
 import sys
