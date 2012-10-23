@@ -1,0 +1,17 @@
+#summary scikit-learn: SVM, Bayes, RF
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+{{{
+from rdkit import Chem 
+from rdkit.Chem import Descriptors
+from rdkit.ML.Descriptors import MoleculeDescriptors
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import svm
+from sklearn.naive_bayes import GaussianNB
+from sklearn import cross_validation
+from sklearn import metrics
+}}}
