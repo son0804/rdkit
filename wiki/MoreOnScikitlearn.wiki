@@ -48,7 +48,7 @@ trainActs = [classes[x.GetProp('SOL_classification')] for x in trainset]
 testActs = [classes[x.GetProp('SOL_classification')] for x in testset]
 }}}
 
-First, start with RandomForest
+First, start with RandomForest:
 {{{
 print "RandomForest"
 nclf = RandomForestClassifier(n_estimators=100, max_depth=5,\
@@ -58,4 +58,14 @@ nclf      = nclf.fit(trainDescrs,trainActs)
 preds     = nclf.predict(testDescrs)
 print metrics.confusion_matrix(testActs,preds)
 accuracy    = nclf.score(testDescrs,testActs)
+}}}
+Here comes the SVM implementation:
+{{{
+print "SVM"
+clf_svm = svm.SVC(gamma=0.001, C=100.)
+clf_svm = clf_svm.fit(trainDescrs,trainActs)
+preds_SVM = clf_svm.predict(testDescrs)
+print metrics.confusion_matrix(testActs,preds_SVM)
+accuracy    = clf_svm.score(testDescrs,testActs)
+print accuracy
 }}}
