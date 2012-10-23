@@ -44,8 +44,8 @@ cPickle.dump(testDescrs,file('testDescrs.pkl','wb+'))
 Let's do the training:
 {{{
 classes={'(A) low':0,'(B) medium':1,'(C) high':2}
-trainActs = [classes[x.GetProp('SOL_classification')] for x in trainMols]
-testActs = [classes[x.GetProp('SOL_classification')] for x in testMols]
+trainActs = [classes[x.GetProp('SOL_classification')] for x in trainset]
+testActs = [classes[x.GetProp('SOL_classification')] for x in testset]
 }}}
 
 First, start with RandomForest
