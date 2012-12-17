@@ -1,4 +1,5 @@
 #summary Windows build instructions
+#labels Development,Notes
 
 = Building on Windows =
 
