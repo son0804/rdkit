@@ -1,5 +1,7 @@
 #summary Online tutorials from the 2012 UGM.
+#labels Tutorial
 
+These were all created using the [http://ipython.org/ IPython notebook]. The `.ipynb` files themselves are stored as [http://gist.github.com/greglandrum gists on github] and then presented using the [http://nbviewer.ipython.org/ IPython Notebook Viewer].
 
   * [http://nbviewer.ipython.org/4076605/ RECAP and BRICS]
   * [http://nbviewer.ipython.org/4070354/ MCS]
