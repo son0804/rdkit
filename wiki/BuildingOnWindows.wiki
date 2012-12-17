@@ -1,7 +1,9 @@
 #summary Building on Windows
 #labels Development,Notes
 
-For source releases prior to Q4 2009, look at BuildingOnWindows_Old
+_Applies to releases after (and including) Q4 2012_
+
+For source releases prior to Q4 2009, look at BuildingOnWindows_preQ42012
 
 == Software to Install ==
   * Microsoft Visual C++ : The Express version has everything necessary and can be downloaded for free [http://www.microsoft.com/express/download/ from Microsoft]. This is a big installation and will take a while. The RDKit has been successfully built with all version of visual c++ since 6.0, so the current version of VC++ (2010 as of this writing) should be fine. 
