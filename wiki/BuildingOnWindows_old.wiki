@@ -1,6 +1,8 @@
 #summary Windows build instructions
 #labels Development,Notes
 
+_Applies to versions pre Q4 2009_
+
 = Building on Windows =
 
 == Software to Install ==
