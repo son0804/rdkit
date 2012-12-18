@@ -1,7 +1,7 @@
 #summary Building on Windows
 #labels Development,Notes
 
-_Applies to releases after (and including) Q4 2012_
+_Applies to releases after (and including) 2012.09.2_
 
 For source releases prior to Q4 2009, look at BuildingOnWindows_preQ42012
 
@@ -16,25 +16,22 @@ For source releases prior to Q4 2009, look at BuildingOnWindows_preQ42012
     * If you would like to install the RDKit InChI support (first available in the Q2 2011 release), follow the instructions in $RDBASE/External/INCHI-API to get a copy of the InChI source and put it in the appropriate place.
 
 == Setup and Preparation ==
-This section assumes that python is installed in c:\Python26, that the boost libraries have been extracted to c:\boost\boost_1_43_0, and that you will build the RDKit from a directory named c:\RDKit. If any of these conditions is not true, just change the corresponding paths. 
+This section assumes that python is installed in c:\Python27, that the boost libraries have been extracted to c:\boost\boost_1_43_0, and that you will build the RDKit from a directory named c:\RDKit. If any of these conditions is not true, just change the corresponding paths. 
 
 _Notes_ :
     # If you install things in paths that have spaces in their names, be sure to use quotes properly in your environment variable definitions.
     # If you have more than one version of visual studio installed, the instructions below may not use the correct compiler. In this case you need to use a different `--toolset` argument to specify the version of the compiler used in all commands. Information for this situation is covered in [http://www.boost.org/doc/libs/1_43_0/more/getting_started/windows.html the boost.build documentation].
 
-  * Make sure that boost builds properly by going to the directory c:\boost\boost_1_43_0 and executing the command: `.\bjam.exe --toolset=msvc --with-regex --with-python release install`. This may take a while, but it should finish without errors. _This step is not required if you are using a pre-compiled version of boost._
-  * If you are planning on using a development version of the RDKit: get a copy of the current RDKit source using subversion. If you're using the command-line client the command is: `svn co http://rdkit.svn.sourceforge.net/svnroot/rdkit/trunk c:\RDKit` 
+  * If you are planning on using a development version of the RDKit: get a copy of the current RDKit source using subversion. If you're using the command-line client the command is: `svn co  http://svn.code.sf.net/p/rdkit/code/trunk c:\RDKit` 
   * If you are planning on using a released version of the RDKit : get a copy of the most recent release and extract it into the directory c:\RDKit 
   * Set the required environment variables (you can set this in cygwin or in windows. If you set them in windows, be sure to restart your cygwin window):
     * RDBASE = c:\RDKit  *Note* in releases Q3 2010 and later this variable is only required to run the tests.
-  * Make sure that the directory c:\Python26 is in your PATH
+  * Make sure that the directory c:\Python27 is in your PATH
   * Make sure that the directory c:\RDKit\lib is in your PATH
-  * Make sure that the directory c:\boost\lib is in your PATH _If you are using a precompiled version of boost, make sure the directory containing its DLLs is in your path._
-  * Make sure the cygwin bin/ directory, or wherever the flex and bison executables are installed, are in your PATH so that cmake can find flex and bison.
+  * Make sure that the directory containing the boost DLLs is in your PATH
   * Make sure that the directory c:\RDKit is in your PYTHONPATH
 
-== Building the Code ==
-  * follow the Installing Boost instructions above.
+== Building the Code Using GUIs ==
   * environment variables:
     * if you built your own version of boost and cmake complains about not being able to find it, define the environment variable BOOST_ROOT to point to the directory containing the boost source.
   * Configure the build:
@@ -48,6 +45,15 @@ _Notes_ :
     * check to be sure that you're building a Release build (for some reason CMake produces solution files that default to doing a Debug build)
     * build the "ALL_BUILD" target; this will take a while and generate warnings, but there should be no errors. *Note:* if you are building the SWIG wrappers you may get an error the first time you try to build them. If you see this error, try building ALL_BUILD again; it should work the second time.
     * build the "INSTALL" target
+
+== Building the Code Using the Command Line ==
+  * environment variables:
+    * if you built your own version of boost and cmake complains about not being able to find it, define the environment variable BOOST_ROOT to point to the directory containing the boost source.
+  * Create an $RDBASE/build directory and cd into it.
+  * Run cmake. Here's an example basic command line for 64bit windows: 
+`cmake -DBOOST_ROOT=c:/boost/boost64_151 -G"Visual Studio 10 Win64" ..`
+  * Build the code. Here's an example command line:
+`c:/Windows/Microsoft.NET/Framework64/v4.0.30319/MSBuild.exe  /m:4 /p:Configuration=Release INSTALL.vcxproj`
 
 == Testing the Build (optional, but recommended) ==
   * cd to $RDBASE/build and run `ctest`
