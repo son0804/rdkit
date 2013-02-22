@@ -23,6 +23,12 @@ The rest of this will assume that the installation is in `c:/RDKit_Q12011_2`
 
 = Environment variables =
  * `RDBASE`: `c:/RDKit_Q12011_2`  *Note* this is optional for the Q3 2010 and later releases.
- * `PYTHONPATH`: `%RDBASE%` if there is already a PYTHONPATH, put `;%RDBASE` at the end.
+ * `PYTHONPATH`: `%RDBASE%` if there is already a PYTHONPATH, put `;%RDBASE%` at the end.
  * *Releases prior to Q3 2010*: `PATH`: add `;%RDBASE%/bin` to the end
  * *Q3 2010 and more recent releases*: `PATH`: add `;%RDBASE%/lib` to the end
+
+In Win7 systems, you may run into trouble due to missing DLLs, see one thread from the mailing list:
+http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01632.html
+
+You can download the missing DLLs from here:
+http://www.microsoft.com/en-us/download/details.aspx?id=5555
