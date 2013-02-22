@@ -1,0 +1,36 @@
+#summary Ideas for GSOC 2013 projects
+#labels Notes
+
+==C++==
+  * Erg fingerprints (http://pubs.acs.org/doi/abs/10.1021/ci050457y)
+  * Unique ring families (http://pubs.acs.org/doi/abs/10.1021/ci200629w)
+  * Fixing the bit assignment in the rdkit and layered fingerprints (canonical subgraph traversal)
+  * Canonical graph traversal code
+  * Tautomer enumeration and canonicalization
+  * Canonical Kekule form
+  * Add a new force field (MMFF?)
+  * Improved molecule drawing code
+  * Port MCS code -> Python
+
+==Python==
+  
+
+==KNIME==
+
+
+==Cartridge==
+  * Similarity search performance: 
+    * Revisit cartridge fingerprint index for efficiency
+    * Cartridge optimization to use words instead of bytes for similarity
+    * Improved similarity calculation for sparse FPs.
+  * Reaction support in the cartridge
+
+
+==Integration==
+  * Pypi integration 
+  * Code to automatically generate docs in the SWIG wrappers
+  * Javascript canvas renderer implementation. Ideally with atom selection
+  * rdkit type support in psycopg2
+  * rdkit type support in pandas
+  * rdkit type support in SQLAlchemy (building on Riccardo's work)
+
