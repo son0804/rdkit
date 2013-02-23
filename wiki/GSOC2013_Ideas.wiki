@@ -11,6 +11,12 @@
   * Add a new force field (MMFF?)
   * Improved molecule drawing code
   * Port MCS code -> Python
+  * Implementation of Noel O'Boyle's InChI-driven canonicalization (http://www.jcheminf.com/content/4/1/22/abstract)
+  * integration with google's Native Client
+  * add support for sequence types (i.e. proteins, DNA, polysaccharides etc.)
+  * Add a parser for PDB files
+  * Add bond-perception code based on an algorithm such as the one recently published by Rarey et. al (http://pubs.acs.org/doi/abs/10.1021/ci300358c)
+
 
 ==Python==
   
@@ -32,5 +38,10 @@
   * Javascript canvas renderer implementation. Ideally with atom selection
   * rdkit type support in psycopg2
   * rdkit type support in pandas
-  * rdkit type support in SQLAlchemy (building on Riccardo's work)
-
+  * rdkit type support in SQLAlchemy (building on Riccardo V's work)
+  * improved iPython notebook integration:
+     * control over rendering settings
+     * browse interface for sets of molecules
+     * molecule picker
+  * Use emscripten (https://github.com/kripken/emscripten) to get basic chemistry functionality into javascript
+ 
