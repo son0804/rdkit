@@ -3,12 +3,12 @@
 
 These were all created using the [http://ipython.org/ IPython notebook]. The `.ipynb` files themselves are stored as [http://gist.github.com/greglandrum gists on github] and then presented using the [http://nbviewer.ipython.org/ IPython Notebook Viewer].
 
-  * [http://nbviewer.ipython.org/4076605/ RECAP and BRICS]
-  * [http://nbviewer.ipython.org/4070354/ MCS]
-  * [http://nbviewer.ipython.org/4316426/ Using ChEMBL and the PostgreSQL cartridge]
-  * [http://nbviewer.ipython.org/4316430/ Working with Chemical Reactions]
-  * [http://nbviewer.ipython.org/4316433/ Sanitization]
-  * [http://nbviewer.ipython.org/4316434/ Similarity and Diversity]
-  * [http://nbviewer.ipython.org/4316435/ Working in 3D]
-  * [http://nbviewer.ipython.org/4316460/ Using SciKit-Learn and Descriptors to Build Regression Models]
-  * [http://nbviewer.ipython.org/4316463/ Using SciKit-Learn and Fingerprints to Build Classification Models]
+  * [http://nbviewer.ipython.org/4076605 RECAP and BRICS]
+  * [http://nbviewer.ipython.org/4070354 MCS]
+  * [http://nbviewer.ipython.org/4316426 Using ChEMBL and the PostgreSQL cartridge]
+  * [http://nbviewer.ipython.org/4316430 Working with Chemical Reactions]
+  * [http://nbviewer.ipython.org/4316433 Sanitization]
+  * [http://nbviewer.ipython.org/4316434 Similarity and Diversity]
+  * [http://nbviewer.ipython.org/4316435 Working in 3D]
+  * [http://nbviewer.ipython.org/4316460 Using SciKit-Learn and Descriptors to Build Regression Models]
+  * [http://nbviewer.ipython.org/4316463 Using SciKit-Learn and Fingerprints to Build Classification Models]
