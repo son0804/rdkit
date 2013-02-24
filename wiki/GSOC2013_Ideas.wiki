@@ -14,10 +14,11 @@
   * Implementation of Noel O'Boyle's InChI-driven canonicalization (http://www.jcheminf.com/content/4/1/22/abstract)
   * integration with google's Native Client
   * add support for sequence types (i.e. proteins, DNA, polysaccharides etc.)
+  * Implement a parser for the HELM language for describing sequences (http://pubs.acs.org/doi/abs/10.1021/ci3001925)
   * Add a parser for PDB files
   * Add bond-perception code based on an algorithm such as the one recently published by Rarey et. al (http://pubs.acs.org/doi/abs/10.1021/ci300358c)
   * Port SMILES/SMARTS parsers from flex/bison -> Boost.spirit
-  * implement Pubchem fingerprints. [Description here: ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt, a Java implementation here: https://bitbucket.org/caodac/pcfp/src]
+  * implement Pubchem fingerprints. Description (ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt); reference Java implementation (https://bitbucket.org/caodac/pcfp/src)
   * Implement a parser for the language describing the Lilly reactivity/promiscuity filters. (http://pubs.acs.org/doi/full/10.1021/jm301008n, reference code here: https://github.com/IanAWatson/Lilly-Medchem-Rules)
 
 
