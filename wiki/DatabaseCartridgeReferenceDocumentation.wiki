@@ -1,6 +1,9 @@
 #summary Reference manual for the RDKit database cartridge
 #labels cartridge
 
+*Note:* For an up-to-date version of this document, please use the online version: https://rdkit.readthedocs.org/en/latest/Cartridge.html#reference-guide.
+
+
 = New Types =
 
   * `mol` : an rdkit molecule. Can be created from a SMILES via direct type conversion, for example: `'c1ccccc1'::mol` creates a molecule from the SMILES `'c1ccccc1'`
