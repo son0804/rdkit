@@ -50,7 +50,7 @@
 = Unsuccessful Builds =
 
 || *Date* || *RDKit Version* || *OS* || *Compiler* || *Boost version* || *Python version* || *Who* || *Notes* ||
-||  ||  ||  ||  ||  ||  ||  || ||
+|| 2/03/2013 || 2013_03_2  || Ubuntu 10.04 || g++-4.1 || 1.53.0 || 2.6 || Greg Landrum || Problem is with boost version. Older versions of boost work fine. ||
 
 = Unsuccessful Tests =
 
