@@ -9,7 +9,7 @@ Anaconda is nicely packaged, and commercially supported, scientific python distr
 
 Start by installing anaconda.
 
-You need to build boost and the RDKit again.
+You need to build boost and the RDKit using the anaconda configuration.
 
 == Building Boost ==
 
