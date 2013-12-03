@@ -25,11 +25,12 @@ The test data and scripts are in $RDBASE/Regress.
   # Optimize those conformations using UFF
   # Generate unique subgraphs of length 6 for the 1000 molecules
   # Generate RDK fingerprints for the 1000 molecules
+  # Optimize the conformations using MMFF94
 
 = Results =
 
 
-|| Date || Machine || Code Version || t1 || t2 || t3 || t4 || t5 || t6 || t7 || t8 || t9 || t10 || t11 || t12 || t13 || t14 || t15 || t16 ||
+|| Date || Machine || Code Version || t1 || t2 || t3 || t4 || t5 || t6 || t7 || t8 || t9 || t10 || t11 || t12 || t13 || t14 || t15 || t16 || t17 ||
 || 11-06-2009|| marten || Q12009_2 || 4.0 || 2.4 || 0.2 || 13.2 || 13.6 || 0.0 || 40.8 || 41.2 || 1.0 || 2.1 || 38.7 || 1.1 || 16.6 ||
 || 11-06-2009 || marten || svn ||  3.0 || 2.4 || 0.3 || 5.6 || 5.7 || 0.0 || 17.2 || 17.0 || 1.0 || 2.1 || 43.4 || 1.1 || 17.7 ||
 || 17-06-2009 || otter || svn || 4.3 || 3.1 || 0.4 || 7.2 || 8.0 || 0.1 || 24.7 || 25.3 || 2.3 || 3.5 || 54.6 || 2.0 || 22.2 ||
