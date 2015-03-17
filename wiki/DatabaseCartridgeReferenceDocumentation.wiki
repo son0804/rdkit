@@ -1,5 +1,0 @@
-#summary Reference manual for the RDKit database cartridge
-#labels cartridge
-
-This document has been moved, please use the ReadTheDocs version: https://rdkit.readthedocs.org/en/latest/Cartridge.html#reference-guide.
-
