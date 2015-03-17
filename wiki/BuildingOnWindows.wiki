@@ -1,4 +1,0 @@
-#summary Building on Windows
-#labels Development,Notes
-
-_*Note*_ : These instructions have been moved to the new online documentation: http://www.rdkit.org/docs/Install.html#installation-from-source.
