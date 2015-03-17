@@ -1,5 +1,0 @@
-#summary Loading the full ChEMBL database into PostgreSQL
-#labels cartridge,Notes
-
-  _*Note*_ : These instructions have been moved to the new online documentation: https://rdkit.readthedocs.org/en/latest/Cartridge.html#creating-databases.
-  The older version of these instructions can be found on the wiki page LoadingChemblOld
