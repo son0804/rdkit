@@ -1,3 +1,0 @@
-#summary We're using GitHub for bug tracking
-
-We're doing bug and feature-request tracking at [https://github.com/rdkit/rdkit/issues GitHub].
