@@ -1,0 +1,59 @@
+# Successful Build and Test #
+
+| **Date** | **RDKit Version** | **OS** | **Compiler** | **Boost version** | **Python version** | **Who** | **Notes** |
+|:---------|:------------------|:-------|:-------------|:------------------|:-------------------|:--------|:----------|
+| 01/01/2014 | svn               | MacOSX (Mountain Lion) XCode 4 | clang-500.2.75 | 1.54.0            | 2.7.2              | Greg Landrum |           |
+| 06/02/2013 | svn               | Ubuntu 12.04 (64bit) | g++-4.6.3    | 1.53.0            | 2.7.3              | Greg Landrum |           |
+| 28/10/2012 | svn               | Windows 7 (64bit) | VS10-Express | 1.51.0            | N/A                | Greg Landrum | 64bit RDKit build, used boostpro binary boost distribution, no Python wrappers |
+| 28/10/2012 | svn               | Windows 7 (64bit) | VS10-Express | 1.51.0            | 2.7.2              | Greg Landrum | 64bit windows, 32bit RDKit build, used boostpro binary boost distribution |
+| 24/10/2012 | 2012\_09\_1       | Centos 6.3 (64bit) | g++-4.4.6    | 1.49.0            | 2.6.6              | Christos Kannas |           |
+| 24/10/2012 | 2012\_09\_1       | Centos 6.2 (64bit) | g++-4.4.6    | 1.48.0            | 2.6.6              | Greg Landrum | does not work with system boost (SLN tests fail) |
+| 20/10/2012 | 2012\_09\_1       | Ubuntu 12.04 (64bit) | g++-4.6.3    | 1.48.0            | 2.7.3              | Greg Landrum |           |
+| 20/10/2012 | 2012\_09\_1       | MacOSX (Snow Leopard), XCode4 | g++-4.2.1    | 1.48.0            | 2.6.1              | Greg Landrum | custom numpy build required |
+| 09/05/2012 | svn               | Ubuntu 12.04 (64bit) | g++-4.6.3    | 1.46.0            | 2.7.3              | Greg Landrum |           |
+| 08/05/2012 | 2012\_03\_1       | CentOS 6.2 (64bit) | g++-4.4.6    | 1.49.0            | 2.6.6              | Christos Nicolaou |  problems encountered with SLN parser |
+| 17/12/2011 | svn               | CentOS 5.7 | g++-4.1.2-51 | 1.48.0            | 2.7.2              | Greg Landrum |  See [building on CentOS 5.7](http://code.google.com/p/rdkit/wiki/BuildingOnCentOS57) in the wiki for more details. |
+| 17/12/2011 | svn               | MacOSX (Snow Leopard), XCode4 | g++-4.2.1    | 1.48.0            | 2.6.1              | Greg Landrum | custom numpy build required |
+| 24/10/2011 | 2011\_09\_1       | MacOSX (Lion) | g++-4.2.1    | 1.46.1            | 2.7                | Sarah Langdon |           |
+| 24/08/2011 | svn               | MacOSX (Snow Leopard) | g++-4.2.1    | 1.47.0            | 2.6.1              | Greg Landrum |           |
+| 14/06/2011 | 2011\_03\_2       | CentOS 5.6 | g++-4.4.5    | 1.44.0            | 2.7                | Kirk DeLisle | See [building on CentOS](http://code.google.com/p/rdkit/wiki/BuildingOnCentOS) in the wiki for more details. |
+| 13/06/2010 | svn               | Ubuntu(10.10) | g++-4.4.4    | 1.46.1            | 2.6.6              | Greg Landrum |           |
+| 14/05/2011 | 2011\_03\_2       | Bio Linux 6 | g++-4.4.3    | 1.40.0            | 2.6.5              | Greg Landrum | system boost and python |
+| 20/04/2011 | svn               | Scientific Linux v6 | g++-4.4.4    | 1.41.0            | 2.6.5              | Greg Landrum | system boost and python; cairo MolDraw tests fail |
+| 14/02/2011 | svn               | Windows 7 (64bit) | VS10-Express | 1.44.0            | 2.6.6              | Greg Landrum | 64bit windows, 32bit RDKit build, used boostpro binary boost distribution |
+| 1/12/2010 | svn               | Windows 7 (64bit) | VS9-Express  | 1.44.0            | 2.7.1              | Greg Landrum | 64bit windows, 32bit RDKit build |
+| 24/11/2010 | svn               | Ubuntu(10.10) | g++-4.4.4    | 1.42.0            | 2.6.6              | Greg Landrum |           |
+| 18/11/2010 | svn               | Fedora14 | g++-4.5.1    | 1.44.0            | 2.7                | Kirk DeLisle | [description](http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01385.html) |
+| 05/10/2010 | svn               | Ubuntu(10.04) | g++-4.4.3    | 1.44.0            | 2.7                | Greg Landrum |           |
+| 17/09/2010 | svn               | Ubuntu(10.04) | g++-4.4.3    | 1.44.0            | 2.6.5              | Greg Landrum |           |
+| 17/09/2010 | svn               | MacOSX (Snow Leopard) | g++-4.2.1    | 1.43.0            | 2.6.1              | Greg Landrum |           |
+| 05/06/2010 | svn               | Ubuntu(10.04) | g++-4.4.3    | 1.43.0            | 2.6.5              | Greg Landrum |           |
+| 11/04/2010 | svn               | Ubuntu(9.10) | g++-4.4.1    | 1.42.0            | 2.6.4              | Greg Landrum |           |
+| 22/11/2009 | svn               | MacOSX (Leopard) | g++-4.0.1    | 1.41.0            | 2.5                | Greg Landrum |           |
+| 30/10/2009 | Q3\_2009          | Kubuntu 9.10 x64 | g++-4.4.1    | 1.40.0            | 2.6.4rc2           | Adrian Schreyer |           |
+| 15/10/2009 | svn               | CentOS 5.3 x64 | g++-4.1.2-44 | 1.39.0            | 2.4.3              | Adrian Schreyer |           |
+| 9/07/2009 | svn               | RHEL(64bit)| g++-3.4.6    | 1.39.0            | 2.5                | Greg Landrum |           |
+| 8/07/2009 | Q1\_2009\_2       | Ubuntu(9.04) 64bit| g++-4.4      | 1.39.0            | 2.6.2              | Abhinav Chawade |           |
+| 8/07/2009 | Q2\_2009\_1       | Ubuntu(9.04) | g++-4.3.3    | 1.39.0            | 2.6.2              | Greg Landrum |           |
+| 27/06/2009 | Q2\_2009\_1       | Ubuntu(8.10) | g++-4.3.2    | 1.39.0            | 2.5                | Greg Landrum |           |
+| 27/06/2009 | Q2\_2009\_1       | WinXP  | VS8-express  | 1.39.0            | 2.5                | Greg Landrum |           |
+| 27/04/2009 | svn               | Ubuntu(8.10) | g++-4.3.2    | 1.38.0            | 2.6.2              | Greg Landrum |           |
+| 18/03/2009 | svn               | WinXP  | VC++7.1      | 1.38.0            | 2.5                | Greg Landrum |           |
+| 11/03/2009 | svn               | WinXP  | VS8-express  | 1.38.0            | 2.5                | Greg Landrum |           |
+| 11/03/2009 | svn               | MacOSX | g++-4.0.1    | 1.37.0            | 2.5                | Greg Landrum |           |
+| 11/03/2009 | svn               | RHEL   | g++-3.4.6    | 1.37.0            | 2.5                | Greg Landrum |           |
+| 11/03/2009 | svn               | RHEL(64bit) | g++-3.4.6    | 1.37.0            | 2.5                | Greg Landrum |           |
+| 11/03/2009 | svn               | Ubuntu(8.10) | g++-4.3.2    | 1.37.0            | 2.5                | Greg Landrum |           |
+|          |                   |        |              |                   |                    |         |           |
+
+# Unsuccessful Builds #
+
+| **Date** | **RDKit Version** | **OS** | **Compiler** | **Boost version** | **Python version** | **Who** | **Notes** |
+|:---------|:------------------|:-------|:-------------|:------------------|:-------------------|:--------|:----------|
+| 2/03/2013 | 2013\_03\_2       | Ubuntu 10.04 | g++-4.1      | 1.53.0            | 2.6                | Greg Landrum | Problem is with boost version. Older versions of boost work fine. |
+
+# Unsuccessful Tests #
+
+| **Date** | **RDKit Version** | **OS** | **Compiler** | **Boost version** | **Python version** | **Who** | **Notes** |
+|:---------|:------------------|:-------|:-------------|:------------------|:-------------------|:--------|:----------|
+|          |                   |        |              |                   |                    |         |           |

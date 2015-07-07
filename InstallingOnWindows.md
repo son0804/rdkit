@@ -1,0 +1,31 @@
+# Pre-requisites #
+
+## Required ##
+  * The windows binary build from http://rdkit.googlecode.com/files/RDKit_2011_03_2.win32.py26.zip
+  * Python 2.6 (from http://www.python.org/)
+  * numpy (from http://numpy.scipy.org/)
+  * PIL: (from http://www.pythonware.com/products/pil/index.htm)
+
+## Recommended ##
+  * aggdraw: a library for high-quality drawing in Python. Instructions for downloading are here: http://effbot.org/zone/aggdraw-index.htm The new (as of May 2008) drawing code has been tested with v1.2a3 of aggdraw. Despite the alpha label, the code is stable and functional.
+  * matplotlib: a library for scientific plotting from Python. http://matplotlib.sourceforge.net/
+  * ipython : a very useful interactive shell (and much more) for Python. http://ipython.scipy.org/dist/
+  * win32all: Windows extensions for Python. http://sourceforge.net/projects/pywin32/
+
+# Extract archive #
+
+Put it somewhere without a space in the name, i.e. `c:/`
+
+The rest of this will assume that the installation is in `c:/RDKit_Q12011_2`
+
+# Environment variables #
+  * `RDBASE`: `c:/RDKit_Q12011_2`  **Note** this is optional for the Q3 2010 and later releases.
+  * `PYTHONPATH`: `%RDBASE%` if there is already a PYTHONPATH, put `;%RDBASE%` at the end.
+  * **Releases prior to Q3 2010**: `PATH`: add `;%RDBASE%/bin` to the end
+  * **Q3 2010 and more recent releases**: `PATH`: add `;%RDBASE%/lib` to the end
+
+In Win7 systems, you may run into trouble due to missing DLLs, see one thread from the mailing list:
+http://www.mail-archive.com/rdkit-discuss@lists.sourceforge.net/msg01632.html
+
+You can download the missing DLLs from here:
+http://www.microsoft.com/en-us/download/details.aspx?id=5555

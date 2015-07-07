@@ -1,0 +1,212 @@
+# Under Construction #
+
+This is the trainig set
+http://rdkit.svn.sourceforge.net/viewvc/rdkit/trunk/Docs/Book/data/solubility.train.sdf?revision=1724 & test set http://rdkit.svn.sourceforge.net/viewvc/rdkit/trunk/Docs/Book/data/solubility.test.sdf. Files were download from http://www.cheminformatics.org/datasets/huuskonen/index.html
+
+Inspired by Greg's mail to share code and write user tutorials, I decided to show an example how I would use RDKit for training QSAR models
+
+## The Data Set ##
+In the training set, there is a total number of 1025 molecules. The solubility classes are defined as follows:
+```
+solu <= -3.0                  : SOL_classification = (A) low
+solu  > -3.0 and solu <= -1.0 : SOL_classification = (B) medium
+solu  > -1.0                  : SOL_classification = (C) high
+```
+This gives the following statistics:
+```
+(A) low     417 compounds
+(B) medium  402 compounds
+(C) high    206 compounds
+```
+## Train a DecisionTree ##
+
+```
+from rdkit import Chem
+from rdkit import ML
+from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
+from rdkit.ML.Composite.Composite import Composite
+from rdkit.ML import ScreenComposite
+from rdkit.ML.DecTree import CrossValidate
+from rdkit.Chem import AllChem
+from rdkit.ML.DecTree.BuildSigTree import BuildSigTree
+from rdkit.ML.DecTree.BuildSigTree import SigTreeBuilder
+
+ms = [x for x in Chem.SDMolSupplier('solubility.train.sdf') if x is not None]
+
+# build fingerprints:
+fps = [AllChem.GetMorganFingerprintAsBitVect(x,2,2048) for x in ms]
+
+nPossible = [0]+[2]*2048+[3]
+
+# now build our list of points:
+pts = []
+for i,m in enumerate(ms):
+    if m.GetProp('SOL_classification')=='(A) low':
+        act=2
+    elif m.GetProp('SOL_classification')=='(B) medium':
+        act=1
+    else: 
+        act=0
+    pts.append([m.GetProp('NAME'),fps[i],act])
+
+# and save them to a file:
+import cPickle
+cPickle.dump(pts,file('pts.pkl','wb+'))
+
+# Building a single decision tree
+
+import cPickle,numpy
+from rdkit.ML.DecTree.BuildSigTree import BuildSigTree
+
+pts = cPickle.load(file('pts.pkl','rb'))
+
+cmp = Composite()
+cmp.Grow(pts,attrs=[1],nPossibleVals=[3],nTries=10,
+         buildDriver=CrossValidate.CrossValidationDriver,
+         treeBuilder=SigTreeBuilder,needsQuantization=False,maxDepth=3)
+res = ScreenComposite.ShowVoteResults(range(len(pts)), pts, cmp, 3, 0,errorEstimate=True)
+t = BuildSigTree(pts,nPossibleRes=3,maxDepth=3)
+
+# simple results report:
+confusionMat=numpy.zeros((3,3),numpy.int)
+for pt in pts:
+    confusionMat[pt[-1]][t.ClassifyExample(pt)]+=1
+print confusionMat
+```
+## The output ##
+```
+        *** Vote Results ***
+misclassified: 580/1025 (%56.59)        580/1025 (%56.59)
+
+average correct confidence:    0.9417
+average incorrect confidence:  0.9298
+
+        Results Table:
+
+           1       0       0      |  0.48
+          27      69      42      |  17.12
+         178     333     375      |  89.71
+     ------- ------- ------- 
+        0.49   17.16   89.93
+
+[[  4  16 186]
+ [  0 100 302]
+ [  0  23 394]]
+```
+
+The **first** confusion matrix contains the out-of-bag predictions of the composite model for the data set.
+The **second** confusion matrix is the confusion matrix for a single decision tree. It has essentially no connection to the first one at all.
+
+
+Now let's print my "own confusion matrix"
+```
+# create my own confusion matrix
+exp_list = []
+pred_list = []
+for mol in ms:
+  exp  =  int(mol.GetProp('solu_class'))
+  exp_list.append(exp)
+i=0
+for x in pts:
+  pred,conf=cmp.ClassifyExample(pts[i])
+  NAME=x[0]
+  pred_list.append(pred)
+  i+=1
+def create_conf_matrix(expected, predicted, n_classes):
+  m = [[0] * n_classes for i in range(n_classes)]
+  for pred, exp in zip(predicted, expected):
+    m[pred][exp] += 1
+  return m
+print create_conf_matrix(exp_list, pred_list, 3)
+```
+which gives this output
+```
+[[4, 0, 0], [16, 111, 26], [186, 291, 391]]
+```
+
+
+Let's go with a descriptor-based model
+```
+nms=[x[0] for x in Descriptors._descList]
+nms.remove('MolecularFormula')
+calc = MoleculeDescriptors.MolecularDescriptorCalculator(nms)
+descrs = [calc.CalcDescriptors(x) for x in ms]
+ndescrs = len(calc.GetDescriptorNames())
+
+pts=[]
+
+for i,m in enumerate(ms):
+    if m.GetProp('SOL_classification')=='(A) low':
+        act=2
+    elif m.GetProp('SOL_classification')=='(B) medium':
+        act=1
+    else:
+        act = 0
+    pts.append([m.GetProp('NAME')]+list(descrs[i])+[act])
+
+cPickle.dump(pts,file('descrs.pkl','wb+'))
+
+from rdkit.ML import ScreenComposite
+pts = cPickle.load(file('descrs.pkl','rb'))
+ndescrs = len(pts[0])-2
+boundsPerVar = [0]+[1]*ndescrs+[0]
+nPossible = [0]+[2]*ndescrs+[3]
+attrs = range(1,ndescrs+1)
+cmp = Composite()
+cmp.Grow(pts,attrs=attrs,nPossibleVals=nPossible,nTries=10,buildDriver=CrossValidate.CrossValidationDriver,treeBuilder=QuantTreeBoot, needsQuantization=False,nQuantBounds=boundsPerVar, maxDepth=3)
+res = ScreenComposite.ShowVoteResults(range(len(pts)), pts, cmp, 3, 0,errorEstimate=True)
+```
+This gives much better statistics:
+```
+        *** Vote Results ***
+misclassified: 237/1025 (%23.12)        237/1025 (%23.12)
+
+average correct confidence:    0.9222
+average incorrect confidence:  0.8135
+
+        Results Table:
+
+         135      50       0      |  65.22
+          71     307      71      |  76.18
+           0      45     346      |  82.78
+     ------- ------- ------- 
+       65.53   76.37   82.97
+```
+How well does the model perform on a test set?
+```
+test1 = [x for x in Chem.SDMolSupplier('test1.sdf') if x is not None]
+nms_test1=[x[0] for x in Descriptors._descList]
+nms_test1.remove('MolecularFormula')
+calc_test1 = MoleculeDescriptors.MolecularDescriptorCalculator(nms_test1)
+descrs_test1 = [calc_test1.CalcDescriptors(x) for x in test1]
+pts_test1 = []
+for i,m in enumerate(test1):
+    if m.GetProp('SOL_classification')=='(A) low':
+        act=2
+    elif m.GetProp('SOL_classification')=='(B) medium':
+        act=1
+    else:
+        act = 0
+    pts_test1.append([m.GetProp('NAME')]+list(descrs_test1[i])+[act])
+cPickle.dump(pts_test1,file('descrs_simple_test1.pkl','wb+'))
+
+cmp_test1 = cPickle.load(file('descrs_test1.pkl','rb'))
+cmp.ClassifyExample(pts_test1[0])
+res = ScreenComposite.ShowVoteResults(range(len(pts_test1)), pts, cmp, 3, 0,errorEstimate=False)
+```
+This gives a very good statistics:
+```
+        *** Vote Results ***
+misclassified: 24/257 (%9.34)   24/257 (%9.34)
+
+average correct confidence:    0.9635
+average incorrect confidence:  0.6833
+
+        Results Table:
+
+          19       4       0      |  76.00
+           5      74      14      |  92.50
+           0       1     140      |  90.32
+     ------- ------- ------- 
+       79.17   93.67   90.91 
+```

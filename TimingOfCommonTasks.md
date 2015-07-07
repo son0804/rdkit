@@ -1,0 +1,25 @@
+CPUs and compilers will make a big difference in actual times, but relative timings should be fine.
+
+# Molecule Operations #
+
+These times were measured on gulo (Dell Studio XPS with a 2.9GHz i7 CPU and 8GB of RAM, 64bit Ubuntu v10.10). The test set is 10K molecules from the PubChem screening set. Times are in seconds.
+
+These tests were run using the svn status of the code on 17 Dec 2010.
+
+| **Operation** | **Time** | **Command** | **Notes** |
+|:--------------|:---------|:------------|:----------|
+| Molecules from SD | 4.92     | `ms=[x for x in supplier]` |           |
+| Generate SMILES | 2.56     |  `smis=[Chem.MolToSmiles(x,True) for x in ms]` |           |
+| Molecules from SMILES | 5.36     | `m2s=[Chem.MolFromSmiles(x) for x in smis]` |           |
+| Serialize Molecules | 0.36     | `pkls=[x.ToBinary() for x in ms]` |           |
+| Deserialize Molecules | 0.41     | `m2s=[Chem.Mol(x) for x in pkls]`|           |
+| Simple SSS query | 0.09     | `matches=[x.HasSubstructMatch(patt) for x in ms]` | `patt=Chem.MolFromSmarts('Oc1ccccc1')`|
+| Count SSS matches | 0.12     | `matches=[len(x.GetSubstructMatches(patt)) for x in ms]` |           |
+| Larger SSS query | 0.42     | `matches=[x.HasSubstructMatch(patt) for x in ms]` | `patt=Chem.MolFromSmiles('c1cccc2c1ncnc2')`|
+| Generate 2D coords | 2.63     | `confs=[AllChem.Compute2DCoords(x) for x in ms]` |           |
+| Generate 3D coords | 43.06    | `confs=[AllChem.EmbedMolecule(x) for x in ms]` |           |
+| Generate 10 3D conformers | 344.41   | `confs=[AllChem.EmbedMultipleConfs(x,10) for x in ms]` |           |
+| Generate Morgan fingerprints | 0.81     | `fps=[AllChem.GetMorganFingerprintAsBitVect(x,2) for x in ms]` |           |
+| Generate topological torsion fingerprints | 1.81     | `fps=[AllChem.GetTopologicalTorsionFingerprintAsBitVect(x) for x in ms]` |           |
+| Generate RDKit fingerprints | 23.42    | `fps=[AllChem.RDKFingerprint(x,maxPath=6,nBitsPerHash=2) for x in ms]` |           |
+|               |          |             |           |
